@@ -1,0 +1,34 @@
+import React from "react";
+
+function App() {
+  return(
+    <></>
+  )
+}
+
+export default App()
+com essa estrutura adicioinamos conteudo a nossa tela ela é a pasta (App) fica dentro 
+da pasta (src) que é onde fica o conteudo da tela. 
+a exportação tambem pode ser feita de outro jeito
+
+import React from "react";
+
+export default function App() {
+  return(
+    <div> CFB Cursos
+    </div>
+  )
+}
+
+tela que é imp ortada pelo (index.js)
+
+na pasta public é rodado o conteudo da parte do cliente e o src é a parte do
+cervidor, é como se fose front-end e back-end
+
+link do curso que esta sendo feito
+
+https://www.youtube.com/watch?v=zhP0EoBbfuc&list=PLx4x_zx8csUh752BVDGZkxYpY9lS4
+0fyC&index=9&ab_channel=CFBCursos
+
+(npx create-react-app teste),(yarn create react-app teste) são utilizados para
+criar a tela react de vamos modificar

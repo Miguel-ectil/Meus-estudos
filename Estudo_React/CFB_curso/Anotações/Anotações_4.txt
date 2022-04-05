@@ -1,0 +1,34 @@
+			
+				props
+
+usamos o props para adionar conteudo junto a outros conteudo que ja estão na tela 
+de outro código colocamos o (props) dentro do nosso código
+----------------------------------------------
+import React from "react";
+
+export default function Dados(props){
+    return(
+        <section>
+            <p>Canal: {props.canal}</p>
+            <p>YouTube: {props.youtube}</p>
+            <p>Curso: {props.curso}</p>
+        </section>
+    )
+}
+-----------------------------------------------
+e dentro do  código principal o (App) alem de importar o código colocamos
+dentro da importação os campos que para que possamos adicionar algo dentro
+-----------------------------------------------
+import Dados from "./componentes/Dados";
+
+export default function App(){
+  return(
+    <>
+    <Header/>
+      <Corpo/>
+      <Dados canal='' youtube='' curso=''/>
+    </>
+    
+  )
+}
+-----------------------------------------------

@@ -1,0 +1,70 @@
+
+				Incerindo css
+
+Para adicionar css ao código basta colocar dentro do campo adicionado 
+style={{color:'red'}} com dois ({{}})
+exemplo:
+----------------------------------------------------------------------
+import React from "react";
+import faetec from './imgs/faetec-400.png'
+
+export default function Header(){
+    return(
+        <header style={{background:'red'}}>
+            <h1 style={{background:'red', fontSize:'3em'}}>Curso de React</h1>
+            <img src={faetec}/>
+        </header>
+    )
+}
+---------------------------------------------------------------------
+outra forma de fazer com a mesma lógica
+import React from "react";
+import Dados from "./Dados";
+// import Button from '@material-ui/core/Button';
+
+export default function Corpo(){
+
+    const textoDestaque={
+        color:'#00f',
+        fontSize:'3em'
+    }
+
+    return(
+        <section> 
+            <h2 style={textoDestaque}>Curso  de React</h2>
+            <p>Dia 15 de março ir até a policia federal</p>
+            <p>Para poder renovar o meu rg</p>
+----------------------------------------------------------------------
+
+Aproveitaremos o arquivo css  para fazer o nosso cssutilizamos elá 
+assim: primeiro faremos a importação aimportação deve ser feita no
+ arquivo (app) que será alterado com o css
+------------------------------------
+Importação: (import './App.css')
+------------------------------------
+criamos uma class no css e dentro dela colocamos as modificações
+-------------------------------------------------------
+.texto{
+   color: #f20;  /*#555 cor sinza, #0f0 cor verde */
+   font-size: 1em;
+}
+ou
+.texto{
+   color: rgb(37, 147, 190);  /*rgb(37, 147, 190); cor azul*/
+   font-size: 1em;
+}
+-------------------------------------------------------
+depois no arquivo acessamos essa class usando
+
+nessa linha de conteudo puxamos  a class de texto que muda a cor do texto
+----------------------------------------------------
+<p className="texto">Olá eu sou o Miguel Ectil</p>
+----------------------------------------------------
+
+Tambem podemos criar o arquivo css dentro da pasta (public)
+ou podemos adiconar cores através do arquivo (html) que esta dentro
+da pasta (public)
+no corpo da tela colocamos cor de fundo
+exemplo:
+<body style="background-color: #ccc;"> /*cor sinza */
+</body>

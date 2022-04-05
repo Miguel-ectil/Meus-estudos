@@ -1,0 +1,25 @@
+
+Vamos ver como criar os componentes dentro a pasta componentes
+
+Pasta componentes é nós mesmos que a nela ficam o podemos fazer
+o progeto da tela e envialos para o (App) para que possa aparecer
+na tela
+
+para que o conteudo que esta no componente aparesa no App
+nós temos que importa-lo dentro do (App) 
+--------------------------------------------
+import Header from "./componentes/header";  |
+--------------------------------------------
+e dentro do return colocamos o nome da função.
+-----------------------------------------------
+import React from "react";
+import Header from "./componentes/header";
+
+export default function App() {
+  return(
+    <>
+      <Header/>
+    </>
+  )
+}
+------------------------------------------------

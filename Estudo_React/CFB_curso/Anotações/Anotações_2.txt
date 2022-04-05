@@ -1,0 +1,16 @@
+Quado temos uma imagem dentro do src para importa-lo fazemo assim
+
+import faetec from './componentes/imgs/faetec-200.png'
+import paisagem from './componentes/imgs/paisagem-700.jpeg'
+
+e para fazer que apareça na tela é só usar dentro return
+
+<img src={faetec}/>
+ <img src={paisagem}/>
+==========================================================================
+
+Quando temos as imagems fora do src e sim dentro do public fazemos a importação
+dele diretamente ou seja não é preciso fazer a importação no cabeçalio do 
+programa usando o import e from
+
+<img src='/img/paisagem-700.jpeg'/>
