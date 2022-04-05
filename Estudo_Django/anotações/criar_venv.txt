@@ -1,0 +1,1 @@
+ (py -m venv venv) serve para poder criar venv n windows

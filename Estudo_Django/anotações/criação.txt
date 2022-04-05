@@ -1,0 +1,24 @@
+acessar (python manage.py help) para achar esses nomes
+
+iniciando um projeto
+
+(django-admin startproject alurareceita .)
+-------------------------------------------------
+para fazer aparacer  a tela 
+(python manage.py runserver)
+-------------------------------------------------
+criando um modelo de app 
+(python manage.py startapp receitas)
+-------------------------------------------------
+registrando app
+dentro do app criado(receitas) entramos em apps.py
+pegamos o nome vamos para a pasta principal e lá
+entramos en setting na linha 33(INSTALLED_APPS )
+colocamos o nome do app
+
+lembrar que o venv do terminal tem que estar sempre ativado
+
+
+Em todo desenvolvimento Django, geralmente vamos criar apps,
+incluir urls e cadastrar rotas, trabalhar com templates utilizando 
+css, javascript e imagens
