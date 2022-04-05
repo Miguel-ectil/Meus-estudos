@@ -1,0 +1,48 @@
+frase = curso em video python
+
+len => comprimeto de algo e serve para verificar string
+
+frase.count['o'] => quantas letras O tem na frase
+
+frase.count['o',0, 13] => quantas letras O tem do numero 0 ate o numero 12
+
+frase.find['deo'] => em que momento comecou O deo na frase(apartir do 11)
+
+frase.find['android'] => como ela nao existe na frase aprecera (-1)
+
+'curso' in frase => existe a palavra curso na frase se tiver (sim)
+ senao (nao)
+
+
+print('========== transformação! ===========')
+
+frase.replace['python', 'Android'] => procura o python na frase e o troca
+por android exem (curso em video Android)
+
+frase.upper() => deixa todas as letras maiusculas e transforma as
+minusculas que tiver em maiusculas
+
+frase.lower() => mantem as letras minusculas que tiver e
+trasforma todas as maiusculas que tiver em minusculas
+
+frase.capitalize() => transforma a primea letra da frase em uma letra
+maiuscula e o resto fica minusculo como nos textos de livros
+
+frase.title() => transforma a primeira letra de cada palavra em uma letra
+maiuscula e o resto fica minusculo
+
+frase strip() => elimina os espaços inuteis exe(xxxaprenda pythonxx) nesse
+exenplo removemos o s primeiros os ultimos espaços porque nao sao uteis
+
+frase.rstrip() => elimina apenas os espaços da direita(   aprenda pythonxx)
+
+frase.lstrip() => elima apenas os espaços da esquerda(xxxaprenda python  )
+
+print('========== divisao! ==========')
+frase.split() => separa as palavras conforme os espaços que elas tem
+exe(|curso|em|video|python|)
+
+print("======== junçao o contrario da funcao divisao! ======== ")
+
+'-'.join(frase) => junta as palvras com essa barra exe(curso-em-video-python)
+se quiser um espaço e so tirar a barra '-' => ''

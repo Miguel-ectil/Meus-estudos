@@ -1,0 +1,22 @@
+======== estudandon listas e tuplas! ========
+
+as listas sao formadas com [] e a as tuplas com ()e armazenam coisas
+que sao guardadas , exem   (lista [....] ee tupla ((....))
+as tuplas sao imutaveis ouseja nao da para auterar um valor
+que esteja dentro dela.
+
+
+algo que precisamos lenbrar => se a posicao indica alguma coisa
+entao provavelmente tem um tamanho fixo e provavelmente e uma tupla,
+
+se a posicao nao tem tipo definido expesifico, se tudo e do mesmo tipo
+nao tem que uma posicao tem que ser de tal tipo ou que tal posicao quer
+diser outra coisa, entao provavelmente e uma lista que sera utilizada
+
+uma lista de usuarios e mutavel porque eu posso adicionar elementos
+dentro dela ,entao faz sentido que o usuario seja uma lista. (# se fosse
+uma tupla nao conseguiriamos alterar o valor delas, ou seja em uma TUPLA nao
+se altera o valor.)
+
+as tuplas geralmente sao utilizadas cuando temos uma sequencia em que
+cada posicao quer diser uma coisa diferente tem significado as posições
