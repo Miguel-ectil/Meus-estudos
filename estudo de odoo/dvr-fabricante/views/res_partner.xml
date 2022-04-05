@@ -1,0 +1,110 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+       <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="l10n_br_base_res_partner_form">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_br_base.l10n_br_base_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="cnpj_cpf" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="legal_name" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="inscr_est" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="rg" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="cnpj_cpf" position="after">    
+                <group name="dados" style="width:538px" >
+                    <label for="dados" string="Dados"/>
+                    <div>
+                       <field name="legal_name" string="Legal name" style="width:100%;height:22px" placeholder="Razão Social/Nome Completo"/><br></br>
+                    
+                        <field name="cnpj_cpf" style="width:48%;height:29px;font-size:14px;margin-top:2px" placeholder="CNPJ/CPF" />
+                        
+                        <field name="inscr_est" style="width:41%;height:30px;margin-left:15px;font-size:14px" placeholder="Inscrição Estadual" attrs="{'invisible': [('is_company','!=', True)]}"/>
+
+                        <field name="rg" style="width:47%;height:30px;margin-left:15px;font-size:14px" placeholder="RG" attrs="{'invisible': [('is_company','=', True)]}"/>
+                    </div>
+                    
+                </group>
+                <button name="check_serpro" type="object" string="Serpro" style="width:40px;height:29px;border-left-width:0px;" attrs="{'invisible': [('is_company','!=', True)]}" />
+                
+                </field>
+            </field>
+    </record>
+    <!-- model.name inherit form view -->
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="mobile" position="attributes">
+                <attributes name="placeholder">Teste</attributes>
+            </field>
+
+        </field>
+    </record>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+       <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="l10n_br_base_res_partner_form">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_br_base.l10n_br_base_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="cnpj_cpf" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="legal_name" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="inscr_est" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="rg" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="cnpj_cpf" position="after">    
+                <group name="dados" style="width:538px" >
+                    <label for="dados" string="Dados"/>
+                    <div>
+                       <field name="legal_name" string="Legal name" style="width:100%;height:22px" placeholder="Razão Social/Nome Completo"/><br></br>
+                    
+                        <field name="cnpj_cpf" style="width:48%;height:29px;font-size:14px;margin-top:2px" placeholder="CNPJ/CPF" />
+                        
+                        <field name="inscr_est" style="width:41%;height:30px;margin-left:15px;font-size:14px" placeholder="Inscrição Estadual" attrs="{'invisible': [('is_company','!=', True)]}"/>
+
+                        <field name="rg" style="width:47%;height:30px;margin-left:15px;font-size:14px" placeholder="RG" attrs="{'invisible': [('is_company','=', True)]}"/>
+                    </div>
+                    
+                </group>
+                <button name="check_serpro" type="object" string="Serpro" style="width:40px;height:29px;border-left-width:0px;" attrs="{'invisible': [('is_company','!=', True)]}" />
+                
+                </field>
+            </field>
+    </record>
+    <!-- model.name inherit form view -->
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="mobile" position="attributes">
+                <attributes name="placeholder">Teste</attributes>
+            </field>
+
+        </field>
+    </record>
+>>>>>>> ada4db41a5cb295d1466b9878ae1d7268408a4f2
+</odoo>

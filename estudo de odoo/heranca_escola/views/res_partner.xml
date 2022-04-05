@@ -1,0 +1,23 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="heranca_escola.partner_herdado_form">
+      <field name="name">partner_herdado_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+          <field name="category_id" position="after">
+              <form>
+                  <group>
+                    <field name="data_nasc"/>
+                    <field name="e_aluno"/>
+                    <field name="e_professor"/>
+                  </group>
+              </form>
+          </field>
+      </field>
+    </record>
+
+  </data>
+</odoo>

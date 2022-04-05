@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="escola.list">
+      <field name="name">escola list</field>
+      <field name="model">notas.escola</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="instituicao"/>
+          <field name="name"/>
+          <field name="disciplina"/>
+          <field name="nota1"/>
+          <field name="nota2"/>
+          <field name="nota3"/>
+          <field name="nota4"/>
+          <field name="media"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="escola.form">
+      <field name="name">escola list</field>
+      <field name="model">notas.escola</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+             <field name="instituicao"/>
+            <field name="name"/>
+            <field name="disciplina"/>
+          </group>
+          <group>
+            <field name="nota1"/>
+          <field name="nota2"/>
+          <field name="nota3"/>
+          <field name="nota4"/>
+          </group>
+          <group>
+            <field name="media"/>
+          </group>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="escola.action_window">
+      <field name="name">Lançamento de Notas</field>
+      <field name="res_model">notas.escola</field>
+      <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="Escola" id="escola.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Avaliação" id="escola.menu_1" parent="escola.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Notas" id="escola.menu_1_list" parent="escola.menu_1"
+              action="escola.action_window"/>
+  </data>
+</odoo>

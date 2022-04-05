@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_escola_heranca,escola.heranca,model_escola_heranca,base.group_user,1,1,1,1
+access_alunos_heranca,alunos.heranca,model_alunos_heranca,base.group_user,1,1,1,1
+access_disciplinas_heranca,disciplinas.heranca,model_disciplinas_heranca,base.group_user,1,1,1,1
+access_professor_heranca,professor.heranca,model_professor_heranca,base.group_user,1,1,1,1
+access_instituicao_heranca,instituicao.heranca,model_instituicao_heranca,base.group_user,1,1,1,1

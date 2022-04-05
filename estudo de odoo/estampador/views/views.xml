@@ -1,0 +1,47 @@
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="estampador.list">
+          <field name="name">estampador list</field>
+          <field name="model">campo.estampador</field>
+          <field name="arch" type="xml">
+              <tree>
+                <field name="cidade"/>
+                <field name="nome"/>
+                <field name="cnpj"/>
+                <field name="cep"/>
+            </tree>
+          </field>
+        </record>
+
+        <record model="ir.ui.view" id="estampador.form">
+      <field name="name">estampador list</field>
+      <field name="model">campo.estampador</field>
+      <field name="arch" type="xml">
+        <form>
+            <group>
+                <field name="cidade"/>
+                <field name="nome"/>
+                <field name="cnpj"/>
+                <field name="cep"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+        <record model="ir.actions.act_window" id="estampador.action_window">
+          <field name="name">Estampadores</field>
+          <field name="res_model">campo.estampador</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="DVR Estampadores" id="estampador.menu_root"/>
+
+        <menuitem name="Estampadores" id="estampador.menu_1" parent="estampador.menu_root"/>
+
+        <!-- actions -->
+
+        <menuitem name="Lista de Estampadore" id="estampador.menu_1_list" parent="estampador.menu_1"
+              action="estampador.action_window"/>
+    </data>
+</odoo>

@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="heranca_escola.list">
+      <field name="name">heranca_escola list</field>
+      <field name="model">escola.heranca</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="instituicao"/>
+          <field name="name"/>
+          <field name="disciplinas"/>
+          <field name="nota1"/>
+          <field name="nota2"/>
+          <field name="nota3"/>
+          <field name="nota4"/>
+          <field name="media"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.ui.view" id="heranca_escola.form">
+      <field name="name">heranca_escola list</field>
+      <field name="model">escola.heranca</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="instituicao"/>
+            <field name="name"/>
+            <field name="disciplinas"/>
+          </group>
+          <group>
+            <field name="nota1"/>
+            <field name="nota2"/>
+            <field name="nota3"/>
+            <field name="nota4"/>
+          </group>
+          <group>
+            <field name="media"/>
+          </group>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.act_window" id="heranca_escola.action_window">
+      <field name="name">Lançamento de Notas</field>
+      <field name="res_model">escola.heranca</field>
+      <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="heranca_escola" id="heranca_escola.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Avaliações" id="heranca_escola.menu_1" parent="heranca_escola.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Notas" id="heranca_escola.menu_1_list" parent="heranca_escola.menu_1"
+              action="heranca_escola.action_window"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+       <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="l10n_br_base_res_partner_form">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="l10n_br_base.l10n_br_base_partner_form"/>
+      <field name="arch" type="xml">
+          <field name="cnpj_cpf" position="after">
+              <div class="oe_edit_only o_row">
+                  <label for="legal_name"/>
+                  <field name="legal_name" string="Legal name"/>
+                  <label for="cnpj_cpf"/>
+                  <field name="cnpj_cpf" string="CNPJ OU CPF"/>
+              </div>
+
+          </field>
+          <field name="inscr_est" position="after">
+              <div class="oe_edit_only o_row">
+                  <span> </span>
+                  <label for="inscr_est"/>
+                  <field name="inscr_est" />
+                  <button name="check_serpro" type="object" string="Consulta Serpro"/>
+
+                  <button name="check_sefaz" type="object" string="Consulta Serpro"/>
+              </div>
+          </field>
+      </field>
+    </record>
+</odoo>

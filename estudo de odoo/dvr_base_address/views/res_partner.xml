@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+       <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="res_partner_form">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+          <field name="company_type" position="after">
+              <label for="estampador" attrs="{'invisible': [('is_company','!=', True)]}"/>
+              <field name="estampador" attrs="{'invisible': [('is_company','!=', True)]}"/>
+<!--              <label for="estrangeiro" attrs="{'invisible':['|',('is_company','!=', True),('country_id', '!=', %(base.br)d)]}"/>-->
+<!--              <field name="estrangeiro" attrs="{'invisible':['|',('is_company','!=', True),('country_id', '!=', %(base.br)d)]}"/>-->
+          </field>
+      </field>
+    </record>
+
+     <record model="ir.ui.view" id="view_partner_structured_form">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base_address_extended.view_partner_structured_form"/>
+        <field name="arch" type="xml">
+           <page position="after" name="internal_notes">
+                <page string="Serpro" name="serpro">
+                    <group name="serpro">
+                        <group>
+                            <label name="name" string="Nome"/>
+                            <span>
+                                <field name="name" required="1"/>
+                                <field name="teste_1"/>
+                                <field name="teste_2"/>
+                                <field name="teste_3"/>
+                            </span>
+                        </group>
+                        <group string="Miguel info" name="infom_miguel">
+                            <field name="teste_4"/>
+                            <field name="teste_5"/>
+                            <field name="teste_6"/>
+                            <field name="estampa"/>
+                        </group>
+                        <group string="Maicol info" name="infom_maicol">
+                            <span>
+                                <field name="teste_7"/>
+                                <field name="teste_8"/>
+                                <field name="teste_9"/>
+                                <field name="teste_10"/>
+                            </span>
+                        </group>
+                    </group>
+                </page>
+           </page>
+        </field>
+    </record>
+</odoo>
+<!--  Serve para colocar os campos company_type em um many2one-->
+<!--          <form>-->
+<!--              <field name="company_type" position="after">-->
+<!--                  <field name="estampador" />-->
+<!--            </field>-->
+<!--          </form>-->
+
+<!--para colocar o campo nome bem grande-->
+<!--<field id="estampador"  class="o_text_overflow" name="name" default_focus="1" placeholder="e.g. Lumber Inc"/>-->

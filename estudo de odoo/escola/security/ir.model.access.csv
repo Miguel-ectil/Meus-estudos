@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_notas_escola,notas.escola,model_notas_escola,base.group_user,1,1,1,1
+access_alunos_escola,alunos_escola,model_alunos_escola,base.group_user,1,1,1,1
+access_disciplinas_escola,disciplinas_escola,model_disciplinas_escola,base.group_user,1,1,1,1
+access_instituicao_escola,instituicao_escola,model_instituicao_escola,base.group_user,1,1,1,1
+access_professor_escola,professor_escola,model_professor_escola,base.group_user,1,1,1,1

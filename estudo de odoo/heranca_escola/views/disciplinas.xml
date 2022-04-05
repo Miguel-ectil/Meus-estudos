@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="heranca_escola.disciplinas_form">
+        <field name="name">heranca_escola form</field>
+        <field name="model">disciplinas.heranca</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name= 'name'/>
+                    <field name= 'responsavel'/>
+                </group>
+            </form>
+        </field>
+        </record>
+
+        <record model="ir.ui.view" id="heranca_escola.disciplinas_tree">
+        <field name="name">heranca_escola tree</field>
+        <field name="model">disciplinas.heranca</field>
+        <field name="arch" type="xml">
+            <tree>
+              <field name= 'name'/>
+              <field name= 'responsavel'/>
+            </tree>
+        </field>
+        </record>
+
+      <record model="ir.actions.act_window" id="heranca_escola.action_window_heranca_escola_disciplinas">
+        <field name="name">Disciplinas</field>
+        <field name="res_model">disciplinas.heranca</field>
+        <field name="view_mode">tree,form</field>
+      </record>
+      <menuitem name="Disciplinas" id="heranca_escola.menu_heranca_escola_disciplinas" action="heranca_escola.action_window_heranca_escola_disciplinas" parent="heranca_escola.menu_root"/>
+
+    </data>
+</odoo>
