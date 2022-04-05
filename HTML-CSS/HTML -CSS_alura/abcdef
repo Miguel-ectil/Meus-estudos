@@ -1,0 +1,40 @@
+abcdef....
+
+binario
+
+numérico 0123456789
+
+hexadecimal 0123456789ABCDEF
+
+RGB = Red Green Blue
+
+hexadecimal = 
+# _ _ _ _ _ _
+
+0 = ausência
+
+F = Máximo
+
+#000000
+
+#FFFFFF
+
+#FF0000
+
+outra forma nome =
+
+red
+blue
+yellow
+
+RGB 0,1,2,3,...255
+
+0 = ausência
+
+255 = máxima
+
+no css =
+
+rgb(255,255,255)
+
+rgb(0,0,255)
