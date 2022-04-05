@@ -1,0 +1,18 @@
+<RCC>
+  <qresource prefix="DATALOGIC">
+    <file>DataLogic/Reset.jpg</file>
+    <file>DataLogic/DVR.jpg</file>
+  </qresource>
+  <qresource prefix="TANCA">
+    <file>Tanca/DVR.jpg</file>
+    <file>Tanca/Reset.jpg</file>
+  </qresource>
+  <qresource prefix="ELGIN">
+    <file>Elgin/Reset.jpg</file>
+    <file>Elgin/DVR.jpg</file>
+  </qresource>
+  <qresource prefix="ZEBRA">
+    <file>Zebra/Reset.jpg</file>
+    <file>Zebra/DVR.jpg</file>
+  </qresource>
+</RCC>

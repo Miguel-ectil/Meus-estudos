@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="img">
+    <file>qd2400_1-removebg-preview (1).png</file>
+    <file>imagens.qrc</file>
+    <file>download (1).jpg</file>
+    <file>qd2400_1.jpg</file>
+    <file>DS2208.jpg</file>
+    <file>download.jpg</file>
+  </qresource>
+</RCC>
