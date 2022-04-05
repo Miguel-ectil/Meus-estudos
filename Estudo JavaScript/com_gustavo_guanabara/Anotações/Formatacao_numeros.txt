@@ -1,0 +1,21 @@
+				Formatação de Números
+
+
+Adiciona duas casas decimais após a viorgula (.00)
+
+número1.toFixed(2) //antes 1543.5 depois 1543.50
+-----------------------------------------------------------------------------------
+Transforma o ponto(.) em uma virgula(,)
+
+número2.toFixed(2).replace('.',',') //antes 1543.5 depois 1543,50
+------------------------------------------------------------------------------------
+Para transfor mar um número em dinheiro
+
+número3.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) 
+(BRL dinheiro brasileiro)
+---------------------
+n1.toLocaleString('pt-BR', {style: 'currency', currency: 'USD'})
+USD DOLLAR)
+---------------------
+n1.toLocaleString('pt-BR', {style: 'currency', currency: 'EUR'})
+EUR Euro)

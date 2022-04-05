@@ -1,0 +1,27 @@
+
+				Eventos DOM
+
+Eventos que são ativados com o movimento do mouse.
+
+  <script>
+        var a = window.document.getElementById('area')
+        a.addEventListener('click', clicar)
+        a.addEventListener('mouseenter', entrar)
+        a.addEventListener('mouseout', sair)
+
+        function clicar() {
+            a.innerText = 'Clicou!'
+            a.style.background = 'gray'
+        }
+        function entrar() {
+            a.innerText = 'Entrou!'
+        }
+        function sair() {
+            a.innerText = 'Saiu!'
+            a.style.background = 'green'
+        }
+    </script>
+
+com esse código , ao passarmos o mouse encima do conteudo aparecera (entrou!)
+e ao retirar o mouse aparecera (saiu!), e se clicarmos nela aparecera (clicou!) e
+a cor de fundo mudara para sinza

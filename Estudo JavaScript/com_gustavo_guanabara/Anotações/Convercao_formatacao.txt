@@ -1,0 +1,46 @@
+			CONVERSÕES E FORMATAÇÕES
+
+Para transforma uma string em um número 
+
+- Number.parseInt(n1) //Aceita só números inteiros
+exemplo: 
+var n1 = Number.parseFloat(window.prompt("Digite um número: "))
+----------------------------------------------------------------
+
+- Number.parseFloat(n2) //Aceita só número com ponto e virgula
+exemplo:
+var n2 = parseFloat(window.prompt('Digite outro número: '))
+----------------------------------------------------------------
+
+Number(n3) aceita todo tipo de número
+exemplo:
+var n2 = Number(window.prompt('Digite outro número: '))
+================================================================
+
+			CONVERSÃO DE NUMBER PARA STRING
+
+Para transforma um número em uma string
+
+String(nome1)
+----------------
+nome2.toString()
+//Os dois transformam um número para string
+exemplo:
+ window.alert('A soma dos valores é ' + String(soma))
+================================================================
+
+			PARA SABER QUAL É O TAMNHO DA STRING
+
+Para saber quantos caracteres a string tem
+
+nome.length  // conta a quantidade de letra que a string tem
+Exemplo:
+document.write(`Olá, <strong>${nome}</strong>! Seu nome tem ${nome.length} letras.<br/>`)
+-----------------------------------------------------------------------------------------
+nome.toUpperCase()  //transforma as letras em letras maiusculas
+Exemplo:
+document.write(`Seu nome só com letras maiúsculas é ${nome.toUpperCase()}<br/>`)
+-----------------------------------------------------------------------------------------
+nome.toLowerCase() //Transforma as letras em letras minúsculas
+Exemplo:
+document.write(`Seu nome só com letras minúsculas é ${nome.toLowerCase()}`)

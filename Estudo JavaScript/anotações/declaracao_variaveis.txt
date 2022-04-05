@@ -1,0 +1,18 @@
+				SOBRE DECLARAÇÃO DE VARIAVEIS
+
+Ao declararmos uma variável como const ela deve obrigatoriamente receber um valor: 
+const taxaComissao = 0.25;
+
+Ao declararmos let, ao contrário, podemos apenas declarar a variável, sem atribuir nenhum 
+valor. Além disso, o valor inicial pode ser modificado depois:
+
+let minhaLet;
+console.log(minhaLet); //undefined
+
+// atribuindo um valor com TIPO DE DADO STRING
+minhaLet = "eu sou um texto";
+console.log(minhaLet); // "eu sou um texto"
+
+// reatribuindo, desta vez com dado do TIPO NUMBER
+minhaLet = 100;
+console.log(minhaLet); //100

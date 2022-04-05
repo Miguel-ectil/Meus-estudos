@@ -1,0 +1,34 @@
+				Operadores logicos
+
+
+			  LÓGICOS
+
+!   negação
+&&  conjunção
+||  disjunçao
+
+exemplo:
+idade >= 15 && idade <= 17         // a idade está entre 15 e 17?
+estado == 'RJ' || estado == 'SP'  // o estado é RJ ou SP?
+saláro > 1500 && sexo != 'M'     // O salário é acima de 1500 e não é homem?
+------------------------------------------------------------------------------
+
+			  ORDEM DE PRECEDÊNCIA		
+
+
+(), **, /
+
+>, <, >=
+
+!
+&&
+||
+------------------------------------------------------------------------------
+
+			  TERNÁRIO
+
+?
+:
+exemplo:
+var media = 5.5
+media > 7?'aprovado':'reprovado' = reprovado

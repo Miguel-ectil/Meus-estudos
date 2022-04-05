@@ -1,0 +1,14 @@
+{
+  "name": "javascript_primeiros_passos_com_a_linguagem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1-meu_p_programa.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "yarn": "^1.22.17"
+  }
+}

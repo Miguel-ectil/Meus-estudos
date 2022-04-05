@@ -1,0 +1,43 @@
+
+				CONDIÇÕES
+
+
+Condições simples
+------------------------------------------------------------------------
+var vel = 78.2
+console.log(`A velocidade do seu carro é ${vel}KM/h`)
+if (vel > 60) {  //condição simples!
+    console.log(`Você ultrapassou a velocidade permitida. MULTADO!`)
+}
+console.log(`Dirija sempre usando cinto de segurança!`)
+========================================================================
+
+Condições compostas
+---------------------------------------------
+var pais = 'Brasil'
+console.log(`vivendo em ${pais}`)
+
+if (pais != 'Brasil') {
+    console.log('Você é Estrangeiro!')
+} else{
+    console.log('Você é Brasileiro!')
+}
+===============================================
+
+Condições aninhadas
+-------------------------------------------
+var idade = 22
+console.log(`Você tem ${idade} anos.`)
+if (idade < 16) {
+    console.log('Não pode votar')
+} else if (idade <18 || idade > 65) {
+    console.log('Voto opcional')
+} else {
+    console.log('Voto obrigatório')
+}
+================================================
+
+Condição Multipla
+------------------------------------------------
+é obrigatório usar o comando (break) nas condições multiplas após
+as ação ser concluida apos o comando (case) 

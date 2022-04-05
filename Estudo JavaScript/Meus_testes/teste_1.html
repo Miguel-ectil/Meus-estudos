@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>Mostrando data e hora </h2>
+
+    <button type="button"
+    onclick="document.getElementById('demo').innerHTML = Date()">
+    click em mim para ver a data e a hora.</button>
+
+    <p id="demo"></p>
+
+<h2>Mudando o conteudo de uma viriavel</h2>
+
+<p id="demo">JavaScript pode alterar conteúdo HTML.</p>
+
+<button type="button" onclick='document.getElementById("demo").innerHTML = "Olá JavaScript!"'>Click Me!</button>
+
+    <h2>Mudando estado da imagem?</h2>
+
+    <p>JavaScript pode alterar valores de atributo HTML.</p>
+
+    <p>Neste caso, o JavaScript altera o valor do atributo src (fonte) de uma imagem.</p>
+
+    <button onclick="document.getElementById('myImage').src='./imgs/acessa_lampa.jpg'">Acenda a luz</button>
+
+    <img id="myImage" src="./imgs/apagada_lampa.jpg" style="width:100px">
+
+    <button onclick="document.getElementById('myImage').src='./imgs/apagada_lampa.jpg'">Desligue a luz</button>
+
+<h2>Alterando com function</h2>
+
+<p id="demo">A Paragraph.</p>
+
+<button type="button" onclick="myFunction()">Experimente</button>
+
+<script>
+function myFunction() {
+  document.getElementById("demo").innerHTML = "Paragraph changed.";
+}
+</script>
+</body>
+</html> 

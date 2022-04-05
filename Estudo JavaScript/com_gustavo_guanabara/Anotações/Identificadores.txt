@@ -1,0 +1,16 @@
+					iDENTIFICADORES
+
+
+- Podemos começar com letra, $ ou _
+
+- Não podem começar com números
+
+- É possivel usar letras ou números
+
+- É possivel usar acentos e simbolos
+
+- Não podem conter espaços
+
+- Não podem ser palavras reservadas
+
+typeof serve para saber o tipo da variavel se é string numbert etc...
