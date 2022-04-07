@@ -1,0 +1,3 @@
+
+Utilizar op TypeAnnotation, porque ele diminue os erros, enquanto estamos escrevendo
+o código ele mostra os erros en tempo real (Ctrl + Shift+ B)

@@ -1,0 +1,9 @@
+				Transformando o código ts em js
+
+no terminal, entramos dentro da pasta honde está o arquivo typescript 
+digitamos (tsc .\nome_arquivo), outra maneria recomendada de fazer é com
+(TSC --init)
+ 
+
+Links & Recursos Importantes
+https://github.com/glaucia86/curso-typescript-zero-to-hero
