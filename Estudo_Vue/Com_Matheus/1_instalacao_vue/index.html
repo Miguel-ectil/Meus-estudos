@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Vue</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="src/app.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <form id="app-form">
+            <input type="text" v-model="input_name" placeholder="Digite o seu nome">
+            <input type="submit" value="Enviar" v-on:click="submitForm">
+        </form>
+        <p>O meu nome é: {{ name }}</p>
+        <p>Data binding: {{ input_name }}</p>
+    </div>
+</body>
+</html>
+
+<!-- , e tenho {{ age }} anos. -->
