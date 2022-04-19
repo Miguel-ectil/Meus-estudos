@@ -1,0 +1,16 @@
+Primeiramente instalamos e configuramos o maven na nossa maquina
+
+e depois para rodar o front sem que demore muito
+
+cp .env.exemple .env
+yarn install
+yarn build
+npm run serve
+
+se não der para fazer o cp .env.exemple .env fazemos ele na mão
+e dentro dele colocamos 
+(
+NODE_ENV=development
+VUE_APP_DVGR_API=http://localhost:8080/dvrg-rastreabilidade-service
+)
+e seguimos com a sequencia yarn install...
