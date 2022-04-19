@@ -2,3 +2,11 @@ Para criar o package.json (npm init -y)
 
  o -y é colocado ao final do comando npm para pular uma série de perguntas
 que o npm normalmente faz
+============================================================================
+
+importante quando for salavalo no github pode apagar o node_modules
+e quando baixa-lo é ele será instalado de novo com o npm install
+============================================================================
+
+link do curso https://www.devmedia.com.br/view/viewaula.php?idcomp=42821
+===================================
