@@ -1,0 +1,143 @@
+no index-router
+  {
+    path: '/blanks/receberlotes',
+    name: 'Receber Lotes Estampador',
+    component: () => import('@/views/Blanks/AceitarLotes.vue'),
+    props: true
+  },
+=========================================================
+
+no constatnt-menu
+
+      {
+        href: '/blanks/receberlotes',
+        title: 'Receber Lotes Estampador - Fabricante',
+        roles: ['ROLE_F_ADMIN']
+      },
+
+================================================================
+
+instalar json-server --watch db.json.
+
+e no package.json do front colocar 
+
+"Script": {
+"backend": "json-server --watch db.json",
+},
+================================================================
+
+C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarLotes.vue
+
+
+<template>
+  <div class="container mt-4">
+    <center>
+    <h1> Receber Devoluções </h1>
+    </center>
+    <br/>
+    <div>
+      <b-form-checkbox size="lg">Aceitar devolução</b-form-checkbox>
+      <b-form-checkbox size="lg">Cancelar devolução</b-form-checkbox>
+    </div>
+    <br>
+    <div class="card mt3">
+      <div class="card-header">
+          <h1 class="label h5 m-0">
+          <strong>A ser retornado </strong>
+          </h1>
+      </div>
+      <div class="card-body p-0">
+        <b-table :items="estampagemAe"
+                 :fields="fields"
+                 striped
+                 
+                 sort-icon-left>
+          <template >
+            <b-icon
+                    icon="x-square"
+                    scale="2"
+                    variant="danger" />
+          </template>
+          <template >
+            <b-icon
+                    icon="check-square"
+                    scale="2"
+                    variant="success" />
+            <b-icon 
+                    icon="x-square"
+                    scale="2"
+                    variant="danger" />
+          </template>       
+        </b-table>
+        <div class="row justify-content-center">
+          <b-table>  
+            <template #cell(adicionar)="data">
+              <button id="tooltip-target-3"
+                  class="btn btn-sm btn-secondary"
+                  @click="editarLote(data.item)">
+                <b-icon-pencil-fill />
+              </button>
+              <b-tooltip target="tooltip-target-3" 
+                triggers="hover">
+                Editar caixa de saída
+              </b-tooltip>
+            </template>
+          </b-table>
+          <b-button-toolbar key-nav
+            aria-label="Toolbar with button groups">
+          <b-button-group class="mx-1">
+            <b-button v-show="paginaAtual + 1 !== paginas + 1 " 
+              @click="proximaPagina">
+              Próxima
+              </b-button>
+              <b-button @click="goToUltima">
+                Última
+              </b-button>
+            </b-button-group>
+          </b-button-toolbar>  
+        </div>   
+      </div> 
+      <b-button
+          style="margin: -38px 10px 0px 920px;"
+            variant="primary">Receber</b-button> 
+    </div>
+  </div>
+</template>
+
+<script>
+
+  export default {
+    name: 'ConfirmarRecebimento',
+    data () {
+      return {
+        fields: [
+          {
+            key: 'status',
+            sortable: true,
+            label: 'Status'
+          },
+          {
+            key: 'serial',
+            sortable: true,
+            label: 'Serial'
+          },
+          {
+            key: 'id',
+            sortable: true,
+            label: 'ID.Est'
+          },
+          {
+            key: 'cnpj',
+            sortable: true,
+            label: 'CNPJ',
+          },
+          {
+            key: 'name',
+            sortable: true,
+            label: 'Nome',
+          },
+        ]
+      }
+    },
+  }
+</script>
