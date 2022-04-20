@@ -24,7 +24,12 @@ e no package.json do front colocar
 "Script": {
 "backend": "json-server --watch db.json",
 },
-================================================================
+
+criar arquivo db e dentro dele colocar o json que o glauco mandou
+para poder fazer o recebimento dos campos
+
+C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\db.json
+==================================================================
 
 C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarLotes.vue
 
