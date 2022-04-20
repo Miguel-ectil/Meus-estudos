@@ -8,8 +8,8 @@
             </div>
             <div class="card-body p-0">
                 <b-table :items="tabela"
-                         :campos="campos">
-                        <p>casa</p>
+                         :fields="fields">
+                        
                 </b-table>
                 <div class="row justify-content-center">
                 <b-table>  
@@ -49,12 +49,31 @@
         data () {
             return {
                 tabela: [],
-                fields: [
+                fields: [{
+                    key: 'nome1',
+                    sortable: true,
+                    label: 'Status'
+                    },
                     {
-                        key: 'id',
+                        key: 'nome2',
                         sortable: true,
-                        label: 'Miguel'
-                    }
+                        label: 'Serial'
+                    },
+                    {
+                        key: 'nome3',
+                        sortable: true,
+                        label: 'ID.Est'
+                    },
+                        {
+                        key: 'nome4',
+                        sortable: true,
+                        label: 'CNPJ'
+                    },
+                        {
+                        key: 'nome6',
+                        sortable: true,
+                        label: 'Nome'
+                    },
                 ]
             }
         }
