@@ -96,12 +96,11 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
   import Blanks from '@/services/blanks/Blanks'
 
   export default {
-    name: 'ConfirmarRecebimentoSerial',
+    name: 'AceitarLotes',
     data () {
       return {
         serial: null,
         lote: {},
-        blanks: [],
         form: {
           id: null,
           idEstampador: null
@@ -142,6 +141,9 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
         return this.blanks.length
       }
     },
+    mounted () {
+      this.getSerialRetorno()
+    },
     methods: {
       async getSerialRetorno () {
         const req = await fetch('http://localhost:3000/Dados')
@@ -177,7 +179,6 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
         //   loader({active: false})
         // }
       },
-      
       async confirmarRecebimentoSerial () {
         try {
           const res = await displayMessage(
