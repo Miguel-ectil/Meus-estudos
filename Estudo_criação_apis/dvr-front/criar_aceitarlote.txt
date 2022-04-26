@@ -36,7 +36,7 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
 
 <template>
   <div class="container mt-4">
-    <center>
+     <center>
     <h1> Receber Devoluções </h1>
     </center>
     <br/>
@@ -44,35 +44,17 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
       <b-form-checkbox size="lg">Aceitar devolução</b-form-checkbox>
       <b-form-checkbox size="lg">Cancelar devolução</b-form-checkbox>
     </div>
-    <br>
-    <div class="card mt3">
+    <br/>
+     <div class="card mt3">
       <div class="card-header">
           <h1 class="label h5 m-0">
           <strong>A ser retornado </strong>
           </h1>
       </div>
       <div class="card-body p-0">
-        <b-table :items="estampagemAe"
-                 :fields="fields"
-                 striped
-                 
-                 sort-icon-left>
-          <template >
-            <b-icon
-                    icon="x-square"
-                    scale="2"
-                    variant="danger" />
-          </template>
-          <template >
-            <b-icon
-                    icon="check-square"
-                    scale="2"
-                    variant="success" />
-            <b-icon 
-                    icon="x-square"
-                    scale="2"
-                    variant="danger" />
-          </template>       
+        <b-table :items="Blanks"
+                 :fields="fields">
+               
         </b-table>
         <div class="row justify-content-center">
           <b-table>  
@@ -103,18 +85,29 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
         </div>   
       </div> 
       <b-button
-          style="margin: -38px 10px 0px 920px;"
-            variant="primary">Receber</b-button> 
+        @click="getSerialRetorno"
+        style="margin: -38px 10px 0px 920px;"
+        variant="primary">Receber</b-button> 
     </div>
+
   </div>
 </template>
-
 <script>
+  import Blanks from '@/services/blanks/Blanks'
 
   export default {
-    name: 'ConfirmarRecebimento',
+    name: 'ConfirmarRecebimentoSerial',
     data () {
       return {
+        serial: null,
+        lote: {},
+        blanks: [],
+        form: {
+          id: null,
+          idEstampador: null
+        },
+        currentPage: 1,
+        perPage: 10,
         fields: [
           {
             key: 'status',
@@ -127,9 +120,9 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
             label: 'Serial'
           },
           {
-            key: 'id',
+            key: 'idEstampador',
             sortable: true,
-            label: 'ID.Est'
+            label: 'ID.Estampador'
           },
           {
             key: 'cnpj',
@@ -144,5 +137,87 @@ C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Blanks\AceitarL
         ]
       }
     },
+    computed: {
+      rows () {
+        return this.blanks.length
+      }
+    },
+    methods: {
+      async getSerialRetorno () {
+        const req = await fetch('http://localhost:3000/Dados')
+        const data = await req.json()
+        console.log(data)
+
+        this.idEstampador = data.idEstampador
+
+        // console.log(this.form.id)
+
+
+        // try {
+        //   loader({active: true})
+        //   const {data: blanks} = await Blanks.getSerialRetorno(this.form.id)
+
+        //   this.blanks = blanks
+
+        //   this.verifyFields()
+        // } catch ({ message, response }) {
+        //   if (message && !response) {
+        //     return displayMessage(`Erro!`, message , 'error')
+        //   }
+
+        //   const { data: {status, message: mensagem} } = response
+
+        //   let text = ''
+
+        //   text += status ? `Status: ${status}` : ''
+        //   text += mensagem ? `, ${mensagem}.` : ''
+
+        //   displayMessage(`Erro!`, text , 'error')
+        // }finally {
+        //   loader({active: false})
+        // }
+      },
+      
+      async confirmarRecebimentoSerial () {
+        try {
+          const res = await displayMessage(
+            'Deseja recerber os seriais do estampador?',
+            `Ǹúmero do serial: ${this.form.id}`,
+            "warning",
+            true
+          )
+          if (!res) return
+          loader({active: true})
+
+          const {data} = await Blanks.confirmarRecebimentoSerial(this.form)
+
+          console.log(data)
+
+          this.form.id = null
+          this.blanks = []
+
+          displayMessage('Sucesso!', 'Serial recebido  com sucesso!', 'success')
+
+        } catch ({ message, response }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message , 'error')
+          }
+
+          const { data: {status, message: mensagem} } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text , 'error')
+        }finally {
+          loader({active: false})
+        }
+      },
+    }
   }
 </script>
+<style lang="scss">
+
+</style>
