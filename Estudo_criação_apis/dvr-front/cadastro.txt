@@ -1,0 +1,3809 @@
+tela cadastro
+
+C:\Users\dvr\Desktop\sistema-dvr\Rastreabilidade-Front\src\views\Estampagem\CadastrarAe.vue
+
+<template>
+  <div class="container mt-2 mb-3">
+    <div class="row">
+      <div class="col-xl-12 col-md-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            Registro de Estampagem
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="card bg-light text-dark mb-4">
+      <div class="card-header bold">
+        Dados da Estampagem
+        <div v-if="firstSearch">
+            <b-button
+              v-if="form.statusAE != 'CONCLUIDA'"
+              @click="returnComprovante()"
+              style="margin-left: 486px; margin-top: -26px; width: 240px; visibility: hidden;"
+              variant="primary">Imprimir Comprovante</b-button> 
+            <b-button
+              v-else
+              @click="returnComprovante()"
+              style="margin-left: 498px; margin-top: -26px; width: 240px;"
+              variant="primary">Imprimir Comprovante</b-button> 
+        </div>
+        <b-button
+          @click="returnOrdemServico()"
+          style="margin-left: 808px; margin-top: -74px; width: 240px;"
+          variant="primary">Imprimir OS</b-button>   
+      </div>
+      <b-row>
+        <b-col>
+          <div class="card-body">
+            <b-row class="mb-1 mr-10"
+                   align-h="between">
+              <b-col> 
+                <b-row align-h="between">
+                  <label for="numero_autorizacao"
+                         class="label mb-0"
+                         style="font-size: 12px; margin-left: 4px;">Número Autorização</label>
+                </b-row>
+                <b-row align-h="between">
+                  <div class="input-group">
+                    <input id="numero_autorizacao"
+                           v-model="form.numeroAutorizacaoEstampagem"
+                           type="number"
+                           name="numero_autorizacao"
+                           class="form-control form-control-sm"
+                           style="margin-left: 4px;">
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-sm btn-primary"
+                        type="button"
+                        @click="getAutorizacaoEstampagem()">
+                        <b-icon-search />
+                      </button>
+                    </div>
+                  </div>
+                </b-row>
+              </b-col>
+              <b-col>
+                <b-row>
+                  <label for="chassis"
+                         class="label mb-0"
+                         style="font-size: 12px; margin-left: 20px;">Chassis</label>
+                </b-row>
+                <b-row>
+                  <input id="chassis"
+                         v-model="form.chassis"
+                         type="text"
+                         name="chassis"
+                         class="form-control form-control-sm"
+                         style="margin-left: 20px;">
+                </b-row>
+              </b-col>
+              <div class="w-100" />
+              <b-col v-if="firstSearch">
+                <b-row>
+                  <label for="chassis"
+                         class="label mb-0"
+                         style="font-size: 12px; margin-left: 4px;">Status AE</label>
+                </b-row>
+                <b-row>
+                  <input id="statusAE"
+                        v-model="form.statusAE"
+                        type="text"
+                        name="statusAE"
+                        class="form-control form-control-sm"
+                        style="margin-left: 4px;"
+                        disabled>
+                </b-row>
+              </b-col>
+              <b-col v-if="firstSearch">
+                <b-row >
+                  <label for="categoria"
+                         class="label mb-0"
+                         style="font-size: 12px; margin-left: 20px;">Categoria Veiculo</label>
+                </b-row>
+                <b-row>
+                  <input id="categoria"
+                      v-model="form.categoriaVeiculo"
+                      type="text"
+                      name="categoria"
+                      class="form-control form-control-sm"
+                      style="margin-left: 20px;"
+                      disabled>
+                </b-row>
+              </b-col>
+              <div class="w-100" />
+              <b-col v-if="firstSearch"> 
+                <b-row>
+                  <label for="especie"
+                         class="label mb-0"
+                         style="font-size: 12px; margin-left: 4px;">Espécie Veículo</label>
+                </b-row>
+                <b-row>
+                  <input id="especie"
+                         v-model="form.especieVeiculo"
+                         type="text"
+                         name="especie"
+                         class="form-control form-control-sm"
+                         style="margin-left: 4px;"
+                         disabled>
+                </b-row>
+              </b-col>
+              <b-col v-if="firstSearch">
+                <b-row>
+                  <label for="tipo_veiculo"
+                         class="label mb-0"
+                         style="font-size: 12px; margin-left: 20px;">Tipo de Veículo</label>
+                </b-row>
+                <b-row>
+                  <input id="tipo_veiculo"
+                         v-model="form.tipoVeiculo"
+                         type="text"
+                         name="tipo_veiculo"
+                         class="form-control form-control-sm"
+                         style="margin-left: 20px;"
+                         disabled>
+                </b-row>
+              </b-col>
+              <div class="w-100" />
+            </b-row>
+            <b-row />
+            <b-row>
+              <b-col>
+                <div v-if="firstSearch">
+                  <button v-if="!condicoes.existeAEConcluidaBanco && !condicoes.existeAEForaConcluida"
+                          class="btn btn-sm btn-block btn-primary"
+                          :disabled="condicoes.existeAEEstampador || condicoes.existeAEIniciadaBanco 
+                            || condicoes.existeAEForaIniciada"
+                          @click="salvarAe()"
+                          style="margin: 10px 0px 0px -10px;">
+                    Cadastrar AE
+                  </button>
+
+                  <button v-if="!condicoes.existeAnexos"
+                          class="btn btn-sm btn-block btn-dark"
+                          @click="abreModalAnexos()"
+                          style="margin: 10px 0px 0px -10px;">
+                    Anexar Fotos
+                  </button>
+                  <button v-else
+                          class="btn btn-sm btn-block btn-dark"
+                          @click="abreModalAnexos()">
+                    Editar Anexos
+                  </button>
+
+                  <b-badge v-if="(condicoes.existeAEConcluidaBanco && !condicoes.existeAEEstampadorConcluida) || (condicoes.existeAEIniciadaBanco && !condicoes.existeAEEstampadorIniciada)
+                             || condicoes.existeAEForaIniciada || condicoes.existeAEForaConcluida"
+                           pill
+                           variant="danger">
+                    ESTAMPAGEM JÁ UTILIZADA POR OUTRO ESTAMPADOR
+                  </b-badge>
+                </div>
+              </b-col>
+              <b-col>
+                <div v-if="firstSearch">
+                  <div v-if="condicoes.inserirPendente">
+                    <button 
+                      class="btn btn-sm btn-block btn-secondary mb-2"
+                      :disabled="form.statusAE==='CONCLUIDA'"
+                      @click="abreModalEstampagem">
+                      Inserir Pendente(s)
+                    </button>
+                  </div>
+                  <div v-else>
+                    <button v-if="!condicoes.existeAEConcluidaBanco && !condicoes.existeAEForaConcluida"
+                            class="btn btn-sm btn-block btn-secondary mb-2"
+                            :disabled="condicoes.existeAEForaIniciada 
+                              || condicoes.existeAEIniciadaBanco"
+                            @click="abreModalEstampagem"
+                            style="margin-left: 6px;">
+                      Iniciar Estampagem
+                    </button>
+                  </div>
+                  
+                  <button v-if="condicoes.existeAEEstampadorIniciada" 
+                          class="btn btn-sm btn-block btn-success"
+                          :disabled="!estaoIniciadas"
+                          @click="registrarEstampagem()">
+                    Registrar Estampagem
+                  </button>
+                  <button v-else-if="condicoes.existeAEForaIniciada" 
+                          class="btn btn-lg btn-block btn-danger"
+                          disabled>
+                    AE Iniciada Fora do Sistema
+                  </button>
+                  <button v-if="condicoes.existeAEEstampadorIniciada" 
+                          class="btn btn-sm btn-block btn-danger"
+                          @click="cancelarEstampagem">
+                    Cancelar Estampagem
+                  </button>
+                </div>
+              </b-col>
+              <!-- <b-col>
+                <div v-if="firstSearch">
+                  <button class="btn btn-sm btn-block btn-dark"
+                          @click="testaEnvio">
+                    Teste de Envio
+                  </button>
+                </div>
+              </b-col> -->
+            </b-row>
+          </div>
+        </b-col>
+        <b-col>
+          <div v-if="!placasMotos.includes(form.tipoVeiculo)"
+               class="row mt-3">
+            <div class="col-12 d-flex justify-content-center">
+              <div class="placa placa-carro">
+                <div class="placa-carro-texto"
+                     :class="getClassText()">
+                  {{ form.placa ? form.placa.toUpperCase() : form.placa }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-else
+               class="row mt-3">
+            <div class="col-12 d-flex justify-content-center">
+              <div class="placa placa-moto">
+                <div v-if="form.placa"
+                     class="placa-moto-texto">
+                  <div class="row justify-content-center"
+                       :class="getClassText()">
+                    {{ form.placa.toUpperCase().substring(0,3) }}
+                  </div>
+                  <div class="row justify-content-center"
+                       :class="getClassText()">
+                    {{ form.placa.toUpperCase().substring(3,7) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <b-container style="margin-left: 10px;">
+            <b-row align-h="end">
+              <b-col >
+                <div v-if="firstSearch && ((!condicoes.existeAEConcluidaBanco && !condicoes.existeAEIniciadaBanco) 
+                       && (!condicoes.existeAEForaIniciada && !condicoes.existeAEForaConcluida))"
+                     class="mb-1">
+                  <b-badge v-if="showDianteira"
+                           pill
+                           variant="success">
+                    DIANTEIRA
+                  </b-badge>
+                  <b-badge v-else
+                           pill
+                           variant="danger">
+                    DIANTEIRA
+                  </b-badge>
+                </div>
+                <div v-else-if="firstSearch"
+                     class="mb-1">
+                  <b-badge v-if="showDianteira"
+                           pill
+                           variant="success">
+                    DIANTEIRA <br> {{ form.serialBlankDianteira }}
+                  </b-badge>
+                  <b-badge v-else
+                           pill
+                           variant="danger">
+                    DIANTEIRA
+                  </b-badge>
+                </div>  
+              </b-col>
+              <b-col>
+                <div v-if="firstSearch && ((!condicoes.existeAEConcluidaBanco && !condicoes.existeAEIniciadaBanco) 
+                       && (!condicoes.existeAEForaIniciada && !condicoes.existeAEForaConcluida))"
+                     class="mb-1">
+                  <b-badge v-if="showTraseira"
+                           pill
+                           variant="success">
+                    TRASEIRA
+                  </b-badge>
+                  <b-badge v-else
+                           pill
+                           variant="danger">
+                    TRASEIRA
+                  </b-badge>
+                </div>
+                <div v-else-if="firstSearch"
+                     class="mb-1">
+                  <b-badge v-if="showTraseira"
+                           pill
+                           variant="success">
+                    TRASEIRA <br> {{ form.serialBlankTraseira }}
+                  </b-badge>
+                  <b-badge v-else
+                           pill
+                           variant="danger">
+                    TRASEIRA
+                  </b-badge>
+                </div>
+              </b-col>
+              <b-col>
+                <div v-if="firstSearch && ((!condicoes.existeAEConcluidaBanco && !condicoes.existeAEIniciadaBanco) 
+                       && (!condicoes.existeAEForaIniciada && !condicoes.existeAEForaConcluida))"
+                     class="mb-1">
+                  <b-badge v-if="showSegundaTraseira"
+                           pill
+                           variant="success">
+                    SEGUNDA TRASEIRA
+                  </b-badge>
+                  <b-badge v-else
+                           pill
+                           variant="danger">
+                    SEGUNDA TRASEIRA
+                  </b-badge>
+                </div>
+                <div v-else-if="firstSearch"
+                     class="mb-1">
+                  <b-badge v-if="showSegundaTraseira"
+                           pill
+                           variant="success">
+                    SEGUNDA TRASEIRA <br> {{ form.serialBlankSegundaTraseira }}
+                  </b-badge>
+                  <b-badge v-else
+                           pill
+                           variant="danger">
+                    SEGUNDA TRASEIRA
+                  </b-badge>
+                </div>  
+              </b-col>    
+            </b-row>
+            <!-- <b-row>
+              <b-button v-if="firstSearch"
+                        class="btn btn-sm btn-block btn-danger">
+                VERIFICAR AE
+              </b-button>
+            </b-row> -->
+            <!-- <b-row align-h="end">
+              <div v-if="firstSearch">
+                <button class="btn btn-sm btn-block btn-secondary"
+                        :disabled="!existeAEConcluida"
+                        @click="abreModalEstampagem">
+                  Nota fiscal
+                </button>
+              </div>
+              <div v-if="firstSearch">
+                <button class="btn btn-sm btn-block btn-secondary"
+                        :disabled="(!existeAE && estaFora) || existeAEIniciada || existeAEConcluida"
+                        @click="abreModalEstampagem">
+                  Ordem de Serviço
+                </button>
+              </div>
+              <div v-if="firstSearch">
+                <button class="btn btn-sm btn-block btn-secondary"
+                        :disabled="!existeAEConcluida"
+                        @click="abreModalEstampagem">
+                  Comprovante de Entrega
+                </button>
+              </div>
+            </b-row> -->
+          </b-container>
+        </b-col>
+      </b-row>
+    </div>
+    
+    <div class="justify-content-center mb-4">
+      <b-button v-if="firstSearch"
+                id="listarAE"
+                name="listarAE"
+                variant="primary"
+                class="btn-sm"
+                @click="goTelaListaAe">
+        Listagem de AEs
+      </b-button>
+    </div>
+
+    <!-- Card de Clientes e Solicitantes -->
+    <div v-if="firstSearch" 
+         class="card bg-light text-dark mb-4">
+      <row>
+        <b-col>
+          <row>
+            <label for="input-solicitante"
+                   class="label mb-0"
+                   style="font-size: 12px">Solicitante/Despachante</label>
+          </row>
+          <row>
+            <b-form-select id="input-solicitante"
+                           v-model="form.solicitante.nome" 
+                           :options="optionsSolicitante"
+                           :disabled="(condicoes.existeAEEstampador || condicoes.existeAEEstampadorIniciada || condicoes.existeAEEstampadorConcluida) && form.solicitante.nome != null">
+              <template #first>
+                <b-form-select-option :value="null"
+                                      disabled>
+                  Selecione um Solicitante na lista, caso não apareça clique em Cadastrar Solicitante
+                </b-form-select-option>
+              </template>
+            </b-form-select>               
+          </row>
+        </b-col>
+        <b-col>
+          <b-badge v-if="(condicoes.existeAEEstampador || condicoes.existeAEEstampadorIniciada || condicoes.existeAEEstampadorConcluida) && form.solicitante.nome != null"
+                   pill
+                   variant="success">
+            Solicitante já cadastrado nesse AE
+          </b-badge>
+          <b-button v-else
+                    id="cadastraSolicit"
+                    name="cadastraSolicit"
+                    variant="primary"
+                    class="btn-sm"
+                    @click="$bvModal.show('modal-solicitante')">
+            Cadastrar Solicitante
+          </b-button>
+        </b-col>
+        <div v-if="(condicoes.existeAEEstampador || condicoes.existeAEEstampadorIniciada || condicoes.existeAEEstampadorConcluida) && form.solicitante.nome != null">
+          <b-col>
+            <b-button v-if="!salvaAlteraSolicitante"
+                      id="alteraSolicit"
+                      name="alteraSolicit"
+                      variant="danger"
+                      class="btn-sm"
+                      @click="alterandoSolicitante">
+              Alterar
+            </b-button>
+            <b-button v-else
+                      id="salvalteraSolicit"
+                      name="salvalteraSolicit"
+                      variant="dark"
+                      class="btn-sm"
+                      @click="salvaAlteracaoSolicitante">
+              Salvar Alteracao
+            </b-button>
+          </b-col>
+        </div>
+      </row>
+      <row class="mb-2">
+        <b-col>
+          <row>
+            <label for="cliente"
+                   class="label mb-0"
+                   style="font-size: 12px">Proprietário</label>
+          </row>
+          <row>
+            <b-form-select id="input-cliente"
+                           v-model="form.cliente.nome" 
+                           :options="optionsCliente"
+                           :disabled="(condicoes.existeAEEstampador || condicoes.existeAEEstampadorIniciada || condicoes.existeAEEstampadorConcluida) && form.cliente.nome != null">
+              <template #first>
+                <b-form-select-option :value="null"
+                                      disabled>
+                  Selecione um Cliente na lista, caso não apareça clique em Cadastrar Cliente
+                </b-form-select-option>
+              </template>
+            </b-form-select>  
+          </row>
+        </b-col>
+        <b-col>
+          <b-badge v-if="(condicoes.existeAEEstampador || condicoes.existeAEEstampadorIniciada || condicoes.existeAEEstampadorConcluida) && form.cliente.nome != null"
+                   pill
+                   variant="success">
+            Proprietário já cadastrado nesse AE
+          </b-badge>
+          <b-button v-else
+                    id="cadastraCliente"
+                    name="cadastraCliente"
+                    variant="primary"
+                    class="btn-sm"
+                    @click="$bvModal.show('modal-cliente')">
+            Cadastrar Proprietário
+          </b-button>
+          <div v-if="(condicoes.existeAEEstampador || condicoes.existeAEEstampadorIniciada || condicoes.existeAEEstampadorConcluida) && form.cliente.nome != null">
+            <b-col>
+              <b-button v-if="!salvaAlteraCliente"
+                        id="alteraCliente"
+                        name="alteraCliente"
+                        variant="danger"
+                        class="btn-sm"
+                        @click="alterandoCliente">
+                Alterar
+              </b-button>
+              <b-button v-else
+                        id="salvalteraCliente"
+                        name="salvalteraCliente"
+                        variant="dark"
+                        class="btn-sm"
+                        @click="salvaAlteracaoCliente">
+                Salvar Alteracao
+              </b-button>
+            </b-col>
+          </div>
+        </b-col>
+        <!-- <div class="justify-content-center mt-2">
+          <p>
+            O novo cadastro de solicitante e cliente irá agilizar o processo de emissão de nota fiscal e criar a possibilidade 
+            de gerar um relatório de solicitantes.
+          </p>
+          <p>
+            Os campos abaixo são do tipo busca em tempo real, caso digite um nome de cliente ou solicitante e não apareça a
+            informação como sugestão de auto preenchimento, clique no botão de cadastar em azul.
+          </p>
+          <p>
+            Assim que cadastrado o cliente ou solicitante irá aparecer como sugestão de preenchimento no formato <br>
+            CLIENTE / CPF.OU.CNPJ <br>
+            escolha o cliente ou solicitante cadastrado e por favor, não cadastre 2 vezes o mesmo cliente ou solicitante.
+            Caso esteja cadastrado, ele sempre irá aparecer como sugestão, não havendo necessidade de um segundo cadastro.
+          </p>
+        </div> -->
+      </row>
+    </div>
+
+    <!-- cadastra imagens -->
+    <b-modal id="modal-anexos"
+             size="lg"
+             hide-footer>
+      <template #modal-title>
+        Fotos 
+        <!-- <br> -->
+        <!-- <span style="color: green; font-size: 10px; font-weigth: normal"> Cadastre apenas o nome ou insira todos os campos obrigatórios</span> -->
+      </template>
+
+      <b-tabs content-class="mt-3">
+        <b-tab title="CRV/CRLV"
+               active>
+          <div v-if="Boolean(form.caminhoImagem.crvCrlv)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">CRV/CRLV</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.crvCrlv)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.crvCrlv, '_CRV_CRLV', 'CRV/CRLV' )">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-crv"
+              v-model="form.imagem.crvCrlv"
+              accept=".jpg"
+              size="lg"
+              :state="Boolean(form.imagem.crvCrlv)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-2">
+              <b-button v-if="Boolean(form.imagem.crvCrlv) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.crvCrlv = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.crvCrlv)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.crvCrlv)">
+                Visualizar
+              </b-button>
+            </b-row> 
+          
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.crvCrlv, '_CRV_CRLV')">
+              Salvar CRV/CRLV
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="CNH">
+          <div v-if="Boolean(form.caminhoImagem.cnh)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">CNH</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.cnh)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.cnh, '_CNH', 'CNH')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-cnh"
+              v-model="form.imagem.cnh"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.cnh)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-2">
+              <b-button v-if="Boolean(form.imagem.cnh) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.cnh = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.cnh)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.cnh)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.cnh, '_CNH')">
+              Salvar CNH
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="RG">
+          <div v-if="Boolean(form.caminhoImagem.rg)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">RG</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.rg)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.rg, '_RG', 'RG')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-rg"
+              v-model="form.imagem.rg"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.rg)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.rg) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.rg = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.rg)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.rg)">
+                Visualizar
+              </b-button>
+            </b-row>
+          
+          
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.rg, '_RG')">
+              Salvar RG
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="Placas Retiradas">
+          <b-form-checkbox
+            id="checkbox-placas-retiradas"
+            v-model="form.imagem.usaBoletim"
+            name="checkbox-placas-retiradas"
+            value="true"
+            unchecked-value="false">
+            Utilizar Boletim
+          </b-form-checkbox>
+    
+          <div v-if="form.imagem.usaBoletim === 'false'">
+            <div v-if="Boolean(form.caminhoImagem.retiradaDianteira) || Boolean(form.caminhoImagem.retiradaTraseira)">
+              <label
+                class="label mb-3"
+                style="font-size: 24px; text-align: center">PLACAS RETIRADAS</label>
+
+              <b-row class="ml-2">
+                <b-button 
+                  class="btn-sm mt-2 ml-2"
+                  @click="getFoto(form.caminhoImagem.retiradaDianteira)">
+                  Visualizar
+                </b-button>
+
+                <b-button cols="2"
+                          variant="danger"
+                          class="btn-sm mt-2 ml-3"
+                          @click="removerFoto(form.caminhoImagem.retiradaDianteira, '_RETIRADA_DIANTEIRA', 'RETIRADA DIANTEIRA')">
+                  Remover
+                </b-button>
+              </b-row>
+
+              <!-- <label
+                class="label mb-3"
+                style="font-size: 24px; text-align: center">RETIRADA TRASEIRA</label>
+
+              <b-row class="ml-2">
+                <b-button 
+                  class="btn-sm mt-2 ml-2"
+                  @click="getFoto(form.caminhoImagem.retiradaTraseira)">
+                  Visualizar
+                </b-button>
+
+                <b-button cols="2"
+                          variant="danger"
+                          class="btn-sm mt-2 ml-3"
+                          @click="removerFoto(form.caminhoImagem.retiradaTraseira, '_RETIRADA_TRASEIRA', 'RETIRADA TRASEIRA')">
+                  Remover
+                </b-button>
+              </b-row>  -->
+            </div>     
+            <div v-else>
+              <b-row>
+                <b-col cols="2">
+                  <label for="image-retirada-dianteira"
+                         class="label mb-0"
+                         style="font-size: 18px">Placas Retiradas: </label>
+                </b-col>
+            
+                <b-col>
+                  <b-form-file
+                    id="image-retirada-dianteira"
+                    v-model="form.imagem.retiradaDianteira"
+                    accept="image/jpg"
+                    size="lg"
+                    :state="Boolean(form.imagem.retiradaDianteira)"
+                    placeholder="Selecione ou Arraste a imagem"
+                    drop-placeholder="Solte aqui" 
+                    browse-text="Adicionar" />
+                </b-col>
+              </b-row>
+
+              <b-row class="ml-3">
+                <b-button v-if="Boolean(form.imagem.retiradaDianteira) && !condicoes.existeAnexos"
+                          cols="2"
+                          variant="primary"
+                          class="btn-sm mt-2"
+                          @click="form.imagem.retiradaDianteira = null">
+                  Limpar
+                </b-button>
+
+                <b-button v-if="Boolean(form.imagem.retiradaDianteira)"
+                          class="btn-sm mt-2 ml-2"
+                          @click="previewFoto(form.imagem.retiradaDianteira)">
+                  Visualizar
+                </b-button>
+              </b-row> 
+              <!-- <b-row>
+                <b-col cols="2">
+                  <label for="image-retirada-traseira"
+                         class="label mb-0"
+                         style="font-size: 18px">Traseira: </label>
+                </b-col>
+
+                <b-col>
+                  <b-form-file
+                    id="image-retirada-traseira"
+                    v-model="form.imagem.retiradaTraseira"
+                    accept="image/jpg"
+                    size="lg"
+                    :state="Boolean(form.imagem.retiradaTraseira)"
+                    placeholder="Selecione ou Arraste a imagem"
+                    drop-placeholder="Solte aqui" 
+                    browse-text="Adicionar" />
+                </b-col>
+              </b-row>
+
+              <b-row class="ml-3">
+                <b-button v-if="Boolean(form.imagem.retiradaTraseira) && !condicoes.existeAnexos"
+                          cols="2"
+                          variant="primary"
+                          class="btn-sm mt-2"
+                          @click="form.imagem.retiradaTraseira = null">
+                  Limpar
+                </b-button>
+
+                <b-button v-if="Boolean(form.imagem.retiradaTraseira)"
+                          class="btn-sm mt-2 ml-2"
+                          @click="previewFoto(form.imagem.retiradaTraseira)">
+                  Visualizar
+                </b-button>
+              </b-row>  -->
+
+              <b-button class="mt-3 btn-success bt-sm"
+                        block
+                        @click="salvarFoto(form.imagem.retiradaDianteira, '_RETIRADA_DIANTEIRA')">
+                Salvar Placas Retiradas
+              </b-button>
+            </div>
+          </div>
+
+          <div v-else>
+            <div v-if="Boolean(form.caminhoImagem.boletim)">
+              <label
+                class="label mb-3"
+                style="font-size: 24px; text-align: center">Boletim</label>
+
+              <b-row class="ml-2">
+                <b-button 
+                  class="btn-sm mt-2 ml-2"
+                  @click="getFoto(form.caminhoImagem.boletim)">
+                  Visualizar
+                </b-button>
+
+                <b-button cols="2"
+                          variant="danger"
+                          class="btn-sm mt-2 ml-3"
+                          @click="removerFoto(form.caminhoImagem.boletim, '_BOLETIM', 'BOLETIM')">
+                  Remover
+                </b-button>
+              </b-row> 
+            </div>     
+            <div v-else>
+              <b-form-file
+                id="image-boletim"
+                v-model="form.imagem.boletim"
+                accept="image/jpg"
+                size="lg"
+                :state="Boolean(form.imagem.boletim)"
+                placeholder="Selecione ou Arraste a imagem"
+                drop-placeholder="Solte aqui" 
+                browse-text="Adicionar" />
+
+              <b-row class="ml-3">
+                <b-button v-if="Boolean(form.imagem.boletim) && !condicoes.existeAnexos"
+                          cols="2"
+                          variant="primary"
+                          class="btn-sm mt-2"
+                          @click="form.imagem.boletim = null">
+                  Limpar
+                </b-button>
+
+                <b-button v-if="Boolean(form.imagem.boletim)"
+                          class="btn-sm mt-2 ml-2"
+                          @click="previewFoto(form.imagem.boletim)">
+                  Visualizar
+                </b-button>
+              </b-row> 
+
+              <b-button class="mt-3 btn-success bt-sm"
+                        block
+                        @click="salvarFoto(form.imagem.boletim, '_BOLETIM')">
+                Salvar Boletim
+              </b-button>
+            </div>
+          </div>
+        </b-tab>
+
+        <b-tab title="Dianteira">
+          <div v-if="Boolean(form.caminhoImagem.dianteiraFixada)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">DIANTEIRA</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.dianteiraFixada)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.dianteiraFixada, '_DIANTEIRA_FIXADA', 'DIANTERIA FIXADA')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-dianteira-fixada"
+              v-model="form.imagem.dianteiraFixada"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.dianteiraFixada)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.dianteiraFixada) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.dianteiraFixada = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.dianteiraFixada)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.dianteiraFixada)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.dianteiraFixada, '_DIANTEIRA_FIXADA')">
+              Salvar Dianteira
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="Traseira">
+          <div v-if="Boolean(form.caminhoImagem.traseiraFixada)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">TRASEIRA</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.traseiraFixada)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.traseiraFixada, '_TRASEIRA_FIXADA', 'TRASEIRA FIXADA')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-traseira-fixada"
+              v-model="form.imagem.traseiraFixada"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.traseiraFixada)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.traseiraFixada) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.traseiraFixada = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.traseiraFixada)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.traseiraFixada)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.traseiraFixada, '_TRASEIRA_FIXADA')">
+              Salvar Traseira
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="Segunda traseira">
+          <div v-if="Boolean(form.caminhoImagem.segundaTraseira)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">SEGUNDA TRASEIRA</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.segundaTraseira)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.segundaTraseira, '_SEGUNDA_TRASEIRA', 'SEGUNDA TRASEIRA' )">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-segunda-traseira"
+              v-model="form.imagem.segundaTraseira"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.segundaTraseira)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.segundaTraseira) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.segundaTraseira = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.segundaTraseira)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.segundaTraseira)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.segundaTraseira, '_SEGUNDA_TRASEIRA')">
+              Salvar Segunda Traseira
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="QR Dianteira">
+          <div v-if="Boolean(form.caminhoImagem.qrDianteira)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">QR DIANTEIRA</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.qrDianteira)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.qrDianteira, '_QR_DIANTEIRA', 'QR DIANTEIRA')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-qr-dianteira"
+              v-model="form.imagem.qrDianteira"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.qrDianteira)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.qrDianteira) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.qrDianteira = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.qrDianteira)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.qrDianteira)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.qrDianteira, '_QR_DIANTEIRA')">
+              Salvar QR Dianteira
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="QR Traseira">
+          <div v-if="Boolean(form.caminhoImagem.qrTraseira)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">QR TRASEIRA</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.qrTraseira)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.qrTraseira, '_QR_TRASEIRA', 'QR TRASEIRA')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-qr-traseira"
+              v-model="form.imagem.qrTraseira"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.qrTraseira)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.qrTraseira) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.qrTraseira = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.qrDianteira)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.qrDianteira)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.qrTraseira, '_QR_TRASEIRA')">
+              Salvar QR Traseira
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="QR Segunda Traseira">
+          <div v-if="Boolean(form.caminhoImagem.qrSegundaTraseira)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">QR SEGUNDA TRASEIRA</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.qrSegundaTraseira)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.qrSegundaTraseira, '_QR_SEGUNDA_TRASEIRA', 'QR SEGUNDA TRASEIRA')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-qr-segunda-traseira"
+              v-model="form.imagem.qrSegundaTraseira"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.qrSegundaTraseira)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.qrSegundaTraseira) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.qrSegundaTraseira = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.qrSegundaTraseira)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.qrSegundaTraseira)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.qrSegundaTraseira, '_QR_SEGUNDA_TRASEIRA')">
+              Salvar QR Segunda Traseira
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="Chassi">
+          <b-form-checkbox
+            id="checkbox-chassi"
+            v-model="form.imagem.usaEtiqueta"
+            name="checkbox-chassi"
+            value="true"
+            unchecked-value="false">
+            Utilizar Etiqueta
+          </b-form-checkbox>
+    
+          <div v-if="form.imagem.usaEtiqueta === 'false'">
+            <div v-if="Boolean(form.caminhoImagem.chassi)">
+              <label
+                class="label mb-3"
+                style="font-size: 24px; text-align: center">CHASSI</label>
+
+              <b-row class="ml-2">
+                <b-button 
+                  class="btn-sm mt-2 ml-2"
+                  @click="getFoto(form.caminhoImagem.chassi)">
+                  Visualizar
+                </b-button>
+
+                <b-button cols="2"
+                          variant="danger"
+                          class="btn-sm mt-2 ml-3"
+                          @click="removerFoto(form.caminhoImagem.chassi, '_CHASSI', 'CHASSI')">
+                  Remover
+                </b-button>
+              </b-row> 
+            </div>     
+            <div v-else>
+              <b-row>
+                <b-col cols="2">
+                  <label for="image-chassi"
+                         class="label mb-0"
+                         style="font-size: 18px">Chassi: </label>
+                </b-col>
+            
+                <b-col>
+                  <b-form-file
+                    id="image-chassi"
+                    v-model="form.imagem.chassi"
+                    accept="image/jpg"
+                    size="lg"
+                    :state="Boolean(form.imagem.chassi)"
+                    placeholder="Selecione ou Arraste a imagem"
+                    drop-placeholder="Solte aqui" 
+                    browse-text="Adicionar" />
+                </b-col>
+              </b-row>
+
+              <b-row class="ml-3">
+                <b-button v-if="Boolean(form.imagem.chassi) && !condicoes.existeAnexos"
+                          cols="2"
+                          variant="primary"
+                          class="btn-sm mt-2"
+                          @click="form.imagem.chassi = null">
+                  Limpar
+                </b-button>
+
+                <b-button v-if="Boolean(form.imagem.chassi)"
+                          class="btn-sm mt-2 ml-2"
+                          @click="previewFoto(form.imagem.chassi)">
+                  Visualizar
+                </b-button>
+              </b-row>
+
+              <b-button class="mt-3 btn-success bt-sm"
+                        block
+                        @click="salvarFoto(form.imagem.chassi, '_CHASSI')">
+                Salvar Chassi
+              </b-button>
+            </div>
+          </div>
+          <div v-else>
+            <div v-if="Boolean(form.caminhoImagem.etiquetaChassi)">
+              <label
+                class="label mb-3"
+                style="font-size: 24px; text-align: center">CHASSI</label>
+
+              <b-row class="ml-2">
+                <b-button 
+                  class="btn-sm mt-2 ml-2"
+                  @click="getFoto(form.caminhoImagem.etiquetaChassi)">
+                  Visualizar
+                </b-button>
+
+                <b-button cols="2"
+                          variant="danger"
+                          class="btn-sm mt-2 ml-3"
+                          @click="removerFoto(form.caminhoImagem.etiquetaChassi, '_ETIQUETA_CHASSI', 'ETIQUETA CHASSI')">
+                  Remover
+                </b-button>
+              </b-row> 
+            </div>     
+            <div v-else>
+              <b-row>
+                <b-col cols="2">
+                  <label for="image-etiqueta"
+                         class="label mb-0"
+                         style="font-size: 18px">Etiqueta: </label>
+                </b-col>
+
+                <b-col>
+                  <b-form-file
+                    id="image-retirada-traseira"
+                    v-model="form.imagem.etiquetaChassi"
+                    accept="image/jpg"
+                    size="lg"
+                    :state="Boolean(form.imagem.etiquetaChassi)"
+                    placeholder="Selecione ou Arraste a imagem"
+                    drop-placeholder="Solte aqui" 
+                    browse-text="Adicionar" />
+                </b-col>
+              </b-row>
+
+              <b-row class="ml-3">
+                <b-button v-if="Boolean(form.imagem.etiquetaChassi) && !condicoes.existeAnexos"
+                          cols="2"
+                          variant="primary"
+                          class="btn-sm mt-2"
+                          @click="form.imagem.etiquetaChassi = null">
+                  Limpar
+                </b-button>
+
+                <b-button v-if="Boolean(form.imagem.etiquetaChassi)"
+                          class="btn-sm mt-2 ml-2"
+                          @click="previewFoto(form.imagem.etiquetaChassi)">
+                  Visualizar
+                </b-button>
+              </b-row>
+
+              <b-button class="mt-3 btn-success bt-sm"
+                        block
+                        @click="salvarFoto(form.imagem.etiquetaChassi, '_ETIQUETA_CHASSI')">
+                Salvar Etiqueta
+              </b-button>
+            </div>
+          </div>
+        </b-tab>
+
+        <b-tab title="Local">
+          <div v-if="Boolean(form.caminhoImagem.local)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">LOCAL</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getFoto(form.caminhoImagem.local)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.local, '_LOCAL', 'Local')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-form-file
+              id="image-local"
+              v-model="form.imagem.local"
+              accept="image/jpg"
+              size="lg"
+              :state="Boolean(form.imagem.local)"
+              placeholder="Selecione ou Arraste a imagem"
+              drop-placeholder="Solte aqui" 
+              browse-text="Adicionar" />
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.local) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.local = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.local)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewFoto(form.imagem.local)">
+                Visualizar
+              </b-button>
+            </b-row> 
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.local, '_LOCAL')">
+              Salvar Local
+            </b-button>
+          </div>
+        </b-tab>
+
+        <b-tab title="Nota Fiscal">
+          <div v-if="Boolean(form.caminhoImagem.notaPDF)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">PDF</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getPDF(form.caminhoImagem.notaPDF)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.notaPDF, '_NOTA_PDF', 'PDF')">
+                Remover
+              </b-button>
+            </b-row>
+          </div>
+          <div v-else>
+            <b-row>
+              <b-col cols="2">
+                <label for="image-nota-pdf"
+                       class="label mb-0"
+                       style="font-size: 18px">PDF: </label>
+              </b-col>
+            
+              <b-col>
+                <b-form-file
+                  id="image-nota-pdf"
+                  v-model="form.imagem.notaPDF"
+                  accept="application/pdf"
+                  size="lg"
+                  :state="Boolean(form.imagem.notaPDF)"
+                  placeholder="Selecione ou Arraste a imagem"
+                  drop-placeholder="Solte aqui" 
+                  browse-text="Adicionar" />
+              </b-col>
+            </b-row>
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.notaPDF) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.notaPDF = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.notaPDF)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewPDF(form.imagem.notaPDF)">
+                Visualizar
+              </b-button>
+
+              <b-button class="mt-3 btn-success bt-sm"
+                        block
+                        @click="salvarFoto(form.imagem.notaPDF, '_NOTA_PDF')">
+                Salvar PDF Nota Fiscal
+              </b-button>
+            </b-row>
+          </div>
+          <div v-if="Boolean(form.caminhoImagem.notaXML)">
+            <label
+              class="label mb-3"
+              style="font-size: 24px; text-align: center">XML</label>
+
+            <b-row class="ml-2">
+              <b-button 
+                class="btn-sm mt-2 ml-2"
+                @click="getXML(form.caminhoImagem.notaXML)">
+                Visualizar
+              </b-button>
+
+              <b-button cols="2"
+                        variant="danger"
+                        class="btn-sm mt-2 ml-3"
+                        @click="removerFoto(form.caminhoImagem.notaXML, '_NOTA_XML', 'XML')">
+                Remover
+              </b-button>
+            </b-row> 
+          </div>     
+          <div v-else>
+            <b-row>
+              <b-col cols="2">
+                <label for="image-nota-xml"
+                       class="label mb-0"
+                       style="font-size: 18px">XML: </label>
+              </b-col>
+            
+              <b-col>
+                <b-form-file
+                  id="image-nota-xml"
+                  v-model="form.imagem.notaXML"
+                  accept="application/xml"
+                  size="lg"
+                  :state="Boolean(form.imagem.notaXML)"
+                  placeholder="Selecione ou Arraste a imagem"
+                  drop-placeholder="Solte aqui" 
+                  browse-text="Adicionar" />
+              </b-col>
+            </b-row>
+
+            <b-row class="ml-3">
+              <b-button v-if="Boolean(form.imagem.notaXML) && !condicoes.existeAnexos"
+                        cols="2"
+                        variant="primary"
+                        class="btn-sm mt-2"
+                        @click="form.imagem.notaXML = null">
+                Limpar
+              </b-button>
+
+              <b-button v-if="Boolean(form.imagem.notaXML)"
+                        class="btn-sm mt-2 ml-2"
+                        @click="previewXML(form.imagem.notaXML)">
+                Visualizar
+              </b-button>
+            </b-row>
+
+            <b-button class="mt-3 btn-success bt-sm"
+                      block
+                      @click="salvarFoto(form.imagem.notaXML, '_NOTA_XML')">
+              Salvar XML Nota Fiscal
+            </b-button>
+          </div>
+        </b-tab>
+      </b-tabs>
+    </b-modal>       
+
+    <!-- Modals -->
+    <b-modal id="modal-iniciar"
+             hide-footer>
+      <template #modal-title>
+        Iniciar Estampagem
+      </template>
+      <div v-if="firstSearch && showDianteira"
+           class="row mb-1">
+        <div class="col-5">
+          <label for="id_dianteira"
+                 class="label mb-0">Dianteira</label>
+        </div>
+        <div class="col-7">
+          <input id="id_dianteira"
+                 v-model="form.serialBlankDianteira"
+                 type="text"
+                 name="placa"
+                 class="form-control form-control-sm"
+                 :disabled="Boolean(dadosEstampagem.serialBlankDianteira)"
+                 @blur="getNumberBlank(1)">
+        </div>
+      </div>
+      <div v-if="firstSearch && showTraseira"
+           class="row mb-1">
+        <div class="col-5">
+          <label for="id_traseira"
+                 class="label mb-0">Traseira</label>
+        </div>
+        <div class="col-7">
+          <input id="id_traseira"
+                 v-model="form.serialBlankTraseira"
+                 type="text"
+                 name="traseira"
+                 class="form-control form-control-sm"
+                 :disabled="Boolean(dadosEstampagem.serialBlankTraseira)"
+                 @blur="getNumberBlank(2)">
+        </div>
+      </div>
+      <div v-if="firstSearch && showSegundaTraseira"
+           class="row mb-1">
+        <div class="col-5">
+          <label for="id_seg_traseira"
+                 class="label mb-0">Segunda Traseira</label>
+        </div>
+        <div class="col-7">
+          <input id="id_seg_traseira"
+                 v-model="form.serialBlankSegundaTraseira"
+                 type="text"
+                 name="id_seg_traseira"
+                 class="form-control form-control-sm"
+                 :disabled="Boolean(dadosEstampagem.serialBlankSegundaTraseira)"
+                 @blur="getNumberBlank(3)">
+        </div>
+      </div>
+      <b-button class="mt-3 btn-success"
+                block
+                @click="salvarEIniciar">
+        INICIAR
+      </b-button>
+    </b-modal>
+
+    <!-- modal solicitante -->
+    <b-modal id="modal-solicitante"
+             size="lg"
+             hide-footer
+             @close="form.solicitante.nome = null">
+      <template #modal-title>
+        Cadastrar Solicitante 
+        <!-- <br> -->
+        <!-- <span style="color: green; font-size: 10px; font-weigth: normal"> Cadastre apenas o nome ou insira todos os campos obrigatórios</span> -->
+      </template>
+
+      <b-row>
+        <b-col>
+          <b-row>
+            <label for="solicitante-nome"
+                   class="label mb-0"
+                   style="font-size: 12px">Nome ou Razão Social<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-nome"
+                   v-model="form.solicitante.nome"
+                   type="text"
+                   name="solicitante-nome"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="solicitante-nome-fantasia"
+                   class="label mb-0"
+                   style="font-size: 12px">Nome Fantasia</label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-nome-fantasia"
+                   v-model="form.solicitante.nomeFantasia"
+                   type="text"
+                   name="solicitante-nome-fantasia"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="solicitante-tipo-pessoa"
+                   class="label mb-0"
+                   style="font-size: 12px">Tipo Pessoa</label>
+          </b-row>
+          <b-row>
+            <b-form-select id="solicitante-tipo-pessoa"
+                           v-model="form.solicitante.tipoPessoa"
+                           type="text"
+                           name="solicitante-tipo-pessoa"
+                           :options="optionsPessoa"
+                           class="form-control form-control-sm" />
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label v-if="form.solicitante.tipoPessoa === 'PF'" 
+                   for="solicitante-cpf-cnpj"
+                   class="label mb-0"
+                   style="font-size: 12px">CPF<span style="color: red">*</span></label>
+            <label v-if="form.solicitante.tipoPessoa === 'PJ'"
+                   for="solicitante-cpf-cnpj"
+                   class="label mb-0"
+                   style="font-size: 12px">CNPJ<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input v-if="form.solicitante.tipoPessoa === 'PF'" 
+                   id="solicitante-cpf-cnpj"
+                   v-model="form.solicitante.cpfCnpj"
+                   type="text"
+                   name="solicitante-cpf-cnpj"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+            <input v-if="form.solicitante.tipoPessoa === 'PJ'"
+                   id="solicitante-cpf-cnpj"
+                   v-model="form.solicitante.cpfCnpj"
+                   type="text"
+                   name="solicitante-cpf-cnpj"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label v-if="form.solicitante.tipoPessoa === 'PF'" 
+                   for="solicitante-rg-ie"
+                   class="label mb-0"
+                   style="font-size: 12px">RG</label>
+            <label v-if="form.solicitante.tipoPessoa === 'PJ'"
+                   for="solicitante-rg-ie"
+                   class="label mb-0"
+                   style="font-size: 12px">Inscrição Estadual<span style="color: red">*</span><span style="color: green; font-size: 10px; font-weigth: normal"> Se ISENTO, digite apenas 0(zero)</span></label>
+            <p v-show="form.solicitante.rgIe === '0' && form.solicitante.tipoPessoa === 'PJ'">
+              <span style="font-size: 12px; font-weigth: bold">-ISENTO</span>
+            </p>
+          </b-row>
+          <b-row>
+            <input v-if="form.solicitante.tipoPessoa === 'PF'" 
+                   id="solicitante-rg-ie"
+                   v-model="form.solicitante.rgIe"
+                   type="text"
+                   name="solicitante-rg-ie"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+            <input v-if="form.solicitante.tipoPessoa === 'PJ'"
+                   id="solicitante-rg-ie"
+                   v-model="form.solicitante.rgIe"
+                   type="text"
+                   name="solicitante-rg-ie"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="solicitante-cep"
+                   class="label mb-0"
+                   style="font-size: 12px">CEP<span style="color: red">*</span> <span style="color: green; font-size: 10px; font-weigth: normal"> Pesquise o CEP para completar os dados do endereço</span></label>
+          </b-row>
+          <b-row>
+            <div class="input-group">
+              <input id="solicitante-cep"
+                     v-model="form.solicitante.cep"
+                     v-mask="'#####-###'"
+                     type="text"
+                     name="solicitante-cep"
+                     class="form-control form-control-sm"
+                     @blur="validaApenasDigitos()">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-primary"
+                        type="button"
+                        @click="consultaPorCEP(form.solicitante)">
+                  <b-icon-search />
+                </button>
+              </div>
+            </div>
+          </b-row>
+        </b-col>
+        
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="solicitante-estado"
+                   class="label mb-0"
+                   style="font-size: 12px">UF<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-estado"
+                   v-model="form.solicitante.estado"
+                   type="text"
+                   name="solicitante-estado"
+                   class="form-control form-control-sm"
+                   disabled>
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="solicitante-cidade"
+                   class="label mb-0"
+                   style="font-size: 12px">Município<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-cidade"
+                   v-model="form.solicitante.cidade"
+                   type="text"
+                   name="solicitante-cidade"
+                   class="form-control form-control-sm"
+                   disabled>
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="solicitante-logradouro"
+                   class="label mb-0"
+                   style="font-size: 12px">Logradouro<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-logradouro"
+                   v-model="form.solicitante.logradouro"
+                   type="text"
+                   name="solicitante-logradouro"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="solicitante-numero"
+                   class="label mb-0"
+                   style="font-size: 12px">Número<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-numero"
+                   v-model="form.solicitante.numero"
+                   type="text"
+                   name="solicitante-numero"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="solicitante-bairro"
+                   class="label mb-0"
+                   style="font-size: 12px">Bairro<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-bairro"
+                   v-model="form.solicitante.bairro"
+                   type="text"
+                   name="solicitante-bairro"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="solicitante-email"
+                   class="label mb-0"
+                   style="font-size: 12px">E-Mail</label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-email"
+                   v-model="form.solicitante.email"
+                   type="text"
+                   name="solicitante-email"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="solicitante-telefone1"
+                   class="label mb-0"
+                   style="font-size: 12px">Telefone1</label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-telefone1"
+                   v-model="form.solicitante.telefone1"
+                   v-mask="'(##) #####-####'"
+                   type="text"
+                   name="solicitante-telefone1"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="solicitante-telefone2"
+                   class="label mb-0"
+                   style="font-size: 12px">Telefone2</label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-telefone2"
+                   v-model="form.solicitante.telefone2"
+                   v-mask="'(##) #####-####'"
+                   type="text"
+                   name="solicitante-telefone2"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="solicitante-complemento"
+                   class="label mb-0"
+                   style="font-size: 12px">Complemento</label>
+          </b-row>
+          <b-row>
+            <input id="solicitante-complemento"
+                   v-model="form.solicitante.complemento"
+                   type="text"
+                   name="solicitante-complemento"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+      </b-row>
+
+      <b-row align-h="end">
+        <b-button id="cadastraSolicitanteModal"
+                  name="cadastraSolicitanteModal"
+                  variant="success"
+                  class="btn-sm"
+                  @click="cadastraSolicitanteModal">
+          Cadastrar
+        </b-button>  
+      </b-row>
+    </b-modal>
+
+    <!-- modal cliente -->
+    <b-modal id="modal-cliente"
+             size="lg"
+             hide-footer
+             @close="form.cliente.nome = null">
+      <template #modal-title>
+        Cadastrar Proprietário
+      </template>
+
+      <b-row>
+        <b-col>
+          <b-row>
+            <label for="cliente-nome"
+                   class="label mb-0"
+                   style="font-size: 12px">Nome ou Razão Social<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="cliente-nome"
+                   v-model="form.cliente.nome"
+                   type="text"
+                   name="cliente-nome"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="cliente-nome-fantasia"
+                   class="label mb-0"
+                   style="font-size: 12px">Nome Fantasia</label>
+          </b-row>
+          <b-row>
+            <input id="cliente-nome-fantasia"
+                   v-model="form.cliente.nomeFantasia"
+                   type="text"
+                   name="cliente-nome-fantasia"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="cliente-tipo-pessoa"
+                   class="label mb-0"
+                   style="font-size: 12px">Tipo Pessoa</label>
+          </b-row>
+          <b-row>
+            <b-form-select id="cliente-tipo-pessoa"
+                           v-model="form.cliente.tipoPessoa"
+                           type="text"
+                           name="cliente-tipo-pessoa"
+                           :options="optionsPessoa"
+                           class="form-control form-control-sm" />
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label v-if="form.cliente.tipoPessoa === 'PF'" 
+                   for="cliente-cpf-cnpj"
+                   class="label mb-0"
+                   style="font-size: 12px">CPF<span style="color: red">*</span></label>
+            <label v-if="form.cliente.tipoPessoa === 'PJ'"
+                   for="cliente-cpf-cnpj"
+                   class="label mb-0"
+                   style="font-size: 12px">CNPJ<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input v-if="form.cliente.tipoPessoa === 'PF'" 
+                   id="cliente-cpf-cnpj"
+                   v-model="form.cliente.cpfCnpj"
+                   type="text"
+                   name="cliente-cpf-cnpj"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+            <input v-if="form.cliente.tipoPessoa === 'PJ'"
+                   id="cliente-cpf-cnpj"
+                   v-model="form.cliente.cpfCnpj"
+                   type="text"
+                   name="cliente-cpf-cnpj"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label v-if="form.cliente.tipoPessoa === 'PF'" 
+                   for="cliente-rg-ie"
+                   class="label mb-0"
+                   style="font-size: 12px">RG</label>
+            <label v-if="form.cliente.tipoPessoa === 'PJ'"
+                   for="cliente-rg-ie"
+                   class="label mb-0"
+                   style="font-size: 12px">Inscrição Estadual<span style="color: red">*</span> <span style="color: green; font-size: 10px; font-weigth: normal"> Se ISENTO, digite apenas 0(zero)</span></label>
+            <p v-show="form.solicitante.rgIe === '0' && form.solicitante.tipoPessoa === 'PJ'">
+              <span style="font-size: 12px; font-weigth: bold">-ISENTO</span>
+            </p>
+          </b-row>
+          <b-row>
+            <input v-if="form.cliente.tipoPessoa === 'PF'" 
+                   id="cliente-rg-ie"
+                   v-model="form.cliente.rgIe"
+                   type="text"
+                   name="cliente-rg-ie"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+            <input v-if="form.cliente.tipoPessoa === 'PJ'"
+                   id="cliente-rg-ie"
+                   v-model="form.cliente.rgIe"
+                   type="text"
+                   name="cliente-rg-ie"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="cliente-cep"
+                   class="label mb-0"
+                   style="font-size: 12px">CEP<span style="color: red">*</span> <span style="color: green; font-size: 10px; font-weigth: normal"> Pesquise o CEP para completar os dados do endereço</span></label>
+          </b-row>
+          <b-row>
+            <div class="input-group">
+              <input id="cliente-cep"
+                     v-model="form.cliente.cep"
+                     v-mask="'#####-###'"
+                     type="text"
+                     name="cliente-cep"
+                     class="form-control form-control-sm"
+                     @blur="validaApenasDigitos()">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-primary"
+                        type="button"
+                        @click="consultaPorCEP(form.cliente)">
+                  <b-icon-search />
+                </button>
+              </div>
+            </div>
+          </b-row>
+        </b-col>
+        
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="cliente-estado"
+                   class="label mb-0"
+                   style="font-size: 12px">UF<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="cliente-estado"
+                   v-model="form.cliente.estado"
+                   type="text"
+                   name="cliente-estado"
+                   class="form-control form-control-sm"
+                   disabled>
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="cliente-cidade"
+                   class="label mb-0"
+                   style="font-size: 12px">Município<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="cliente-cidade"
+                   v-model="form.cliente.cidade"
+                   type="text"
+                   name="cliente-cidade"
+                   class="form-control form-control-sm"
+                   disabled>
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="cliente-logradouro"
+                   class="label mb-0"
+                   style="font-size: 12px">Logradouro<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="cliente-logradouro"
+                   v-model="form.cliente.logradouro"
+                   type="text"
+                   name="cliente-logradouro"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="cliente-numero"
+                   class="label mb-0"
+                   style="font-size: 12px">Número<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="cliente-numero"
+                   v-model="form.cliente.numero"
+                   type="text"
+                   name="cliente-numero"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="cliente-bairro"
+                   class="label mb-0"
+                   style="font-size: 12px">Bairro<span style="color: red">*</span></label>
+          </b-row>
+          <b-row>
+            <input id="cliente-bairro"
+                   v-model="form.cliente.bairro"
+                   type="text"
+                   name="cliente-bairro"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="cliente-email"
+                   class="label mb-0"
+                   style="font-size: 12px">E-Mail</label>
+          </b-row>
+          <b-row>
+            <input id="cliente-email"
+                   v-model="form.cliente.email"
+                   type="text"
+                   name="solicitante-email"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="cliente-telefone1"
+                   class="label mb-0"
+                   style="font-size: 12px">Telefone1</label>
+          </b-row>
+          <b-row>
+            <input id="cliente-telefone1"
+                   v-model="form.cliente.telefone1"
+                   v-mask="'(##) #####-####'"
+                   type="text"
+                   name="cliente-telefone1"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <b-col>
+          <b-row>
+            <label for="cliente-telefone2"
+                   class="label mb-0"
+                   style="font-size: 12px">Telefone2</label>
+          </b-row>
+          <b-row>
+            <input id="cliente-telefone2"
+                   v-model="form.cliente.telefone2"
+                   v-mask="'(##) #####-####'"
+                   type="text"
+                   name="cliente-telefone2"
+                   class="form-control form-control-sm"
+                   @blur="validaApenasDigitos()">
+          </b-row>
+        </b-col>
+        <div class="w-100" />
+        <b-col>
+          <b-row>
+            <label for="cliente-complemento"
+                   class="label mb-0"
+                   style="font-size: 12px">Complemento</label>
+          </b-row>
+          <b-row>
+            <input id="cliente-complemento"
+                   v-model="form.cliente.complemento"
+                   type="text"
+                   name="cliente-complemento"
+                   class="form-control form-control-sm">
+          </b-row>
+        </b-col>
+      </b-row>
+
+      <b-row align-h="end">
+        <b-button id="cadastraClienteModal"
+                  name="cadastraClienteModal"
+                  variant="success"
+                  class="btn-sm"
+                  @click="cadastraClienteModal">
+          Cadastrar
+        </b-button>
+      </b-row>
+    </b-modal>
+  </div>
+</template>
+
+<script>
+  import {
+    tipos,
+    categorias,
+    tiposPlacas,
+    especies
+  } from '@/constants/veiculo'
+  
+  import ListarAEs from "./ListarAEs.vue"
+  import Estampagem from "@/services/estampagem/Estampagem"
+  import NotaFiscal from "@/services/notafiscal/NotaFiscal"
+  import Relatorio from '@/services/relatorio/Relatorio'
+
+  export default {
+    name: "EstamparBlank",
+    component: {
+      ListarAEs
+    },
+    props: {
+      numAe: {
+        type: String,
+        default: null
+      }
+    },
+    data () {
+      return {
+        isActive: "form.statusAE == 'CONCLUIDA'",
+        dadosEstampagem: null,
+        data: moment().format('DD/MM/YYYY HH:mm'),
+        show: false,
+        showDianteira: true,
+        showTraseira: true,
+        showSegundaTraseira: true,
+        disableDianteira: false,
+        disableTraseira: false,
+        disableSegundaTraseira: false,
+        emEstampagem: false,
+        estampagemConcluida: false,
+        estaoIniciadas: false,
+        tipos,
+        categorias,
+        tiposPlacas,
+        especies,
+        
+        salvaAlteraSolicitante: false,
+        salvaAlteraCliente: false,
+        condicoes:{
+          existeAEEstampador: null,
+          existeAEEstampadorIniciada: null,
+          existeAEEstampadorConcluida: null,
+          existeAEFora: null,
+          existeAEForaIniciada: null,
+          existeAEForaConcluida: null,
+          existeAECriadaBanco: null,
+          existeAEIniciadaBanco: null,
+          existeAEConcluidaBanco: null,
+          estaPermitidaCadastrarEIniciar: null,
+          estaPermitidaApenasIniciar: null,
+          estaFora: null,
+          existeAnexos: null,
+          existeIniciadaDianteira: null,
+          existeIniciadaTraseira: null,
+          existeIniciadaSegunaTraseira: null,
+          inserirPendente: null
+        },
+        form: {
+          serialBlank: null,
+          serialBlankDianteira: null,
+          serialBlankTraseira: null,
+          serialBlankSegundaTraseira: null,
+          statusAE: null,
+          categoriaVeiculo: null,
+          chassis: null,
+          cnpjEstampadorResponsavel: null,
+          especieVeiculo: null,
+          numeroAutorizacaoEstampagem: null,
+          placa: null,
+          tipoPlaca: null,
+          tipoVeiculo: null,
+          idCliente: null,
+          mostraTraseira: null,
+          mostraDianteira: null,
+          mostraSegunda: null,
+          cliente: {
+            id: null,
+            nome: null,
+            nomeFantasia: null,
+            logradouro: null,
+            telefone1: null,
+            cpfCnpj: null,
+            rgIe: null,
+            tipoPessoa: "PF",
+            cep: null,
+            estado: null,
+            bairro: null,
+            email: null,
+            cidade: null,
+            numero: null,
+            telefone2: null,
+            telefone: null,
+            documento: null,
+            solicitante: null,
+            complemento: null,
+            responsavel: null
+          },
+          solicitante:{
+            id: null,
+            nome: null,
+            nomeFantasia: null,
+            logradouro: null,
+            telefone1: null,
+            cpfCnpj: null,
+            rgIe: null,
+            tipoPessoa: "PF",
+            cep: null,
+            estado: null,
+            bairro: null,
+            email: null,
+            cidade: null,
+            numero: null,
+            telefone2: null,
+            complemento: null,
+            responsavel: null
+          },
+          imagem:{
+            rg: null,
+            cnh: null,
+            crvCrlv: null,
+            dianteiraFixada: null,
+            traseiraFixada: null,
+            local: null,
+            qrDianteira: null,
+            qrTraseira: null,
+            qrSegundaTraseira: null,
+            retiradaDianteira: null,
+            retiradaTraseira: null,
+            boletim: null,
+            usaBoletim: "false",
+            chassi: null,
+            etiquetaChassi: null,
+            usaEtiqueta: "false",
+            notaPDF: null,
+            notaXML: null,
+            segundaTraseira: null
+          },
+          caminhoImagem:{
+            rg: null,
+            cnh: null,
+            crvCrlv: null,
+            dianteiraFixada: null,
+            traseiraFixada: null,
+            local: null,
+            qrDianteira: null,
+            qrTraseira: null,
+            retiradaDianteira: null,
+            retiradaTraseira: null,
+            boletim: null,
+            chassi: null,
+            etiquetaChassi: null,
+            notaPDF: null,
+            notaXML: null,
+            segundaTraseira: null
+          }
+        },
+        optionsSolicitante: {},
+        optionsCliente: {},
+        optionsPessoa: [
+          { text: 'Pessoa Física', value: 'PF' },
+          { text: 'Pessoa Jurídica', value: 'PJ' }
+        ],
+        cblank: {
+          motivo: `BLANK_DANIFICADO`,
+          observacoes: `Blank cancelado pelo AE`,
+          seriaisBlanks: null,
+        },
+        placasMotos: ["CICLOMOTOR", "MOTONETA", "MOTOCICLETA", "TRICICLO"],
+        dados: null,
+        serialHashBlank: null,
+        
+      }
+    },
+    computed () {
+      //this.retornaListaSolicitantes()
+
+    },
+    
+    mounted () {
+
+      this.form.solicitante.cpfCnpj = ""
+      this.form.solicitante.rgIe = ""
+      this.form.solicitante.cep = ""
+      this.form.solicitante.telefone1 = ""
+      this.form.solicitante.telefone2 = "" 
+ 
+      this.form.cliente.cpfCnpj = ""
+      this.form.cliente.rgIe = ""
+      this.form.cliente.cep = ""
+      this.form.cliente.telefone1 = ""
+      this.form.cliente.telefone2 = ""
+      
+      this.validaTipoPessoa()
+      this.retornaListaSolicitantes()
+      this.retornaListaClientes()
+      
+    },
+    async created () {
+      if (this.numAe) {
+        this.form.numeroAutorizacaoEstampagem = this.numAe
+        this.getAutorizacaoEstampagem()
+      }
+    },
+    methods: {
+      async todasPlacasIniciadas () {
+
+        const data1 = {
+          serial: this.form.serialBlankDianteira
+        }
+        const data2 = {
+          serial: this.form.serialBlankTraseira
+        }
+        const data3 = {
+          serial: this.form.serialBlankSegundaTraseira
+        }
+
+        const dianteiraIniciada = await Estampagem.getBlankIniciada(data1)
+        const traseiraIniciada = await Estampagem.getBlankIniciada(data2)
+        const segundaIniciada = await Estampagem.getBlankIniciada(data3)
+
+        if(this.form.mostraDianteira && this.form.mostraTraseira && this.form.mostraSegunda) {
+          console.log("3 placas")
+          console.log(dianteiraIniciada.data === 1 && traseiraIniciada.data === 1 && segundaIniciada.data === 1)
+          this.estaoIniciadas = dianteiraIniciada.data === 1 && traseiraIniciada.data === 1 && segundaIniciada.data === 1
+          return
+        }else{
+          if(this.form.mostraDianteira && this.form.mostraTraseira) {
+            console.log("Dianteira e Traseira")
+            console.log(dianteiraIniciada.data === 1 && traseiraIniciada.data === 1)
+            this.estaoIniciadas = dianteiraIniciada.data === 1 && traseiraIniciada.data === 1
+            return
+          }else{
+            if(this.form.mostraDianteira && this.form.mostraSegunda) {
+              console.log("Dianteira e Segunda")
+              console.log(dianteiraIniciada.data === 1 && segundaIniciada.data === 1)
+              this.estaoIniciadas = dianteiraIniciada.data === 1 && segundaIniciada.data === 1
+              return
+            }else{
+              if(this.form.mostraTraseira && this.form.mostraSegunda) {
+                console.log("Traseira e Segunda")
+                console.log(traseiraIniciada.data === 1 && segundaIniciada.data === 1)
+                this.estaoIniciadas = traseiraIniciada.data === 1 && segundaIniciada.data === 1
+                return
+              }else{
+                if(this.form.mostraDianteira) {
+                  console.log("Somente dianteira")
+                  console.log(dianteiraIniciada.data === 1)
+                  this.estaoIniciadas = dianteiraIniciada.data === 1
+                  return
+                }else{
+                  if(this.form.mostraTraseira) {
+                    console.log("Somente Traseira")
+                    console.log(traseiraIniciada.data === 1)
+                    this.estaoIniciadas = traseiraIniciada.data === 1
+                    return
+                  }else{
+                    console.log("Somente Segunda")
+                    console.log(segundaIniciada.data === 1)
+                    this.estaoIniciadas = segundaIniciada.data === 1
+                    return
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      async removerFoto (caminho , campo, texto) {
+        try {
+          loader({
+            active: true
+          })
+          const res = await displayMessage(
+            `Tem certeza que deseja remover permanentemente a imagem da(o) ${texto}?`,
+            `Esta ação não pode ser revertida.`,
+            "warning",
+            true
+          )
+
+          if (!res) return
+
+          const data = {
+            caminho: caminho,
+            campo: campo,
+            numAE: this.form.numeroAutorizacaoEstampagem
+          }
+
+          await Estampagem.removeFoto(data)
+
+          displayMessage('Sucesso!', 'Imagem Excluída', 'success')
+          this.getFotos()
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async getFoto (caminho) {
+        try {
+          loader({
+            active: true
+          })
+
+          const data = {caminho: caminho}
+          const res = await Estampagem.downloadFoto(data, {
+            responseType: "arraybuffer"
+          })
+
+          const url = URL.createObjectURL(new Blob([res.data], {type: 'image/jpg'}))
+          window.open(url)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async getPDF (caminho) {
+        try {
+          loader({
+            active: true
+          })
+
+          const data = {caminho: caminho}
+          const res = await Estampagem.downloadFoto(data, {
+            responseType: "arraybuffer"
+          })
+
+          const url = URL.createObjectURL(new Blob([res.data], {type: 'application/PDF'}))
+          window.open(url)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      }, 
+      async getXML (caminho) {
+        try {
+          loader({
+            active: true
+          })
+
+          const data = {caminho: caminho}
+          const res = await Estampagem.downloadFoto(data, {
+            responseType: "arraybuffer"
+          })
+
+          const url = URL.createObjectURL(new Blob([res.data], {type: 'application/XML'}))
+          window.open(url)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },  
+      async getFotos () {
+        try {
+          loader({
+            active: true
+          })
+          const data = {numAE: this.form.numeroAutorizacaoEstampagem}
+          const res = await Estampagem.recebeFotos(data)
+  
+          this.form.caminhoImagem.rg = res.data.rg
+          this.form.caminhoImagem.cnh = res.data.cnh
+          this.form.caminhoImagem.crvCrlv = res.data.crvCrlv
+          this.form.caminhoImagem.dianteiraFixada = res.data.dianteiraFixada
+          this.form.caminhoImagem.traseiraFixada = res.data.traseiraFixada
+          this.form.caminhoImagem.local = res.data.local
+          this.form.caminhoImagem.qrDianteira = res.data.dianteiraQr
+          this.form.caminhoImagem.qrTraseira = res.data.traseiraQr
+          this.form.caminhoImagem.qrSegundaTraseira = res.data.segundaTraseiraQr
+          this.form.caminhoImagem.retiradaDianteira = res.data.dianteiraRetirada
+          this.form.caminhoImagem.retiradaTraseira = res.data.traseiraRetirada
+          this.form.caminhoImagem.boletim = res.data.boletim
+          this.form.caminhoImagem.chassi = res.data.chassi
+          this.form.caminhoImagem.etiquetaChassi = res.data.chassiEtiqueta
+          this.form.caminhoImagem.notaPDF = res.data.pdf
+          this.form.caminhoImagem.notaXML = res.data.xml
+          this.form.caminhoImagem.segundaTraseira = res.data.segundaTraseira
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      previewFoto (imagem) {
+        const url = URL.createObjectURL(new Blob([imagem], {type: 'image/jpg'}))
+        window.open(url)
+      },
+      previewPDF (pdf) {
+        const url = URL.createObjectURL(new Blob([pdf], {type: 'application/pdf'}))
+        window.open(url)
+      },
+      previewXML (xml) {
+        const url = URL.createObjectURL(new Blob([xml], {type: 'application/xml'}))
+        window.open(url)
+      },
+      async salvarFoto (imagem, nome) {
+        try {
+          loader({
+            active: true
+          })
+
+          if(imagem === null ) {
+            displayMessage(`Erro!`, "A imagem selecionada é inválida!", "error")
+            return
+          }
+
+          const data = new FormData()
+          data.append('foto', imagem)
+          data.append('nome', this.form.numeroAutorizacaoEstampagem+nome)
+          data.append('numAE', this.form.numeroAutorizacaoEstampagem)
+          data.append('campo', nome)
+
+          await Estampagem.enviaImagem(data)
+          displayMessage('Sucesso!', 'Imagem Salva', 'success')
+          this.getFotos()
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+
+      },
+      async salvarFotos (imagem1, nome1, imagem2, nome2) {
+        try {
+          loader({
+            active: true
+          })
+
+          if(imagem1 === null ) {
+            displayMessage(`Erro!`, "A imagem selecionada no primeiro campo é inválida!", "error")
+            return
+          }
+
+          const data = new FormData()
+          data.append('foto', imagem1)
+          data.append('nome', this.form.numeroAutorizacaoEstampagem+nome1)
+          data.append('numAE', this.form.numeroAutorizacaoEstampagem)
+          data.append('campo', nome1)
+
+          await Estampagem.enviaImagem(data)
+
+          if(imagem2 === null ) {
+            displayMessage(`Erro!`, "A imagem selecionada no segundo campo é inválida!", "error")
+            return
+          }
+
+          const data2 = new FormData()
+          data2.append('foto', imagem2)
+          data2.append('nome', this.form.numeroAutorizacaoEstampagem+nome2)
+          data2.append('numAE', this.form.numeroAutorizacaoEstampagem)
+          data2.append('campo', nome2)
+
+          await Estampagem.enviaImagem(data2)
+
+          displayMessage('Sucesso!', 'Imagens Salvas', 'success')
+          this.getFotos()
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+
+      },
+      async consultaPorCEP (campo) {
+        try {
+          loader({
+            active: true
+          })
+          const cepNumeros = await NotaFiscal.consultaCep(campo.cep.replace(/[^0-9]/gi, ""))
+
+          campo.logradouro = cepNumeros.data.logradouro
+          campo.bairro = cepNumeros.data.bairro
+          campo.cidade = cepNumeros.data.cidade
+          campo.estado = cepNumeros.data.estado
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+          let text = ""
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async testaEnvio () {
+        const axios = require('axios')
+
+        const res = await axios.post("http://localhost:8080/dvrg-rastreabilidade-service/v1/estampagem/registro-novo", this.form)
+        console.log(res.data)
+      },
+      validarCampoNfCPF (campo) {
+        return campo.cpfCnpj.length < 11
+      },
+      validarCampoNfCNPJ (campo) {
+        return campo.cpfCnpj.length > 11 && campo.cpfCnpj.length !== 14
+      },
+      validarCampoVazio (campo) {
+        if (campo.cpfCnpj === "" || campo.cpfCnpj === null) {
+          displayMessage(`Erro!`, "O campo de CPF/CNPJ não pode ser vazio", "error")
+          return true
+        }
+        if (
+          (campo.rgIe === null || campo.rgIe === "") &&
+          campo.cpfCnpj.length > 11
+        ) {
+          displayMessage(`Erro!`, "O campo inscrição Estadual é obrigatório", "error")
+          return true
+        }
+        if (campo.nome === null || campo.nome === "") {
+          displayMessage(`Erro!`, "O campo de razão social é obrigatório", "error")
+          return true
+        }
+        if (campo.logradouro === null || campo.logradouro === "") {
+          displayMessage(`Erro!`, "O campo de logradouro é obrigatório", "error")
+          return true
+        }
+        if (campo.numero === null || campo.numero === "") {
+          displayMessage(`Erro!`, "O campo de numero é obrigatório", "error")
+          return true
+        }
+        if (campo.bairro === null || campo.bairro === "") {
+          displayMessage(`Erro!`, "O campo de bairro é obrigatório", "error")
+          return true
+        }
+        if (
+          campo.cidade === null ||
+          campo.cidade === ""
+        ) {
+          displayMessage(`Erro!`, "O campo de município é obrigatório", "error")
+          return true
+        }
+        if (campo.estado === null || campo.estado === "") {
+          displayMessage(`Erro!`, "O campo de UF é obrigatório", "error")
+          return true
+        }
+        if (campo.cep === null || campo.cep === "") {
+          displayMessage(`Erro!`, "O campo de CEP é obrigatório", "error")
+          return true
+        }
+        return false
+      },
+      validaApenasDigitos () {
+        this.form.solicitante.cpfCnpj = this.form.solicitante.cpfCnpj.replace(/[^0-9]/gi, "")
+        this.form.solicitante.rgIe = this.form.solicitante.rgIe.replace(/[^0-9]/gi, "")
+        this.form.solicitante.cep = this.form.solicitante.cep.replace(/[^0-9]/gi, "")
+        this.form.solicitante.telefone1 = this.form.solicitante.telefone1.replace(/[^0-9]/gi, "")
+        this.form.solicitante.telefone2 = this.form.solicitante.telefone2.replace(/[^0-9]/gi, "")
+        this.form.cliente.cpfCnpj = this.form.cliente.cpfCnpj.replace(/[^0-9]/gi, "")
+        this.form.cliente.rgIe = this.form.cliente.rgIe.replace(/[^0-9]/gi, "")
+        this.form.cliente.cep = this.form.cliente.cep.replace(/[^0-9]/gi, "")
+        this.form.cliente.telefone1 = this.form.cliente.telefone1.replace(/[^0-9]/gi, "")
+        this.form.cliente.telefone2 = this.form.cliente.telefone2.replace(/[^0-9]/gi, "")
+      },  
+      async registrarEstampagem () {
+        try {
+          loader({active: true})
+          const {data: estampagem} = await Estampagem.registerAe(this.form)
+
+          this.dados = estampagem
+          displayMessage('Sucesso!', 'Estampagem registrada!', 'success')
+          this.getAutorizacaoEstampagem()
+          this.show = true
+        } catch ({ message, response }) {
+          if (message && ! response) {
+            return displayMessage(`Erro!`, message , 'error')
+          }
+
+          const { data: {status, message: mensagem} } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text , 'error')
+        } finally {
+          loader({active: false})
+        }
+      },
+      async cancelarEstampagem () {
+        try {
+          loader({active: true})
+          const {data: estampagem} = await Estampagem.cancelAe(this.form)
+
+          this.dados = estampagem
+          
+          displayMessage('Sucesso!', 'Estampagem cancelada!', 'success')
+
+          this.getAutorizacaoEstampagem()
+          this.show = true
+        } catch ({ message, response }) {
+          if (message && ! response) {
+            return displayMessage(`Erro!`, message , 'error')
+          }
+
+          const { data: {status, message: mensagem} } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text , 'error')
+        } finally {
+          loader({active: false})
+        }
+      },
+      abreModalEstampagem () {
+        if(this.form.numeroAutorizacaoEstampagem === null || this.form.numeroAutorizacaoEstampagem == "") {
+          displayMessage(`Erro!`, "Digite o AE e Pesquise, para iniciar uma estampagem!", "error")
+          return
+        }
+
+        this.$bvModal.show('modal-iniciar')
+      },
+      abreModalAnexos () {
+        this.getFotos()
+        this.$bvModal.show('modal-anexos')
+      },  
+      salvarEIniciar () {
+        this.iniciarEstampagem()
+      },
+      async checaAeBanco () {
+        const result = await Estampagem.checaAeBanco(this.form.numeroAutorizacaoEstampagem)
+        const res = await Estampagem.checaAeBancoEstampador(this.form.numeroAutorizacaoEstampagem)
+
+        this.condicoes.existeAEEstampador = res.data && ((this.form.statusAE === "CRIADA"))
+        this.condicoes.existeAEEstampadorIniciada = res.data && (this.form.statusAE === "EM_ESTAMPAGEM")
+        this.condicoes.existeAEEstampadorConcluida = res.data && (this.form.statusAE === "CONCLUIDA")
+
+        this.condicoes.existeAEFora = this.estaFora && ((this.form.statusAE === "CRIADA"))
+        this.condicoes.existeAEForaIniciada = this.estaFora && (this.form.statusAE === "EM_ESTAMPAGEM")
+        this.condicoes.existeAEForaConcluida = this.estaFora && (this.form.statusAE === "CONCLUIDA")
+
+        this.condicoes.existeAECriadaBanco = result.data && (this.form.statusAE === "CRIADA")
+        this.condicoes.existeAEIniciadaBanco = result.data && (this.form.statusAE === "EM_ESTAMPAGEM")
+        this.condicoes.existeAEConcluidaBanco = result.data && (this.form.statusAE === "CONCLUIDA")
+        
+        this.condicoes.estaPermitidaCadastrarEIniciar = (this.estaFora && (this.form.statusAE == "CRIADA"))
+        this.condicoes.estaPermitidaApenasIniciar = this.existeAEEstampador
+
+        this.condicoes.estaFora = !result.data 
+
+        if(this.condicoes.existeAEConcluidaBanco || this.condicoes.existeAEIniciadaBanco 
+          || this.condicoes.existeAEForaIniciada || this.condicoes.existeAEForaConcluida) {
+          this.form.serialBlankDianteira = this.dadosEstampagem.serialBlankDianteira
+          this.form.serialBlankTraseira = this.dadosEstampagem.serialBlankTraseira
+          this.form.serialBlankSegundaTraseira = this.dadosEstampagem.serialBlankSegundaTraseira
+        }
+
+        this.condicoes.inserirPendente = this.condicoes.existeAEIniciadaBanco && ((this.showDianteira && this.form.serialBlankDianteira === undefined) || (this.showTraseira && this.dadosEstampagem.serialBlankTraseira === undefined) || (this.showSegundaTraseira && this.dadosEstampagem.serialBlankSegundaTraseira === undefined))
+        this.todasPlacasIniciadas()
+      },
+      alterandoSolicitante () {
+        this.form.solicitante.nome = null
+        this.salvaAlteraSolicitante = true
+      },
+      async salvaAlteracaoSolicitante () {
+        try {
+          loader({
+            active: true
+          })
+          const data = {
+            numeroAE: this.form.numeroAutorizacaoEstampagem,
+            nome: this.form.solicitante.nome
+          }
+
+          await Estampagem.salvaAlteracaoSolicitante(data)
+          displayMessage('Sucesso!', 'Solicitante Alterado!', 'success')
+          this.salvaAlteraSolicitante = false
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      alterandoCliente () {
+        this.form.cliente.nome = null
+        this.salvaAlteraCliente = true
+      },
+      async salvaAlteracaoCliente () {
+        try {
+          loader({
+            active: true
+          })
+          const data = {
+            numeroAE: this.form.numeroAutorizacaoEstampagem,
+            nome: this.form.cliente.nome
+          }
+
+          await Estampagem.salvaAlteracaoCliente(data)
+          displayMessage('Sucesso!', 'Proprietário Alterado!', 'success')
+          this.salvaAlteraCliente = false
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async retornaListaSolicitantes () {
+        try {
+          loader({
+            active: true
+          })
+
+          const res = await Estampagem.buscarSolicitantes()
+          this.optionsSolicitante = res.data
+          console.log(this.optionsSolicitante)
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async retornaListaClientes () {
+        try {
+          loader({
+            active: true
+          })
+
+          const res = await Estampagem.buscarClientes()
+          this.optionsCliente = res.data
+          console.log(this.optionsCliente)
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      validaTipoPessoa () {
+        if(this.form.tipoPessoa == "PJ") {
+          return this.form.documento === 14 ? true : false
+        }else{
+          return this.form.documento === 11 ? true : false
+        }
+      },
+      async getNumberBlank (posBlank) {
+
+        if (posBlank === 1) {
+          this.serialHashBlank = this.form.serialBlankDianteira.replace(/[^A-Za-z0-9]/gi, '')
+        }
+
+        if (posBlank === 2) {
+          this.serialHashBlank = this.form.serialBlankTraseira.replace(/[^A-Za-z0-9]/gi, '')
+        }
+
+        if (posBlank === 3) {
+          this.serialHashBlank = this.form.serialBlankSegundaTraseira.replace(/[^A-Za-z0-9]/gi, '')
+        }
+
+        if (isNaN(this.serialHashBlank)) {
+
+          loader({
+            active: false
+          })
+          try {
+            loader({
+              active: true
+            })
+            const {
+              data: blankData
+            } = await Estampagem.getBlankBySerialHash(this.serialHashBlank)
+
+            if (posBlank === 1) {
+              this.form.serialBlankDianteira = blankData.serial
+            }
+            if (posBlank === 2) {
+              this.form.serialBlankTraseira = blankData.serial
+            }
+            if (posBlank === 3) {
+              this.form.serialBlankSegundaTraseira = blankData.serial
+            }
+
+          } catch ({
+            message,
+            response
+          }) {
+            if (message && !response) {
+              return displayMessage(`Erro!`, message, 'error')
+            }
+
+            const {
+              data: {
+                status,
+                message: mensagem
+              }
+            } = response
+
+            let text = ""
+
+            text += status ? `Status: ${status}` : ""
+            text += mensagem ? `, ${mensagem}.` : ""
+
+            displayMessage(`Erro!`, text, 'error')
+          } finally {
+            loader({
+              active: false
+            })
+          }
+        }
+      },
+      goEmissaoNf () {
+        let numAe = this.form.numeroAutorizacaoEstampagem
+        this.$router.push({
+          name: "Gerar Nf",
+          params: {
+            numAe,
+          },
+        })
+      },
+      async emitirNf () {
+        try {
+          loader({
+            active: true
+          })
+          await NotaFiscal.emitirNf(this.form)
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      goTelaListaAe () {
+        this.$router.push({
+          name: "Lista de autorizacao de estampagem",
+        })
+      },
+      async salvarAe () {
+        try {
+          loader({
+            active: true
+          })
+          await Estampagem.salvarAe(this.form)
+          displayMessage("Sucesso!", "Autorização de estampagem cadastrada!", "success")
+          this.limparTela()
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async getBlankCancelados () {
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: blanksCancelados
+          } = await Estampagem.getBlankCancelados(this.form.numeroAutorizacaoEstampagem)
+          if (!blanksCancelados) {
+            throw new Error("Nenhuma autorização encontrada.")
+          }
+          this.cancelados = blanksCancelados
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async cancelarBlank (serialBlankSelected) {
+        try {
+          loader({
+            active: true
+          })
+          this.cblank.seriaisBlanks = serialBlankSelected
+          await Estampagem.cancelarBlankEstampagem(this.cblank)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async getAutorizacaoEstampagem () {
+        try {
+          loader({
+            active: true
+          })
+
+          if(this.form.numeroAutorizacaoEstampagem.length > 15) {
+            displayMessage(`Erro!`, "O AE não pode ser maior que 15 digitos." , 'error')
+            return
+          }
+          const {
+            data: estampagem
+          } = await Estampagem.getAe(this.form.numeroAutorizacaoEstampagem)
+          if (!estampagem) {
+            throw new Error("Nenhuma autorização encontrada.")
+          }
+          this.firstSearch = true
+          this.form.statusAE = estampagem.estadoAutorizacao
+          this.form.categoriaVeiculo = estampagem.veiculo.categoria
+          this.form.placa = estampagem.veiculo.placa
+          this.form.especieVeiculo = estampagem.veiculo.especie
+          this.form.tipoVeiculo = estampagem.veiculo.tipo
+          this.showDianteira = estampagem.tiposPlacas.dianteira
+          this.showTraseira = estampagem.tiposPlacas.traseira
+          this.showSegundaTraseira = estampagem.tiposPlacas.segundaTraseira
+          this.form.mostraDianteira = estampagem.tiposPlacas.dianteira
+          this.form.mostraTraseira = estampagem.tiposPlacas.traseira
+          this.form.mostraSegunda = estampagem.tiposPlacas.segundaTraseira
+          this.form.chassis = estampagem.chassis
+          this.form.cliente.nome = estampagem.nomeCliente
+          if(this.form.cliente.nome === undefined) {
+            this.form.cliente.nome = null
+          }
+
+          this.form.solicitante.nome = estampagem.nomeSolicitante
+          if(this.form.solicitante.nome === undefined) {
+            this.form.solicitante.nome = null
+          }
+
+          this.dadosEstampagem = estampagem
+
+          this.checaAeBanco()
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      limparTela () {
+        this.show = false
+        this.showDianteira = true
+        this.showTraseira = true
+        this.showSegundaTraseira = true
+        this.tipos = null
+        this.categorias = null
+        this.tiposPlacas = null
+        this.especies = null
+        this.form.statusAE = null
+        this.form.categoriaVeiculo = null
+        this.form.chassis = null
+        this.form.cnpjEstampadorResponsavel = null
+        this.form.especieVeiculo = null
+        this.form.numeroAutorizacaoEstampagem = null
+        this.form.placa = null
+        this.form.tipoPlaca = null
+        this.form.tipoVeiculo = null
+        this.form.cliente.nome = null
+        this.form.solicitante.nome = null
+      },
+      async iniciarEstampagem () {
+        try {
+          loader({active: true})
+          if((this.form.serialBlankDianteira === "" || this.form.serialBlankDianteira == null)   
+            && this.showDianteira) {
+            displayMessage(`Erro!`, "Preencha o Serial da placa dianteira." , 'error')
+         
+            return 
+          }
+          if((this.form.serialBlankTraseira === "" || this.form.serialBlankTraseira == null)   
+            && this.showTraseira) {
+            displayMessage(`Erro!`, "Preencha o Serial da placa traseira." , 'error')
+         
+            return 
+          }
+          if((this.form.serialBlankSegundaTraseira === "" || this.form.serialBlankSegundaTraseira == null)   
+            && this.showSegundaTraseira) {
+            displayMessage(`Erro!`, "Preencha o Serial da segunda placa." , 'error')
+         
+            return 
+          }
+          await Estampagem.salvarAe(this.form)
+          
+          const {data: estampagem} = await Estampagem.iniciarEstampagem(this.form)
+
+          this.dados = estampagem
+          this.getAutorizacaoEstampagem()
+          this.show = true
+          this.$bvModal.hide('modal-iniciar')
+        } catch ({ message, response }) {
+          if (message && ! response) {
+            return displayMessage(`Erro!`, message , 'error')
+          }
+
+          const { data: {status, message: mensagem} } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text , 'error')
+        } finally {
+          loader({active: false})
+        }
+      },
+      async cadastraSolicitanteModal () {
+        try {
+          loader({active: true})
+          
+          if (this.validarCampoNfCPF(this.form.solicitante)) {
+            displayMessage(`Erro!`, "Campo de CPF não possui 11 digitos", "error")
+            return
+          }
+          if (this.validarCampoNfCNPJ(this.form.solicitante)) {
+            displayMessage(`Erro!`, "Campo de CNPJ não possui 14 digitos", "error")
+            return
+          }
+
+          if (this.validarCampoVazio(this.form.solicitante)) {
+            return
+          }
+
+          await Estampagem.salvarSolicitante(this.form.solicitante)
+          this.retornaListaSolicitantes()
+          this.form.solicitante.nome = ""
+          this.$bvModal.hide('modal-solicitante')
+        } catch ({ message, response }) {
+          if (message && ! response) {
+            return displayMessage(`Erro!`, message , 'error')
+          }
+
+          const { data: {status, message: mensagem} } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text , 'error')
+        } finally {
+          loader({active: false})
+        }
+      },
+      async cadastraClienteModal () {
+        try {
+          loader({active: true})
+
+          
+          if (this.validarCampoNfCPF(this.form.cliente)) {
+            displayMessage(`Erro!`, "Campo de CPF não possui 11 digitos", "error")
+            return
+          }
+          if (this.validarCampoNfCNPJ(this.form.cliente)) {
+            displayMessage(`Erro!`, "Campo de CNPJ não possui 14 digitos", "error")
+            return
+          }
+
+          if (this.validarCampoVazio(this.form.cliente)) {
+            return
+          }
+
+          await Estampagem.salvarClienteNovo(this.form.cliente)
+          this.retornaListaClientes()
+          this.form.cliente.nome = ""
+          this.$bvModal.hide('modal-cliente')
+        } catch ({ message, response }) {
+          if (message && ! response) {
+            return displayMessage(`Erro!`, message , 'error')
+          }
+
+          const { data: {status, message: mensagem} } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text , 'error')
+        } finally {
+          loader({active: false})
+        }
+
+      },
+      getClassText () {
+        if (!this.form.categoriaVeiculo) return "text-black"
+
+        let text
+        const categoria = this.form.categoriaVeiculo
+        const especie  = this.form.especieVeiculo
+
+        if (categoria.match("PARTICULAR")) {
+          if(especie.match("COLECAO")) {
+            text = "text-silver"
+          }else{
+            text = "text-black"
+          }
+        } else if (categoria.match("ALUGUEL")) {
+          text = "text-red"
+        } else if (categoria.match("APRENDIZAGEM")) {
+          text = "text-red"
+        } else if (categoria.match("OFICIAL")) {
+          text = "text-blue"
+        } else if (categoria.match("DIPLOMATICO")) {
+          text = "text-gold"
+        } else if (categoria.match("FABRICANTE")) {
+          text = "text-green"
+        } else if (categoria.match("COLECAO")) {
+          text = "text-silver"
+        } else {
+          text = "text-black"
+        }
+
+        return text
+      },
+      async returnOrdemServico () {
+
+        // if (this.form.status === "CONCLUIDA") {
+        //   displayMessage(`Erro!`, "Estampagem já concluída!\n" +
+        //     "A ordem de serviço só pode ser impressa antes de concluir a estampagem.", "error")
+        //   return
+        // }
+
+        try {
+          loader({
+            active: true
+          })
+          const json = await Relatorio.relatorioOS(this.form.numeroAutorizacaoEstampagem, {
+            responseType: "arraybuffer",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/pdf",
+            },
+          })
+          const url = URL.createObjectURL(new Blob([json.data], {type: 'application/pdf'}))
+          window.open(url)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      }, 
+      async returnComprovante () {
+
+        // if (this.form.status !== "CONCLUIDA") {
+        //   displayMessage(`Erro!`, "Estampagem não concluída!\n"
+        //     +"O comprovante só pode ser gerado, assim que a estampagem for concluída.", "error")
+        //   return
+        // }
+
+        try {
+          loader({
+            active: true
+          })
+          const json = await Relatorio.relatorioComprovante(this.form.numeroAutorizacaoEstampagem, {
+            responseType: "arraybuffer",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/pdf",
+            },
+          })
+          const url = URL.createObjectURL(new Blob([json.data], {type: 'application/pdf'}))
+          window.open(url)
+          
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+    },
+  }
+</script>
+
+<style lang="scss">
+.placa-carro {
+    background-image: url('../../assets/img/placa_carro.png');
+    background-repeat: no-repeat;
+    height: 174px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    font-size: 110px;
+    font-family: 'Mercosul' !important;
+
+    &-texto {
+        margin-top: 190px;
+        display: flex;
+        align-items: flex-end;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+.placa-moto {
+    background-image: url('../../assets/img/placa-moto.png');
+    background-repeat: no-repeat;
+    height: 274px;
+    width: 282px;
+    display: flex;
+    justify-content: center;
+    font-size: 85px;
+    font-family: 'Mercosul' !important;
+    line-height: 70px;
+
+    &-texto {
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin-top: 80px;
+    }
+}
+
+.text-black {
+    color: black !important;
+}
+
+.text-red {
+    color: red !important;
+}
+
+.text-blue {
+    color: blue !important;
+}
+
+.text-gold {
+    color: rgb(243, 207, 4) !important;
+}
+
+.text-green {
+    color: green !important;
+}
+
+.text-silver {
+    color: silver !important;
+}
+</style>
