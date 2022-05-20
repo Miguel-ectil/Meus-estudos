@@ -1,0 +1,196 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    redirect: '/login'
+  },
+  {
+    path: '/index',
+    name: 'Dashboard',
+    component: () => import('@/views/Dashboard/Dashboard')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login/Login.vue')
+  },
+  {
+    path: '/page-not-found',
+    name: 'Page Not Found',
+    component: () => import('@/views/Default/NotFound.vue')
+  },
+  {
+    path: '/blanks/consultar',
+    name: 'Consultar Blank',
+    component: () => import('@/views/Blanks/Consultar.vue')
+  },
+  {
+    path: '/blanks/inativar',
+    name: 'Inativar Blank',
+    component: () => import('@/views/Blanks/Inativar.vue'),
+    props: true
+  },
+  {
+    path: '/blanks/devolucao',
+    name: 'Devolucao Blank',
+    component: () => import('@/views/Blanks/Devolucao.vue'),
+    props: true
+  },
+  {
+    path: '/lotes-blank/inserir',
+    name: 'Inserir blank no lote',
+    component: () => import('@/views/Lotes/LotesBlanks/InserirBlank.vue'),
+    props: true
+  },
+  {
+    path: '/lotes-blank/criar',
+    name: 'Criar Lote Saida',
+    component: () => import('@/views/Lotes/LotesBlanks/CriarBlank.vue'),
+    props: true
+  },
+  {
+    path: '/lotes-blank/consultar',
+    name: 'Consultar Blanks',
+    component: () => import('@/views/Lotes/LotesBlanks/Blanks.vue')
+  },
+  {
+    path: '/lotes-serpro/consulta',
+    name: 'Consultar',
+    component: () => import('@/views/Lotes/LotesSerpro/Consulta.vue')
+  },
+  {
+    path: '/lotes-serpro/consulta-lotes',
+    name: 'Consultar Lotes',
+    component: () => import('@/views/Lotes/LotesSerpro/ConsultaLotes.vue'),
+    props: true
+  },
+  {
+    path: '/cadastros/usuario',
+    name: 'Cadastrar Usuário',
+    component: () => import('@/views/Register/User.vue')
+  },
+  {
+    path: '/cadastros/estampador',
+    name: 'Cadastrar Estampador',
+    component: () => import('@/views/Register/Estampador.vue')
+  },
+  {
+    path: '/cadastros/empresa-nf',
+    name: 'Cadastrar Empresa Nf',
+    component: () => import('@/views/Register/NfEmpresa.vue')
+  },
+  {
+    path: '/cadastros/gerar-nf',
+    name: 'Gerar Nf',
+    component: () => import('@/views/Register/GerarNf.vue'),
+    props: true,
+  },
+  {
+    path: '/cadastros/gerar-cupom',
+    name: 'Gerar Cupom',
+    component: () => import('@/views/Register/GerarCupom.vue'),
+    props: true,
+  },
+  {
+    path: '/estampador/inativar-blank',
+    name: 'Inativar Blank Estampador',
+    component: () => import('@/views/Estampadores/InativarBlank.vue'),
+    props: true,
+  },
+  {
+    path: '/estampador/estampar-blank',
+    name: 'Estampar Blank',
+    component: () => import('@/views/Estampadores/EstamparBlank.vue')
+  },
+  {
+    path: '/estampador/consultar',
+    name: 'Consultar Blank Estampador',
+    component: () => import('@/views/Estampadores/Consultar.vue')
+  },
+  {
+    path: '/estampador/confirmar-recebimento-lote',
+    name: 'Confirmar Recebimento Lote',
+    component: () => import('@/views/Estampadores/ConfirmarRecebimento.vue')
+  },
+  {
+    path: '/estampador/lotes-recebidos',
+    name: 'Lotes Recebidos',
+    component: () => import('@/views/Estampadores/LotesRecebidos.vue')
+  },
+  {
+    path: '/estampador/cadastros',
+    name: 'Solicitantes & Proprietários',
+    component: () => import('@/views/Estampadores/Cadastros.vue')
+  },
+  {
+    path: '/estampador/certificado',
+    name: 'Certificado',
+    component: () => import('@/views/Estampadores/Certificado.vue')
+  },
+  {
+    path: '/relatorio/estoque',
+    name: 'Relatorio de Estoque',
+    component: () => import('@/views/Relatorios/Estoque.vue')
+  },
+  {
+    path: '/relatorio/inativo',
+    name: 'Relatorio de Inativos',
+    component: () => import('@/views/Relatorios/Inativo.vue')
+  },
+  {
+    path: '/relatorio/seriais',
+    name: 'Relatorio de Blanks disponiveis',
+    component: () => import('@/views/Relatorios/Disponivel.vue')
+  },
+  {
+    path: '/relatorio/nfs',
+    name: 'Relatorio de notas fiscais',
+    component: () => import('@/views/Relatorios/NotasFiscais.vue')
+  },
+  {
+    path: '/relatorio/nfcs',
+    name: 'Relatorio de cupons fiscais',
+    component: () => import('@/views/Relatorios/CuponsFiscais.vue')
+  },
+  {
+    path: '/relatorio/estampagem',
+    name: 'Relatorio de Estampagem',
+    component: () => import('@/views/Relatorios/Estampagem.vue')
+  },
+  {
+    path: '/estampagem/cadastro-ae',
+    name: 'Cadastro de autorizacao de estampagem',
+    component: () => import('@/views/Estampagem/CadastrarAe.vue'),
+    props: true
+  },
+  {
+    path: '/estampador/estampar-blank',
+    name: 'Estampar blank',
+    component: () => import('@/views/Estampadores/EstamparBlank.vue'),
+    props: true
+  },
+  {
+    path: '/estampagem/listar-aes',
+    name: 'Lista de autorizacao de estampagem',
+    component: () => import('@/views/Estampagem/ListarAEs.vue')
+  },
+  {
+    path: '/estampagem/estampagem-ae',
+    name: 'Registrar autorizacao de estampagem',
+    component: () => import('@/views/Estampagem/EstamparAe.vue'),
+    props: true
+  },
+  
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router

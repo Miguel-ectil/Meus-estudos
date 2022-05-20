@@ -1,0 +1,1317 @@
+<template>
+  <div class="container mt-2">
+    <div class="row">
+      <div class="col-xl-12 col-md-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            Estampar Blank
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-md-12 col-sm-12">
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="card bg-light text-dark mb-4">
+              <div class="card-header bold">
+                Dados
+              </div>
+              <div class="card-body">
+                <div class="row mb-1">
+                  <div class="col-5">
+                    <label for="numero_autorizacao"
+                           class="label mb-0">Número Autorização</label>
+                  </div>
+                  <div class="col-7 input-group">
+                    <input id="numero_autorizacao"
+                           v-model="numAe"
+                           type="number"
+                           name="numero_autorizacao"
+                           class="form-control form-control-sm">
+                    <div class="input-group-append">
+                      <button class="btn btn-sm btn-primary"
+                              type="button"
+                              @click="getAutorizacaoEstampagem()">
+                        <b-icon-search />
+                      </button>
+                    </div>
+                  </div>
+                  <p> {{ form.numeroAutorizacaoEstampagem }}</p>
+                </div>
+                <div v-if="firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="chassis"
+                           class="label mb-0">Status AE</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="statusAE"
+                           v-model="form.statusAE"
+                           type="text"
+                           name="statusAE"
+                           class="form-control form-control-sm"
+                           disabled>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-5">
+                    <label for="chassis"
+                           class="label mb-0">Chassis</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="chassis"
+                           v-model="form.chassis"
+                           type="text"
+                           name="chassis"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div v-if="firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="categoria"
+                           class="label mb-0">Categoria Veiculo</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="categoria"
+                           v-model="form.categoriaVeiculo"
+                           type="text"
+                           name="categoria"
+                           class="form-control form-control-sm"
+                           disabled>
+                  </div>
+                </div>
+                <div v-if="firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="especie"
+                           class="label mb-0">Espécie Veículo</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="especie"
+                           v-model="form.especieVeiculo"
+                           type="text"
+                           name="especie"
+                           class="form-control form-control-sm"
+                           disabled>
+                  </div>
+                </div>
+                <div v-if="firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="tipo_veiculo"
+                           class="label mb-0">Tipo de Veículo</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="tipo_veiculo"
+                           v-model="form.tipoVeiculo"
+                           type="text"
+                           name="tipo_veiculo"
+                           class="form-control form-control-sm"
+                           disabled>
+                  </div>
+                </div>
+
+                <div v-if="firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="placa"
+                           class="label mb-0">Placa</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="placa"
+                           v-model="form.placa"
+                           v-mask="'AAA#A##'"
+                           type="text"
+                           name="placa"
+                           class="form-control form-control-sm"
+                           disabled>
+                  </div>
+                </div>
+                <div v-if="showDianteira && firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="serial"
+                           class="label mb-0">Serial Dianteira</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="serialDianteira"
+                           v-model="form.serialBlankDianteira"
+                           type="text"
+                           name="serialDianteira"
+                           class="form-control form-control-sm mb-1"
+                           :disabled="!disabled1 ? disabled : ''"
+                           @blur="getNumberBlank(1)">
+                    <button v-if="iniciaEstampagem1"
+                            class="btn btn-sm btn-block btn-success"
+                            @click="estampagem(1)">
+                      INICIAR ESTAMPAGEM
+                    </button>
+                    <button v-if="registraEstampagem1"
+                            class="btn btn-sm btn-block btn-secondary"
+                            disabled>
+                      ESTAMPAGEM INICIADA
+                    </button>
+                    <button v-if="registraEstampagem1"
+                            class="btn btn-sm btn-block btn-success"
+                            @click="registrarEstampagem(1)">
+                      REGISTRAR ESTAMPAGEM
+                    </button>
+                    <button v-if="registraEstampagem1"
+                            class="btn btn-sm btn-block btn-danger"
+                            @click="cancelarEstampagem(1)">
+                      CANCELAR ESTAMPAGEM
+                    </button>
+                    <button v-if="!registraEstampagem1 && !iniciaEstampagem1"
+                            class="btn btn-sm btn-block btn-info"
+                            disabled>
+                      ESTAMPAGEM CONCLUIDA
+                    </button>
+                  </div>
+                </div>
+                <div v-if="showTraseira && firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="serial"
+                           class="label mb-0">Serial Traseira</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="serialTraseira"
+                           v-model="form.serialBlankTraseira"
+                           type="text"
+                           name="serialTraseira"
+                           class="form-control form-control-sm mb-1"
+                           :disabled="!disabled2 ? disabled : ''"
+                           @blur="getNumberBlank(2)">
+                    <button v-if="iniciaEstampagem2"
+                            class="btn btn-sm btn-block btn-success"
+                            @click="estampagem(2)">
+                      INICIAR ESTAMPAGEM
+                    </button>
+                    <button v-if="registraEstampagem2"
+                            class="btn btn-sm btn-block btn-secondary"
+                            disabled>
+                      ESTAMPAGEM INICIADA
+                    </button>
+                    <button v-if="registraEstampagem2"
+                            class="btn btn-sm btn-block btn-success"
+                            @click="registrarEstampagem(2)">
+                      REGISTRAR ESTAMPAGEM
+                    </button>
+                    <button v-if="registraEstampagem2"
+                            class="btn btn-sm btn-block btn-danger"
+                            @click="cancelarEstampagem(2)">
+                      CANCELAR ESTAMPAGEM
+                    </button>
+                    <button v-if="!registraEstampagem2 && !iniciaEstampagem2"
+                            class="btn btn-sm btn-block btn-info"
+                            disabled>
+                      ESTAMPAGEM CONCLUIDA
+                    </button>
+                  </div>
+                </div>
+                <div v-if="showSegundaTraseira && firstSearch"
+                     class="row mb-1">
+                  <div class="col-5">
+                    <label for="serial"
+                           class="label mb-0">Serial 2a Traseira</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="serialSegundaTraseira"
+                           v-model="form.serialBlankSegundaTraseira"
+                           type="text"
+                           name="serialSegundaTraseira"
+                           class="form-control form-control-sm"
+                           :disabled="!disabled3 ? disabled : ''"
+                           @blur="getNumberBlank(3)">
+                    <button v-if="iniciaEstampagem3"
+                            class="btn btn-sm btn-block btn-success"
+                            @click="estampagem(3)">
+                      INICIAR ESTAMPAGEM
+                    </button>
+                    <button v-if="registraEstampagem3"
+                            class="btn btn-sm btn-block btn-secondary"
+                            disabled>
+                      ESTAMPAGEM INICIADA
+                    </button>
+                    <button v-if="registraEstampagem3"
+                            class="btn btn-sm btn-block btn-success"
+                            @click="registrarEstampagem(3)">
+                      REGISTRAR ESTAMPAGEM
+                    </button>
+                    <button v-if="registraEstampagem3"
+                            class="btn btn-sm btn-block btn-danger"
+                            @click="cancelarEstampagem(3)">
+                      CANCELAR ESTAMPAGEM
+                    </button>
+                    <button v-if="!registraEstampagem3 && !iniciaEstampagem3"
+                            class="btn btn-sm btn-block btn-info"
+                            disabled>
+                      ESTAMPAGEM CONCLUIDA
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-12 col-sm-12">
+        <div v-if="!placasMotos.includes(form.tipoVeiculo)"
+             class="row mt-3">
+          <div class="col-12 d-flex justify-content-center">
+            <div class="placa placa-carro">
+              <div class="placa-carro-texto"
+                   :class="getClassText()">
+                {{ form.placa ? form.placa.toUpperCase() : form.placa }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else
+             class="row mt-3">
+          <div class="col-12 d-flex justify-content-center">
+            <div class="placa placa-moto">
+              <div v-if="form.placa"
+                   class="placa-moto-texto">
+                <div class="row justify-content-center"
+                     :class="getClassText()">
+                  {{ form.placa.toUpperCase().substring(0,3) }}
+                </div>
+                <div class="row justify-content-center"
+                     :class="getClassText()">
+                  {{ form.placa.toUpperCase().substring(3,7) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="firstSearch"
+             class="row mt-3">
+          <div class="col-12">
+            <div class="card bg-light text-dark mb-4">
+              <div class="card-header bold">
+                Dados do cliente
+              </div>
+              <div class="card-body">
+                <div class="row mb-1">
+                  <div class="col-5">
+                    <label for="numero_autorizacao"
+                           class="label mb-0">Nome cliente</label>
+                  </div>
+                  <div class="col-7 input-group">
+                    <input id="nome_cliente"
+                           v-model="form.cliente.nome"
+                           type="text"
+                           name="nome_cliente"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-5">
+                    <label for="numero_autorizacao"
+                           class="label mb-0">Solicitante/Despachante</label>
+                  </div>
+                  <div class="col-7 input-group">
+                    <input id="nome_cliente"
+                           v-model="form.cliente.solicitante"
+                           type="text"
+                           name="nome_cliente"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-5">
+                    <label for="chassis"
+                           class="label mb-0">Documento (CPF/CNPJ)</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="documento_cliente"
+                           v-model="form.cliente.documento"
+                           type="text"
+                           name="documento_cliente"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-5">
+                    <label for="categoria"
+                           class="label mb-0">Endereço</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="endereco_cliente"
+                           v-model="form.cliente.endereco"
+                           type="text"
+                           name="endereco_cliente"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-5">
+                    <label for="especie"
+                           class="label mb-0">Telefone</label>
+                  </div>
+                  <div class="col-7">
+                    <input id="especie"
+                           v-model="form.cliente.telefone"
+                           type="text"
+                           name="especie"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <button class="btn btn-sm btn-block btn-success"
+                          @click="salvarCliente()">
+                    SALVAR CLIENTE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="firstSearch"
+             class="row mt-3">
+          <div class="card-header bold">
+            <button class="btn btn-sm btn-block btn-warning"
+                    @click="inutilizarPlacas()">
+              Inutilizar Placas
+            </button>
+            <button class="btn btn-sm btn-block btn-success"
+                    @click="goEmissaoNf()">
+              Emitir NotaFiscal
+            </button>
+            <button class="btn btn-sm btn-block btn-success"
+                    @click="returnOrdemServico()">
+              Ordem de Serviço
+            </button>
+            <button class="btn btn-sm btn-block btn-success"
+                    @click="returnComprovante()">
+              Comprovante de Entrega
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-sm-12">
+        <div class="card-header">
+          <h1 class="label h5 m-0">
+            Autorizações de estampagem
+          </h1>
+        </div>
+        <div class="card-body p-0">
+          <b-table :items="numerosAes"
+                   :fields="fields"
+                   :per-page="perPage"
+                   :current-page="currentPage"
+                   striped
+                   hover
+                   sort-icon-left />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {
+    tipos,
+    categorias,
+    tiposPlacas,
+    especies
+  } from '@/constants/veiculo'
+
+  import Estampagem from '@/services/estampagem/Estampagem'
+  import NotaFiscal from '@/services/notafiscal/NotaFiscal'
+  import Relatorio from '@/services/relatorio/Relatorio'
+  export default {
+    name: 'EstamparBlank',
+    data () {
+      return {
+        currentPage: 1,
+        perPage: 50,
+        fields: [{
+                   key: 'numeroAe',
+                   sortable: false,
+                   label: 'Número AE',
+                 },
+                 {
+                   key: 'placa',
+                   sortable: false,
+                   label: 'Placa',
+                 },
+                 {
+                   key: 'status',
+                   sortable: false,
+                   label: 'Status',
+                 },
+                 {
+                   key: 'tipo',
+                   sortable: false,
+                   label: 'Tipo',
+                 },
+                 {
+                   key: 'categoria',
+                   sortable: false,
+                   label: 'Categoria',
+                 },
+                 {
+                   key: 'createAt',
+                   sortable: false,
+                   label: 'Criado em',
+                 },
+        ],
+        data: moment().format('DD/MM/YYYY HH:mm'),
+        show: false,
+        showDianteira: true,
+        showTraseira: true,
+        showSegundaTraseira: true,
+        firstSearch: false,
+        iniciaEstampagem1: true,
+        iniciaEstampagem2: true,
+        iniciaEstampagem3: true,
+        registraEstampagem1: false,
+        registraEstampagem2: false,
+        registraEstampagem3: false,
+        disabled1: false,
+        disabled2: false,
+        disabled3: false,
+        tipos,
+        categorias,
+        tiposPlacas,
+        especies,
+        form: {
+          statusAE: null,
+          categoriaVeiculo: null,
+          chassis: null,
+          cnpjEstampadorResponsavel: null,
+          especieVeiculo: null,
+          numAe: "",
+          placa: null,
+          serialBlank: null,
+          serialBlankDianteira: null,
+          serialBlankTraseira: null,
+          serialBlankSegundaTraseira: null,
+          tipoPlaca: null,
+          tipoVeiculo: null,
+          idCliente: null,
+          cliente: {
+            id: null,
+            nome: null,
+            endereco: null,
+            telefone: null,
+            documento: null,
+            solicitante: null,
+          },
+        },
+        cancelados: [],
+        numerosAes: [
+
+        ],
+        cblank: {
+          motivo: `BLANK_DANIFICADO`,
+          observacoes: `Blank cancelado pelo AE`,
+          seriaisBlanks: null,
+        },
+        placasMotos: [
+          'CICLOMOTOR',
+          'MOTONETA',
+          'MOTOCICLETA',
+          'TRICICLO',
+        ],
+        dados: null,
+        serialHashBlank: null,
+      }
+    },
+    async created () {
+      if (this.numAe) {
+        this.form.numeroAutorizacaoEstampagem = this.numAe
+        this.getAutorizacaoEstampagem()
+      }
+    },
+    methods: {
+      async getNumberBlank (posBlank) {
+
+        if (posBlank === 1) {
+          this.serialHashBlank = this.form.serialBlankDianteira.replace(/[^A-Za-z0-9]/gi, '')
+        }
+
+        if (posBlank === 2) {
+          this.serialHashBlank = this.form.serialBlankTraseira.replace(/[^A-Za-z0-9]/gi, '')
+        }
+
+        if (posBlank === 3) {
+          this.serialHashBlank = this.form.serialBlankSegundaTraseira.replace(/[^A-Za-z0-9]/gi, '')
+        }
+
+        if (isNaN(this.serialHashBlank)) {
+
+          loader({
+            active: false
+          })
+          try {
+            loader({
+              active: true
+            })
+            const {
+              data: blankData
+            } = await Estampagem.getBlankBySerialHash(this.serialHashBlank)
+
+            if (posBlank === 1) {
+              this.form.serialBlankDianteira = blankData.serial
+            }
+            if (posBlank === 2) {
+              this.form.serialBlankTraseira = blankData.serial
+            }
+            if (posBlank === 3) {
+              this.form.serialBlankSegundaTraseira = blankData.serial
+            }
+
+          } catch ({
+            message,
+            response
+          }) {
+            if (message && !response) {
+              return displayMessage(`Erro!`, message, 'error')
+            }
+
+            const {
+              data: {
+                status,
+                message: mensagem
+              }
+            } = response
+
+            let text = ''
+
+            text += status ? `Status: ${status}` : ''
+            text += mensagem ? `, ${mensagem}.` : ''
+
+            displayMessage(`Erro!`, text, 'error')
+          } finally {
+            loader({
+              active: false
+            })
+          }
+        }
+      },
+      inutilizarPlacas () {
+        this.$router.push({
+          name: 'Inativar Blank Estampador'
+        })
+      },
+      goEmissaoNf () {
+        let numAe = this.form.numeroAutorizacaoEstampagem
+        this.$router.push({
+          name: 'Gerar Nf',
+          params: {
+            numAe
+          }
+        })
+      },
+      async returnOrdemServico () {
+
+        // if (this.form.status === "CONCLUIDA") {
+        //   displayMessage(`Erro!`, "Estampagem já concluída!\n" +
+        //     "A ordem de serviço só pode ser impressa antes de concluir a estampagem.", "error")
+        //   return
+        // }
+
+        try {
+          loader({
+            active: true
+          })
+          const json = await Relatorio.relatorioOS(this.form.numeroAutorizacaoEstampagem, {
+            responseType: "arraybuffer",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/pdf",
+            },
+          })
+          const url = window.URL.createObjectURL(new Blob([json.data]))
+          const link = document.createElement("a")
+          link.href = url
+          link.setAttribute("download", "Ordem de Serviço " + this.form.numeroAutorizacaoEstampagem + ".pdf")
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async returnComprovante () {
+
+        // if (this.form.status !== "CONCLUIDA") {
+        //   displayMessage(`Erro!`, "Estampagem não concluída!\n"
+        //     +"O comprovante só pode ser gerado, assim que a estampagem for concluída.", "error")
+        //   return
+        // }
+
+        try {
+          loader({
+            active: true
+          })
+          const json = await Relatorio.relatorioComprovante(this.form.numeroAutorizacaoEstampagem, {
+            responseType: "arraybuffer",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/pdf",
+            },
+          })
+          const url = window.URL.createObjectURL(new Blob([json.data]))
+          const link = document.createElement("a")
+          link.href = url
+          link.setAttribute("download", "Comprovante de entrega " + this.form.numeroAutorizacaoEstampagem + ".pdf")
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, "error")
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            },
+          } = response
+
+          let text = ""
+
+          text += status ? `Status: ${status}` : ""
+          text += mensagem ? `, ${mensagem}.` : ""
+
+          displayMessage(`Erro!`, text, "error")
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async emitirNf () {
+        try {
+          loader({
+            active: true
+          })
+          await NotaFiscal.emitirNf(this.form)
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async salvarCliente () {
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: cliente
+          } = await Estampagem.salvarCliente(this.form)
+          this.form.cliente.nome = cliente.nome
+          this.form.cliente.endereco = cliente.endereco
+          this.form.cliente.telefone = cliente.telefone
+          this.form.cliente.documento = cliente.documento
+          this.form.cliente.solicitante = cliente.solicitante
+          this.form.cliente.id = cliente.id
+          this.form.idCliente = cliente.id
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async estampagem (posBlank) {
+        if (posBlank === 1) {
+          this.form.serialBlank = this.form.serialBlankDianteira
+          this.form.tipoPlaca = "DIANTEIRA"
+        }
+
+        if (posBlank === 2) {
+          this.form.serialBlank = this.form.serialBlankTraseira
+          this.form.tipoPlaca = "TRASEIRA"
+        }
+
+        if (posBlank === 3) {
+          this.form.serialBlank = this.form.serialBlankSegundaTraseira
+          this.form.tipoPlaca = "SEGUNDA_TRASEIRA"
+        }
+
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: estampagem
+          } = await Estampagem.estampar(this.form)
+
+          this.dados = estampagem
+          this.getAutorizacaoEstampagem()
+          this.show = true
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async cancelarEstampagem (posBlank) {
+
+        if (posBlank === 1) {
+          this.form.serialBlank = this.form.serialBlankDianteira
+          this.form.tipoPlaca = "DIANTEIRA"
+        }
+
+        if (posBlank === 2) {
+          this.form.serialBlank = this.form.serialBlankTraseira
+          this.form.tipoPlaca = "TRASEIRA"
+        }
+
+        if (posBlank === 3) {
+          this.form.serialBlank = this.form.serialBlankSegundaTraseira
+          this.form.tipoPlaca = "SEGUNDA_TRASEIRA"
+        }
+
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: estampagem
+          } = await Estampagem.cancelar(this.form)
+
+          this.dados = estampagem
+          this.getAutorizacaoEstampagem()
+          this.show = true
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async registrarEstampagem (posBlank) {
+        if (posBlank === 1) {
+          this.form.serialBlank = this.form.serialBlankDianteira
+          this.form.tipoPlaca = "DIANTEIRA"
+        }
+
+        if (posBlank === 2) {
+          this.form.serialBlank = this.form.serialBlankTraseira
+          this.form.tipoPlaca = "TRASEIRA"
+        }
+
+        if (posBlank === 3) {
+          this.form.serialBlank = this.form.serialBlankSegundaTraseira
+          this.form.tipoPlaca = "SEGUNDA_TRASEIRA"
+        }
+
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: estampagem
+          } = await Estampagem.registrar(this.form)
+
+          this.dados = estampagem
+          this.getAutorizacaoEstampagem()
+          this.show = true
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async getBlankCancelados () {
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: blanksCancelados
+          } = await Estampagem.getBlankCancelados(this.form.numeroAutorizacaoEstampagem)
+          if (!blanksCancelados) {
+            throw new Error('Nenhuma autorização encontrada.')
+          }
+          this.cancelados = blanksCancelados
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async cancelarBlank (serialBlankSelected) {
+
+        try {
+          loader({
+            active: true
+          })
+          this.cblank.seriaisBlanks = serialBlankSelected
+          await Estampagem.cancelarBlankEstampagem(this.cblank)
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async getAutorizacaoEstampagem () {
+
+        try {
+          loader({
+            active: true
+          })
+
+          if(this.form.numeroAutorizacaoEstampagem.length > 15) {
+            displayMessage(`Erro!`, "O AE não pode ser maior que 15 digitos." , 'error')
+            return
+          }
+
+          const {
+            data: estampagem
+          } = await Estampagem.getAutorizacaoEstampagem(this.form.numeroAutorizacaoEstampagem)
+          if (!estampagem) {
+            throw new Error('Nenhuma autorização encontrada.')
+          }
+          this.firstSearch = true
+          this.form.statusAE = estampagem.estadoAutorizacao
+          this.form.categoriaVeiculo = estampagem.veiculo.categoria
+          this.form.placa = estampagem.veiculo.placa
+          this.form.especieVeiculo = estampagem.veiculo.especie
+          this.form.tipoVeiculo = estampagem.veiculo.tipo
+          this.showDianteira = estampagem.tiposPlacas.dianteira
+          this.showTraseira = estampagem.tiposPlacas.traseira
+          this.showSegundaTraseira = estampagem.tiposPlacas.segundaTraseira
+          this.form.chassis = estampagem.chassis
+          this.form.serialBlankDianteira = estampagem.serialBlankDianteira
+          this.form.serialBlankTraseira = estampagem.serialBlankTraseira
+          this.form.serialBlankSegundaTraseira = estampagem.serialBlankSegundaTraseira
+          this.form.cliente.nome = estampagem.cliente.nome
+          this.form.cliente.endereco = estampagem.cliente.endereco
+          this.form.cliente.telefone = estampagem.cliente.telefone
+          this.form.cliente.documento = estampagem.cliente.documento
+          this.form.cliente.solicitante = estampagem.cliente.solicitante
+          this.form.cliente.id = estampagem.cliente.id
+
+          if (estampagem.dianteiraStatus === "INICIADA") {
+            this.iniciaEstampagem1 = false
+            this.registraEstampagem1 = true
+          } else if (estampagem.dianteiraStatus === "CONCLUIDA") {
+            this.iniciaEstampagem1 = false
+            this.registraEstampagem1 = false
+          } else {
+            this.iniciaEstampagem1 = true
+            this.registraEstampagem1 = false
+          }
+
+          if (estampagem.traseiraStatus === "INICIADA") {
+            this.iniciaEstampagem2 = false
+            this.registraEstampagem2 = true
+          } else if (estampagem.traseiraStatus === "CONCLUIDA") {
+            this.iniciaEstampagem2 = false
+            this.registraEstampagem2 = false
+          } else {
+            this.iniciaEstampagem2 = true
+            this.registraEstampagem2 = false
+          }
+
+          if (estampagem.segundaTraseiraStatus === "INICIADA") {
+            this.iniciaEstampagem3 = false
+            this.registraEstampagem3 = true
+          } else if (estampagem.segundaTraseiraStatus === "CONCLUIDA") {
+            this.iniciaEstampagem3 = false
+            this.registraEstampagem3 = false
+          } else {
+            this.iniciaEstampagem3 = true
+            this.registraEstampagem3 = false
+          }
+
+          if (this.form.statusAE === "CONCLUIDA") {
+            this.disabled1 = true
+            this.disabled2 = true
+            this.disabled3 = true
+          } else {
+            this.disabled1 = false
+            this.disabled2 = false
+            this.disabled3 = false
+          }
+
+          this.checaAeBanco()
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+          this.getNumerosAes()
+        }
+      },
+      async getNumerosAes () {
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: nAes
+          } = await Estampagem.getNumerosAes()
+          this.numerosAes = nAes
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      async getCnpjEstampador () {
+        try {
+          loader({
+            active: true
+          })
+          const {
+            data: estampador
+          } = await Estampagem.getCnpjEstampador()
+          if (!estampador) {
+            throw new Error('Nenhum cnpj encontrado.')
+          }
+          this.form.cnpjEstampadorResponsavel = estampador.cnpj
+
+        } catch ({
+          message,
+          response
+        }) {
+          if (message && !response) {
+            return displayMessage(`Erro!`, message, 'error')
+          }
+
+          const {
+            data: {
+              status,
+              message: mensagem
+            }
+          } = response
+
+          let text = ''
+
+          text += status ? `Status: ${status}` : ''
+          text += mensagem ? `, ${mensagem}.` : ''
+
+          displayMessage(`Erro!`, text, 'error')
+        } finally {
+          loader({
+            active: false
+          })
+        }
+      },
+      getClassText () {
+        if (!this.form.categoriaVeiculo) return 'text-black'
+
+        let text
+        const categoria = this.form.categoriaVeiculo
+
+        if (categoria.match('PARTICULAR')) {
+          text = 'text-black'
+        } else if (categoria.match('ALUGUEL')) {
+          text = 'text-red'
+        } else if (categoria.match('APRENDIZAGEM')) {
+          text = 'text-red'
+        } else if (categoria.match('OFICIAL')) {
+          text = 'text-blue'
+        } else if (categoria.match('DIPLOMATICO')) {
+          text = 'text-gold'
+        } else if (categoria.match('FABRICANTE')) {
+          text = 'text-green'
+        } else if (categoria.match('COLECAO')) {
+          text = 'text-silver'
+        } else {
+          text = 'text-black'
+        }
+
+        return text
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+.placa-carro {
+    background-image: url('../../assets/img/placa_carro.png');
+    background-repeat: no-repeat;
+    height: 174px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    font-size: 110px;
+    font-family: 'Mercosul' !important;
+
+    &-texto {
+        margin-top: 190px;
+        display: flex;
+        align-items: flex-end;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+.placa-moto {
+    background-image: url('../../assets/img/placa-moto.png');
+    background-repeat: no-repeat;
+    height: 274px;
+    width: 282px;
+    display: flex;
+    justify-content: center;
+    font-size: 85px;
+    font-family: 'Mercosul' !important;
+    line-height: 70px;
+
+    &-texto {
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin-top: 80px;
+    }
+}
+
+.text-black {
+    color: black !important;
+}
+
+.text-red {
+    color: red !important;
+}
+
+.text-blue {
+    color: blue !important;
+}
+
+.text-gold {
+    color: rgb(243, 207, 4) !important;
+}
+
+.text-green {
+    color: green !important;
+}
+
+.text-silver {
+    color: silver !important;
+}
+</style>
