@@ -48,7 +48,5 @@ h3 {
 .btn-jogar {
     padding: 8px 15px;
     border: 0;
-    background: var(--primary-color);
-    border-radius: 5px;
-    margin-top: 20px;
+    background: var(--)
 }
