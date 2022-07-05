@@ -1,7 +1,0 @@
-{
-    "posts": [
-      { "id": 1, "title": "Curso Quasar crud", "author": "Miguel ectil", "content": "Este é um artigo sobre vue 3, Quasar e API REST." },
-      { "id": 2, "title": "Curso Vue crud", "author": "Miguel ectil", "content": "Este é um artigo sobre vue 3." }
-      
-    ]
-  }
