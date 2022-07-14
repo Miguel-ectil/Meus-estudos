@@ -14,7 +14,7 @@
           label="Your name *"
           hint="Name and surname"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Por favor, digite algo']"
+          :rules="[ val => val && val.length > 0 || ' favor, digite algo']"
         />
 
         <q-input

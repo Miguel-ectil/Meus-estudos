@@ -68,11 +68,11 @@ export default {
       };
     }
   },
-  mounted() {
-    this.$q.notify.setDefaults({
-      position: 'top-right',
-      color: 'purple-8'
-    });
-  }
+  // mounted() {
+  //   this.$q.notify.setDefaults({
+  //     position: 'top-right',
+  //     color: 'purple-8'
+  //   });
+  // }
 }
 </script>

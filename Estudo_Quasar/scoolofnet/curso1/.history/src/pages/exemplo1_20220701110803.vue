@@ -12,30 +12,30 @@
         ]"> <!--bg-color="blue-6"= cor de fundo, color="white"=-->
         <template v-slot:prepend>
           <q-icon name="label"/>
-        </template>
+        </template> 
         <template v-slot:append>
           <q-icon name="account_box"/>
-        </template>
+        </template>  
       </q-input>
       <!-- --------------------------------------------------------------- -->
       <q-input outlined v-model="user.gmail" label="Gmail"
         :rules="[
-          val => !!val || 'Campo obrigatório',
+          val => !!val || 'Campo obrigatório', 
           val => /^[a-zA-z\-_]+@[a-zA-z]+\.[a-z]+[a-zA-Z.]*$/.test(val) || 'Gmail inválida'
           ]">
 
         <template v-slot:prepend> <!--v-slot:append outra opção, o icone ficara no final -->
           <q-icon name="email"/>
-        </template>
+        </template>  
       </q-input>
       <!-- --------------------------------------------------------------- -->
       <p>
-      <q-toggle
-        v-model="user.newsletter"
+      <q-toggle 
+        v-model="user.newsletter" 
         label="Aceita receber novidades pelo Email?"
         left-label
         checked-icon="check"
-        unchecked-icon="clear"/>
+        unchecked-icon="clear"/> 
       </p>
       <!-- --------------------------------------------------------------- -->
       <q-btn type="submit" color="primary">Salvar</q-btn>
@@ -61,7 +61,7 @@ export default {
         message: `Salvo com sucesso, kkk - <strong>${this.user.name}</strong>`,
         html: true,
       });
-    },
+    }, 
     reset() {
       this.user = {
         newsletter: true,

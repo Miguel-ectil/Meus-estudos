@@ -14,7 +14,7 @@
           label="Your name *"
           hint="Name and surname"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Por favor, digite algo']"
+          :rules="[ val => val && val.length > 0 || 'Please type something']"
         />
 
         <q-input
@@ -64,7 +64,7 @@ export default {
             color: 'red-5',
             textColor: 'white',
             icon: 'warning',
-            message: 'Você precisa aceitar a licença e os termos primeiro'
+            message: 'You need to accept the license and terms first'
           })
         }
         else {
