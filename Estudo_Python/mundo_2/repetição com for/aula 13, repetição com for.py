@@ -16,7 +16,7 @@ for c in range(6, 0, -1):
     print(c)
 print('FIM')
 print('-=-'*14)
-print('pede o primeiro o ultimo e de quanto em quanto sera a contagem')
+print('Digite o primeiro o ultimo e de quanto em quanto sera a contagem')
 i = int(input('Inicio: '))
 f = int(input('FIM: '))
 p = int(input('Passo: '))
