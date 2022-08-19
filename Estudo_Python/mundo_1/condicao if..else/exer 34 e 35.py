@@ -1,11 +1,12 @@
 from time import sleep
-print('====== Aumento para um funcionario! ======')
-sala = float(input('digite aqui o seu salario? '))
+
+print('====== Aumento de salario funcionario! ======')
+sala = float(input('digite aqui o seu salario mensal? '))
 if sala <= 1250:
-    novo = (sala * 0.15) + sala
+    novosala = (sala * 0.15) + sala
 else:
     novo = sala + (sala * 10 / 100)
-print('Quem ganhava R${} passa a ganhar R${:.2f} agora.'.format(sala, novo))
+print('Quem ganhava R${} passara a ganhar R${:.2f} apartir de agora.'.format(sala, novosala))
 
 print('====== exer 35, formar triangulo! ======')
 
