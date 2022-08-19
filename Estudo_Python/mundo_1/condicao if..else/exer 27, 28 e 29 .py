@@ -8,8 +8,8 @@ print('e o seu último nome é {}'.format(nome[len(nome)-1]))'''
 
 print('-=-=-=-=- exer 28, numero aleatorio! -=-=-=-=-')
 N1 =  random.randrange(0, 6)
-print(N1)
-num = int(input('digite um numero entre 0 e 5? '))
+# print(N1)
+num = int(input('digite um numero entre 0 e 5: '))
 print('PROCESANDO...')
 sleep(3)
 if(num == N1):
