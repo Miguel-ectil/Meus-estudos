@@ -12,7 +12,7 @@ print('-=' * 16)
 print('Os 4 ùltimos são', brasileirao[16:21])
 print('-=' * 16)
 
-print('Os times em ordem alfabética:')
+print('Os times em ordem alfabética:', sorted(brasileirao) )
 print('-=' * 16)
 
 print('O', brasileirao[7], 'esta na 8ª posição')
