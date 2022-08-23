@@ -1,4 +1,5 @@
 import random
+from time import sleep
 
 print('-=-=-=-=- exer 28, numero aleatorio! -=-=-=-=-')
 N1 =  random.randrange(0, 6)
