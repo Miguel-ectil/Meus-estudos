@@ -7,6 +7,7 @@ num = int(input("Digite um número entre 0 e 20: "))
 while num > 20 or num < 0:
   num = int(input('Esse valor não é valido. digite um número entre 0 e 20 novamente: '))
 
+print('-=' * 16)
 print(f'Você digitou o número {numeros[num]}')
 
 
