@@ -9,7 +9,7 @@ while opção != 5:
     [ 3 ] maior
     [ 4 ] novos números
     [ 5 ] sair do programa''')
-    opção = int(input('>>>>>> Qual é a sua opção?'))
+    opção = int(input('>>>>>> Qual é a sua opção? '))
     if opção == 1:
         soma = n1 + n2
         print('A soma de {} + {} é {}'.format(n1, n2, soma))
