@@ -1,0 +1,4 @@
+
+Como criar feature
+
+git checkout -B feature/nome
