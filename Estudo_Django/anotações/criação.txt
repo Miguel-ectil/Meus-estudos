@@ -3,6 +3,10 @@ acessar (python manage.py help) para achar esses nomes
 iniciando um projeto
 
 (django-admin startproject alurareceita .)
+-------------------------------------------------[
+
+Para migrar alterações
+(python manage.py migrate)
 -------------------------------------------------
 para fazer aparacer  a tela 
 (python manage.py runserver)
