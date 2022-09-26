@@ -1,2 +1,2 @@
 # Meus-estudos
-Cursos que estou fazendo
+Meus estudos em programação
