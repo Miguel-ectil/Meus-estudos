@@ -17,7 +17,7 @@ dia = input("digite o seu dia de nascimento? ")
 mes = input("digite o seu mes de nascimento: ")
 ano = input("digite o seu ano de nascimento? ")
 
-print("voce naceu no dia {} de {} de {}".format(dia,mes,ano))
+print("voce naceu no dia {} de {} de {}".format(dia, mes, ano))
 input("correto? ")
 
 conta2 = {"numero": 432, "titular": "maicol", "saldo": 100.0, "limite":1000.0}
