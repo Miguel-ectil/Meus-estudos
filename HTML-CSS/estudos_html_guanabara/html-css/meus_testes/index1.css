@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:900');
+body {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  font-family: sans-serif;
+  margin: 0;
+  background: #6D6027;
+  background: -webkit-linear-gradient(left, #D3CBB8, #6D6027);
+  background: -o-linear-gradient(left, #D3CBB8, #6D6027);
+  background: linear-gradient(to right, #D3CBB8, #6D6027);
+}
+@media (max-width: 767px) {
+  body {
+    display: block;
+  }
+}
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  cursor: pointer;
+  height: 300px;
+  margin: 20px;
+  padding: 0 20px;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.025);
+  text-align: center;
+  transition: height 1000ms;
+  width: 260px;
+}
+@media (max-width: 767px) {
+  .card {
+    left: calc(50% - 20px);
+    transform: translateX(-50%);
+  }
+}
+.card.expanded {
+  height: 400px;
+}
+.label {
+  margin-top: 30px;
+  transform: translateY(10px);
+  transition: transform 1000ms;
+}
+.card.expanded .label {
+  transform: translateY(0);
+}
+.text1 {
+  clip-path: polygon(0% 100%, 0 -90%, 50% -5%, 100% -90%, 100% 100%);
+  -webkit-clip-path: polygon(0% 100%, 0 -90%, 50% -5%, 100% -90%, 100% 100%);
+  transition: clip-path 1000ms;
+}
+.card.expanded .text1 {
+  clip-path: polygon(0% 100%, 0 -100%, 50% -15%, 100% -100%, 100% 100%);
+  -webkit-clip-path: polygon(0% 100%, 0 -100%, 50% -15%, 100% -100%, 100% 100%);
+}
+.text2 {
+  clip-path: polygon(0% 100%,0% -80%,15% -70%,17.23% -53.59%,23% -40%,27.23% -28.94%,35% -20%,41.09% -13.59%,50% -10%,58.91% -13.23%,65% -20%,72.77% -28.23%,77% -40%,82.77% -54.65%,85% -70%,100% -80%,100% 100%);
+  -webkit-clip-path: polygon(0% 100%,0% -80%,15% -70%,17.23% -53.59%,23% -40%,27.23% -28.94%,35% -20%,41.09% -13.59%,50% -10%,58.91% -13.23%,65% -20%,72.77% -28.23%,77% -40%,82.77% -54.65%,85% -70%,100% -80%,100% 100%);
+  transition: clip-path 1000ms;
+}
+.card.expanded .text2 {
+  clip-path: polygon(0% 100%,0% -90%,15% -80%,17.23% -63.59%,23% -50%,27.23% -38.94%,35% -30%,41.09% -23.59%,50% -20%,58.91% -23.23%,65% -30%,72.77% -38.23%,77% -50%,82.77% -64.65%,85% -80%,100% -90%,100% 100%);
+  -webkit-clip-path: polygon(0% 100%,0% -90%,15% -80%,17.23% -63.59%,23% -50%,27.23% -38.94%,35% -30%,41.09% -23.59%,50% -20%,58.91% -23.23%,65% -30%,72.77% -38.23%,77% -50%,82.77% -64.65%,85% -80%,100% -90%,100% 100%);
+}
+.text-content {
+  transform: translateY(-160px);
+  transition: transform 1000ms;
+}
+.card.expanded .text-content {
+  transform: translateY(-15px);
+}
+.chevron {
+  position: absolute;
+  bottom: 20px;
+  left: calc(50% - 15px);
+  transform-origin: 50%;
+  transform: rotate(180deg);
+  transition: transform 1000ms;
+}
+.card.expanded .chevron {
+  transform: rotate(0deg);
+}
+.title {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-weight: 900;
+  margin: 20px 0 12px;
+}
+.body-text {
+  padding: 0 20px;
+}
