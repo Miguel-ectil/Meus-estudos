@@ -36,7 +36,7 @@ export default function Dashboard() {
           <AccountCircle />
           </IconButton>
           </div>
-          <Button variant="contained" color="error">Sair</ Button>
+          <Button variant="contained" color="error" href="/">Sair</ Button>
           </Toolbar>
         </AppBar>
       </Box>
