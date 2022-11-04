@@ -1,0 +1,45 @@
+canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+div#options {
+	position: absolute;
+	top: 0;
+	transition: top .5s;
+	color: #aca;
+	font-size: 15px;
+	font-family: monospace;
+	width: 250px;
+	background-color: rgba(10,10,10,.8);
+}
+div#options.closed {
+	top: -140px;
+}
+div#options > p {
+	display: flex;
+}
+div#options > p > span:first-child {
+	text-align: right;
+	padding-right: 10px;
+	width: 90px;
+}
+div#options > p > span:nth-child(2){
+	width: 150px;
+}
+div#options > p:last-child {
+	display: inline-block;
+	width: 250px;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+}
+p#instruction {
+	position: absolute;
+	bottom: 0;
+	width: 300px;
+	left: calc( 50% - 150px );
+	color: rgb(0,255,0);
+	font-family: monospace;
+	text-align: center;
+}
