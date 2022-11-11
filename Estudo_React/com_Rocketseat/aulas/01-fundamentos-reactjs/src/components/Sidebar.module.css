@@ -13,9 +13,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     margin-top: calc(0px - 1.5rem - 6px);
-    outline: 2px solid var(--green-500);
+    outline: 2px var(--green-500);
 }
 
 .avatar {

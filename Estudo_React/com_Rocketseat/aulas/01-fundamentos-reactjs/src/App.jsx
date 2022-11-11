@@ -16,7 +16,7 @@ export function App() {
         <Sidebar />
         <main>
           <Post 
-            author="Miguel Ectil" 
+            
             content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perferendis vel optio delectus velit eum totam, est recusandae. Illo ducimus culpa eveniet aliquam minima, molestiae quos accusantium sapiente? Ipsa, laborum." 
           /> 
           <Post 

@@ -1,7 +1,7 @@
 .post {
   background: var(--gray-800);
   border-radius: 8px;
- padding: 2.5rem;
+  padding: 2.5rem;
 }
 
 .post + .post {
@@ -49,8 +49,8 @@
 }
 
 .author img {
-    width: calc(5rem + 12px);
-    height: calc(5rem + 12px);
+    width: calc(3rem + 12px);
+    height: calc(3rem + 12px);
     border-radius: 8px;  
     border: 2px solid var(--green-500);
     outline: 2px solid var(--gray-500) 
@@ -58,7 +58,7 @@
 
 .authorInfo strong {
     display: block;
-    color: var(--gray-400);
+    color: var(--gray-100);
     line-height: 1.6;
 }
 
@@ -67,4 +67,60 @@
     font-size: 0.875rem;
     color: var(--gray-400);
     line-height: 1.6;
+}
+
+.comentForm {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-600);
+}
+
+.comentForm > strong {
+  line-height: 1.6;
+  color: var(--gray-100)
+}
+
+.comentForm textarea {
+  width: 100%;
+  background: var(--gray-900);
+  border: 0;
+  resize: none;
+  height: 4rem;
+  padding: 1rem;
+  border-radius: 8px;
+  color: var(--gray-100);
+  line-height: 1.4;
+  margin-top: 1rem;
+}
+
+.comentForm footer {
+  visibility: hidden;
+  max-height: 0;
+  }
+
+  .comentForm:focus-within footer {
+    visibility: visible;
+    max-height: none;
+    }
+
+.comentForm button[type=submit] {
+    background: var(--green-500);
+    border: 0;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    transition: background-color 0.1s;
+  }
+
+.comentForm button[type=submit]:hover {
+  background: var(--green-300);
+}
+
+.commentList {
+  margin-top: 2rem;
 }
