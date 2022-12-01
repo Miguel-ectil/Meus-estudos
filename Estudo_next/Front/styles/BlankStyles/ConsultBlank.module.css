@@ -1,0 +1,56 @@
+.bodyTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    color: rgb(0, 0, 0);
+    background-color: #e9ecef;
+    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+    font-family: sans-serif;
+    height: 50px;
+    font-weight: 700;
+    border-radius: 10px;
+  }
+  
+  .button {
+    background-color: rgb(62, 100, 226);
+    color:#f1e9e9;
+    height: 30px;
+  }
+
+  .button:hover{
+    background-color: rgb(62, 100, 226);
+  }
+
+  .body1 {
+    transition: all 0.3s ease-out;
+    border-radius: 10px;
+    border-left: 5px solid #6c757d;
+    border-right: 5px solid #6c757d;
+    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+    -webkip-font-smoothing: antialiased;
+    padding: 0.5rem 1.5rem;
+    height: 90px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text {
+    font-weight: 600;
+    font-size: 16px;
+    font-family: sans-serif;
+    color: rgb(3, 3, 3)
+  }
+
+  .tabelaBody {
+    transition: all 0.3s ease-out;
+    border-radius: 10px;
+    border-left: 5px solid #6c757d;
+    border-right: 5px solid #6c757d;
+    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+    -webkip-font-smoothing: antialiased;
+    padding: 0.6rem 0.8rem;
+    height: 220px;
+    align-items: center;
+    justify-content: center;
+  }
