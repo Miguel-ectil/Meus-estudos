@@ -16,8 +16,27 @@ export const useProdutoService = () => {
         await httpClient.put<Produto>(url, produto)
     }
 
+    const carregarProduto = async (id) : Promise<Produto> => {
+        const url: string = `${resourceURL}/${id}`
+        const response: AxiosResponse<Produto> = await httpClient.get(url);
+        return response.data;
+    }
+
+    const deletar = async (id) : Promise<void> => {
+        const url: string = `${resourceURL}/${id}`
+        await httpClient.delete(url)
+    }
+
+    const listar = async () : Promise<Produto[]> => {
+        const response: AxiosResponse<Produto[]> = await httpClient.get(resourceURL)
+        return response.data
+    }
+
     return {
         salvar,
-        atualizar
+        atualizar,
+        carregarProduto,
+        deletar,
+        listar
     }
 }

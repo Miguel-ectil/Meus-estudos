@@ -270,7 +270,7 @@ export default function Sidebar({ children }) {
                   <ListItemText primary="Consultar blanck" />
                 </ListItemButton>
               </a>
-              <a href='/Blank/Inativar-blacks-estampador'>
+              <a href='/Blank/Inativar-blanks-estampador'>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemText primary="Inativar blanck - Estampador" />
                 </ListItemButton>
