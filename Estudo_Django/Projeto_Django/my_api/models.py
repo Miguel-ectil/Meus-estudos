@@ -4,6 +4,6 @@ from django.db import models
 
 class Cadastro(models.Model):
   name = models.CharField(max_length=80)
-  idade = models.IntegerField()
+  idade = models.CharField(max_length=8)
   cpf = models.CharField(max_length=11)
-  
+  senha = models.CharField(max_length=100, default='sua_senha_aqui')

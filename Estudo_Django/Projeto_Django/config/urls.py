@@ -18,10 +18,12 @@ from django.urls import path, include
 from my_api.views import CadastroViewSet
 from rest_framework import routers
 
-routers = routers. DefaultRouter()
-routers.register('', CadastroViewSet, basename='Cadastro')
+route = routers. DefaultRouter()
+
+route.register(r'cadastro', CadastroViewSet, basename='Cadastro')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cadastro/', include(routers.urls))
+    path('', include(route.urls))
 ]

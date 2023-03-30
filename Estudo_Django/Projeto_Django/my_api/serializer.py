@@ -4,4 +4,5 @@ from my_api.models import Cadastro
 class CadastroSerializer(serializers.ModelSerializer):
   class Meta:
     model = Cadastro
-    fields = ['id', 'name', 'idade', 'cpf']
+    fields = '__all__'
+    # fields = ['id', 'name', 'idade', 'cpf', 'senha']

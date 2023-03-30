@@ -11,11 +11,11 @@ const axiosInstance1  = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URLDJANGO,
 });
 
-axiosInstance.interceptors.request.use((config:any) => {
+axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-axiosInstance1.interceptors.request.use((config:any) => {
+axiosInstance1.interceptors.request.use((config) => {
   return config;
 });
 
