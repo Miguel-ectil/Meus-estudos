@@ -17,21 +17,11 @@ export default function Login() {
 	const [idade, setIdade] = useState<string>("")
   const [cpf, setCpf] = useState<string>("")
   const [senha, setSenha] = useState<any>("")
-  const [id, setId] = useState<any>(1)
-
-  // useEffect(() => {
-  //   service.getCadastro()
-  //   .then((response) => {
-  //     setCadastro(response)
-
-  //   }).catch((err) => {
-  //     console.log('erro pangare')
-  //   })
-  // }, [])
+  const [id, setId] = useState<number>(3)
 
   const submit = () => {
-    // const cadastro = {name, idade, cpf}
-		service.getCadastro()
+    const cadastro = {name, idade, cpf, senha}
+		service.getCadastro(cadastro)
       .then(response => response.json())
 			.then((data) => {
         setCadastro(data)
@@ -48,7 +38,7 @@ export default function Login() {
         display: 'flex',
       alignItems: 'center',
       flexDirection: 'column'
-      }} //background: "#92140c"
+      }}
       maxWidth="lg"
     >
       <Card

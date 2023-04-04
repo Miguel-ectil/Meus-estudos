@@ -5,9 +5,9 @@ const resourceUrl = '';
 
 export const  useCadastroservices = () => {
 
-  const getCadastro = async(): Promise<any> => {
-    const url: string = `${resourceUrl}`;
-    const response: AxiosResponse<any> = await httpClientDJango.get(url);
+  const getCadastro = async(id: any): Promise<any> => {
+    const url: string = `${resourceUrl}${id}`;
+    const response: AxiosResponse<any> = await httpClientDJango.delete(url, id);
     return response;
   }
 
