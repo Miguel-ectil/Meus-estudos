@@ -5,7 +5,13 @@ import {  Container } from '@mui/system'
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Box>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 2, bg: "white" }}>
+      <Container 
+        maxWidth="lg" 
+        sx={{ 
+          mt: 4, mb: 2,
+          color: "white"
+        }}
+      >
         {children}
       </Container>
     </Box>
