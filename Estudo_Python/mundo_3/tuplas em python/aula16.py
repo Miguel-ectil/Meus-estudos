@@ -1,6 +1,6 @@
 
 print('-='*24)
-print('-=-=-=-=- Aprendendo a manipular tuplas -=-=-=-=')
+print('-=-=-=-=- Aprendendo a manipular tuplas -=-=-=-=-')
 print('-='*24)
 
 lanche = ('Hambúrguer', 'Suco', 'Pizza', 'Pudin', 'Batata Frita')
@@ -36,7 +36,7 @@ print('provando que tuplas são imutáveis')
 # print(lanche[1])
 
 
-print('===============================Fim====================================')
+print('===========================Fim===============================')
 a = (2, 5, 4)
 b = (5, 8, 1, 2)
 c = b + a
@@ -45,7 +45,8 @@ print(c.count(4))
 print(c.index(5, 1)) 
 
 
-print('===============================Fim====================================')
+print('============================Fim==============================')
 pessoa = ('Miguel', 17, 'M', 1.69)
 # del(pessoa)
+
 print(pessoa)

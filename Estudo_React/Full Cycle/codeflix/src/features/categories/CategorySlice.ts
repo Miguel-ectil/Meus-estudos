@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-interface Category {
+export interface Category {
   id: string;
   name: string;
-  is_activate: boolean;
+  is_active: boolean;
   created_at: string;
   updated_at: string;
   deleted_at: null | string;
@@ -14,7 +14,7 @@ interface Category {
 const category: Category = {
   id: '0cce68ddd-8956-4dd2-a1056479b01',
   name: 'Miguel',
-  is_activate: true,
+  is_active: true,
   created_at: '2023-08-15T10:58:08+0000',
   updated_at: '2023-08-15T10:58:08+0000',
   deleted_at: null,

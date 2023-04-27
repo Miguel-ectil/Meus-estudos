@@ -25,7 +25,7 @@ export const CategoryList = () => {
     id: category.id,
     name: category.name,
     description: category.description,
-    isActive: category.is_activate,
+    isActive: category.is_active,
     createdAt: new Date(category.created_at).toLocaleDateString("pt-BR"),
     actions: category.updated_at
   }));
