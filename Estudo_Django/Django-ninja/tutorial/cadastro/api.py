@@ -1,16 +1,8 @@
-from ninja import NinjaAPI
+from ninja import ModelSchema, NinjaAPI, Schema, UploadedFile
 from .models import Livro
 import json
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
-
-import orjson
-from ninja.parser import Parser
-from django.http import HttpRequest
-
-class ORJSONParser(Parser):
-  def parse_body(self, request: HttpRequest):
-    return orjson.loads(request.body)
 
 api = NinjaAPI()
 
@@ -25,3 +17,34 @@ def listar(request):
 def listar_livro(request, id: int):
   livro = get_object_or_404(Livro, id=id)
   return model_to_dict(livro)
+
+@api.get('livro_consulta/')
+def listar_livro_consulta(request, id: int = 1):
+  livro = get_object_or_404(Livro, id=id)
+  return model_to_dict(livro)
+
+'''  class LivroSchema(Schema):
+      titulo: str
+      descricao: str
+      autor: str = None '''
+
+class LivroSchema(ModelSchema):
+  class Config:
+    model = Livro
+    model_fields = "__all__"
+    # model_fields = ['titulo', 'descricao', 'autor']
+
+# from typing import List
+# List[LivroSchema]
+
+@api.post('livro', response=LivroSchema)
+def livro_criar(request, livro: LivroSchema):
+  l1 = livro.dict()
+  livro = Livro(**l1)
+  livro.save()
+  return livro
+
+@api.post('/file')
+def file_upload(request, file: UploadedFile):
+  print(file.size)
+  return file.size
