@@ -196,6 +196,14 @@ export default function Sidebar({ children }) {
                   <ListItemText primary="Modelos de Tabelas" />
                 </ListItemButton>
               </Link>
+              <Link href='/cadastro' >
+                <ListItemButton sx={{ my: 2, color: 'white' }}>
+                  <ListItemIcon>
+                    <HomeSharp sx={{ color: 'white', fontSize: '2rem' }} />
+                  </ListItemIcon>
+                  <ListItemText primary="Tela Cadastro" />
+                </ListItemButton>
+              </Link>
             </List>
           </Box>  
         </Box>

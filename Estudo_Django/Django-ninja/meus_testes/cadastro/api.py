@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from ninja import ModelSchema, NinjaAPI, Schema, UploadedFile
 from .models import User
 import json
@@ -9,7 +10,7 @@ api = NinjaAPI()
 @api.get('user/')
 def listar(request):
   user = User.objects.all()
-  response = [{'id': i.id, 'name': i.name, 'email': i.email, 'usuario': i.usuario} for i in user]
+  response = [{'id': i.id, 'name': i.name, 'email': i.email, 'usuario': i.usuario, 'senha': i.senha,} for i in user]
 #   print(response)
   return response
 
@@ -34,3 +35,19 @@ def livro_criar(request, user: UserSchema):
 def listar_livro_consulta(request, id: int = 1):
   user = get_object_or_404(User, id=id)
   return model_to_dict(user)
+
+@api.put('user_atualiza/')
+def listar_user_altera(request, id: int):
+  try:
+    user = get_object_or_404(User, id=id)
+    user_data = {
+      'name': user.name,
+      'email': user.email,
+      'usuario': user.usuario,
+      'senha': user.senha
+    }
+    return HttpResponse(json.dumps(user_data), content_type='application/json')
+  except User.DoesNotExist:
+    return HttpResponse(status=404, content="User não encontrado")
+  except Exception as e:
+    return HttpResponse(status=500, content=f"Erro ao obter informações do User: {str(e)}")
