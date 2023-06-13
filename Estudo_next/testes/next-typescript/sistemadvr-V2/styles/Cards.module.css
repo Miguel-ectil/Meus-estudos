@@ -1,9 +1,0 @@
-.card {
-    transition: all 0.3s ease-out;
-    width: 880px;
-    height: 160px;
-    border-radius: 12px;
-    border-left: 5px solid #103780;
-    border-right: 5px solid #103780;
-    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
-  }

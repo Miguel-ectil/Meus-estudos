@@ -1,0 +1,29 @@
+.centralizar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.card {
+  margin: 16rem;
+  padding: 2.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 2px solid #eaeaea;
+  border-radius: 10px;
+  max-width: 300px;
+}
+
+.card h2 {
+    margin: 0 0 rem 0;
+    font-size: 1.5rem;
+  }
+  
+  .card p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }

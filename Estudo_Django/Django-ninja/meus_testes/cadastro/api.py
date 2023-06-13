@@ -2,9 +2,11 @@ from django.http import HttpResponse
 from ninja import ModelSchema, NinjaAPI, Schema, UploadedFile
 from .models import User
 import json
+from ninja import Router, File, Form
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
 
+router = Router()
 api = NinjaAPI()
 
 @api.get('user/')
@@ -24,7 +26,7 @@ class UserSchema(ModelSchema):
     model = User
     model_fields = "__all__"
 
-@api.post('user', response=UserSchema)
+@router.post('user', response=UserSchema)
 def livro_criar(request, user: UserSchema):
   l1 = user.dict()
   user = User(**l1)
