@@ -100,9 +100,9 @@ export default function Tela() {
           </div>
         </header> */}
         <main>
-          <div className=" rounded-xl py-6 lg:px-8 bg-black  shadow-lg space-y-2 sm:py-4 "> {/* max-w-7xl sm:px-6 */}
+          <div className=" rounded-xl py-6 lg:px-8 bg-black  shadow-lg space-y-2 sm:py-4 sm:max-w-8xl sm:px-6"> {/* max-w-7xl sm:px-6 */}
 
-            <div className="isolate sm:flex sm:space-x-6 rounded-lg bg-gray-800 py-24 sm:py-32 lg:px-8">
+            <div className="isolate sm:flex-wrap justify-center sm:flex sm:space-x-6 rounded-lg bg-gray-800 py-24 sm:py-32 lg:px-8">
               {/* Coloração meio vermelio  */}
               <div className="absolute inset-x-0 top-[-10rem] -z-10 transhtmlForm-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
                 <div className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]" style={{marginRight: '1em'}}></div>
