@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
-export default function Tela() {
+export default function Cadastro() {
   // const [menuFoto, setMenuFoto] = useState ()
   const [open, setOpen] = useState(false)
   const handleButtonClick = () => {
