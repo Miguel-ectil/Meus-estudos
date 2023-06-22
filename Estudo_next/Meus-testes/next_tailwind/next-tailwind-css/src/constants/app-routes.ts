@@ -2,15 +2,13 @@
 export const APP_ROUTES = {
   private: {
     dashboard: {
-      name: '/dashboard',
+      name: 'dashboard'
     },
     cadastro: {
-      cadastro:  '/cadastro'
-    }
+      name: 'cadastro'
+    },
   },
   public: {
-    login: {
-      name:'/'
-    }
+    login: '/',
   }
 }
