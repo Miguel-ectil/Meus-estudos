@@ -1,51 +1,64 @@
 import openpyxl
 import os
+import pyautogui
 import subprocess
+import pyperclip
 import time
 
-valor_a = 40
-valor_b = 40
+# Pegar dados do Excel
+arquivo_excel = openpyxl.load_workbook("arquivo_excel.xlsx")
+dados = arquivo_excel.active
 
-# Caminho para o arquivo Excel
-excel_file_path = 'arquivo_excel.xlsx'
+total_linhas = dados.max_row
+total_colunas = dados.max_column
 
-# Verificar se os valores são numéricos e diferentes de None
-if valor_a is None or valor_b is None:
-    print("Valores nas células A1 e B1 devem ser preenchidos com números.")
-    resultado = None
-else:
-    resultado = valor_a * valor_b
+# Caminho onde será salvo o arquivo
+desktop_path = os.path.expanduser("~/Documents")
+nome_arquivo = "relatorio.txt"
+file_path = os.path.join(desktop_path, nome_arquivo)
 
-# Verificar se o resultado não é None antes de continuar
-if resultado is not None:
-    # Caminho para o arquivo de texto
-    texto_file_path = 'teste.txt'
+lista_valores = []  # Lista que será randomizada na calculadora
 
-    # Escrever o resultado no arquivo de texto
-    with open(texto_file_path, 'w') as f:
-        f.write(str(resultado))
+with open(file_path, "w") as file:
+    for linha in range(1, total_linhas + 1):  # para manipular cada linha
+        for coluna in range(1, total_colunas + 1):  # para manipular cada coluna
+            celula = dados.cell(row=linha, column=coluna)
+            valor = celula.value
 
-    # Abrir a calculadora automaticamente
-    subprocess.run(['gnome-calculator'])
+            if valor is not None:
+                conteudo = f"linha {linha}, coluna {coluna}: {valor}\n"
+                if type(valor) == int:
+                    lista_valores.append(valor)
+                file.write(conteudo)  # adiciona as informações do Excel no arquivo
 
-    # Aguardar um tempo para que você possa fazer o cálculo manualmente
-    time.sleep(10)  # Ajuste o tempo conforme necessário
+os.system(f"start {file_path}")
+time.sleep(2)
 
-    # Ler o resultado do arquivo de texto
-    with open(texto_file_path, 'r') as f:
-        resultado_calculadora = float(f.read())
+# Abre a calculadora do Windows
+subprocess.Popen(["calc.exe"])
+time.sleep(3)
 
-    # Abrir o arquivo Excel novamente
-    workbook = openpyxl.load_workbook(excel_file_path)
-    sheet = workbook.active
+# Loop para inserir valores e calcular
+for i, valor in enumerate(lista_valores):
+    pyautogui.write(str(valor))
+    if i < len(lista_valores) - 1:
+        pyautogui.press('enter')
+        pyautogui.press('+')
 
-    # Escrever o resultado de volta no Excel
-    sheet['C1'].value = resultado_calculadora
+# Pressiona Enter para obter o resultado final
+pyautogui.press('enter')
 
-    # Salvar as alterações no arquivo Excel
-    workbook.save(excel_file_path)
+pyautogui.hotkey('ctrl', 'c')
+time.sleep(2)
+resultado = pyperclip.paste()
+time.sleep(1)
+with open(file_path, 'a') as file:  # Use 'a' para modo de anexação
+    file.write(resultado)
 
-    # Fechar o arquivo Excel
-    workbook.close()
-
-    print("Processo concluído.")
+célula_resultado = dados.cell(row=23, column=2)  # Por exemplo, adicione à primeira linha da última coluna
+célula_resultado.value = resultado
+time.sleep(2)
+# Salve as alterações no arquivo Excel
+arquivo_excel.save("arquivo_excel.xlsx")
+pyautogui.hotkey('f5')
+os.system("start \"\" \"C:\\Program Files\\LibreOffice\\program\\soffice.exe\" --calc arquivo_excel.xlsx")
