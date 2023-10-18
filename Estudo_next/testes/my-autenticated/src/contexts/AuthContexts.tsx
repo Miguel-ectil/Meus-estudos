@@ -10,7 +10,6 @@ interface IAuthContextData {
   isAuthenticated: boolean;
   login: (form: { username: string; password: string }) => Promise<string | void>;
 }
-  
 const AuthContext = createContext<IAuthContextData | undefined>(undefined);
 
 const ACCESS_TOKEN_KEY = 'token';
