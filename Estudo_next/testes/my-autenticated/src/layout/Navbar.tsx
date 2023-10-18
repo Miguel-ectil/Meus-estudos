@@ -108,8 +108,8 @@ export function Menu({ showNav, setShowNav }: { showNav: any, setShowNav: any })
 
                     <div className='relative flex justify-center items-center mb-8'>
                         <div className="absolute inset-0 bg-gradient-to-t from-[#530000] to-transparent z-10"/>
-                        <Image className="w-auto h-38 object-cover -z-40" src="/sidebar.png" width={'420'} height={'280'} alt='Imagem placas sidebar' />
-                        <Image  src="/logo1.png" className="absolute items-center mt-36 justify-center flex z-10" width={'66'} height={'66'} alt='Logo dvr'/>
+                        {/* <Image className="w-auto h-38 object-cover -z-40" src="/sidebar.png" width={'420'} height={'280'} alt='Imagem placas sidebar' /> */}
+                        {/* <Image  src="/logo1.png" className="absolute items-center mt-36 justify-center flex z-10" width={'66'} height={'66'} alt='Logo dvr'/> */}
                     </div>
                     
                     <h1 className='text-center text-lg font-semibold text-white items-center justify-center flex mt-10 px-1'>Sistema de Rastreabilidade</h1>

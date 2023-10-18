@@ -86,8 +86,8 @@ const Sidebar = forwardRef((showNav: any , ref: any)  => {
 
           <div className='relative flex justify-center items-center mb-8'>
             <div className="absolute inset-0 bg-gradient-to-t from-[#530000] to-transparent z-10"/>
-            <Image className="w-auto h-38 object-cover -z-40" src="/sidebar.png" width={'420'} height={'280'} alt='Imagem placas sidebar' loading="lazy"/>
-            <Image  src="/logo1.png" className="absolute items-center mt-32 justify-center flex z-10 md:p-1 2xl:p-0" width={'66'} height={'66'} alt='Logo dvr' loading="lazy"/>
+            {/* <Image className="w-auto h-38 object-cover -z-40" src="/sidebar.png" width={'420'} height={'280'} alt='Imagem placas sidebar' loading="lazy"/> */}
+            {/* <Image  src="/logo1.png" className="absolute items-center mt-32 justify-center flex z-10 md:p-1 2xl:p-0" width={'66'} height={'66'} alt='Logo dvr' loading="lazy"/> */}
           </div>
           
           <h1 className='text-center 2xl:text-lg md:text-md font-semibold text-white items-center justify-center flex mt-10 2xl:px-1 sm:px-2.5'>Sistema de Rastreabilidade</h1>

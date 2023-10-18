@@ -53,7 +53,7 @@ export default function Login() {
   return (
     <div className="flex min-h-screen bg-white flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <Image className="mx-auto h-16 w-16 bg-white" src="/logo.png" alt="DVR" width={64} height={64} />
+        {/* <Image className="mx-auto h-16 w-16 bg-white" src="/logo.png" alt="DVR" width={64} height={64} /> */}
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-700">
           Entre em sua conta
         </h2>
