@@ -1,0 +1,20 @@
+
+export interface cadastroContato {
+    razaoSocial?: string,
+    nomeFantasia ?:string,
+    cpfCnpj ?:string,
+    rgIe ?: string,
+    telefone ?: string,
+    celular ?: string,
+    cep ?: string,
+    estado ?: string,
+    cidade ?: string,
+    logradouro ?: string,
+    numero ?: string,
+    bairro ?: string,
+    complemento ?: string,
+    email ?: string,
+    tags ?: any,
+    inscricaoEstadual ?: string,
+    is_isento ?: boolean,
+  }
