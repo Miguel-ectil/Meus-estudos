@@ -12,4 +12,7 @@ func main() {
 
 	fmt.Printf("Len=%d Cap=%d %v\n", len(s[2:]), cap(s[2:]), s[2:])
 
+	s = append(s, 110)
+	fmt.Printf("Len=%d Cap=%d %v\n", len(s), cap(s), s)
+
 }
