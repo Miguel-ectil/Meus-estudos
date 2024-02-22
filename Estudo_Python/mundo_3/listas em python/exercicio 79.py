@@ -10,7 +10,7 @@ while desejo in 'sS':
     print(f'Valor adicionado com sucesso...')
     valores.append(num)
 
-  desejo = str(input(f'quer continuar? [S/N]')).strip().upper()[0]
+  desejo = str(input(f'quer continuar? [S/N] ')).strip().upper()[0]
 
 print('\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
 print(f'Voce digitou os valores {valores}')
