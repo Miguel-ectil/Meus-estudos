@@ -1,20 +1,22 @@
-
 lista = []
-mais = 0
-menos = 0
 
-for c in range(0, 5):
+for _ in range(5):
   valor = int(input('Digite um valor: '))
-  if c == 0:
-    # mais = menos = lista[c]
-    lista.insert(c, valor)
+  inserido = False
+  if not lista:
+    lista.append(valor)
   else:
-    if lista[c] > mais:
-      mais = lista[c]
-    if lista[c] < menos:
-      menos = lista[c]
-      lista.insert(valor, c)
-    
-    print(f'Adicionado na posição _ da lista... ')
-  
-print('Os valores digitados em orden foram ', lista)
+    for i in range(len(lista)):
+      if valor < lista[i]:
+        lista.insert(i, valor)
+        inserido = True
+        break
+    if not inserido:
+      lista.append(valor)
+
+  if inserido:
+    print(f"Adicionado na posição {i} da lista...")
+  else:
+    print("Adicionado ao final da lista...")
+
+print('Os valores digitados em ordem foram:', lista)
