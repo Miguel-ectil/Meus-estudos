@@ -19,4 +19,4 @@ for _ in range(5):
   else:
     print("Adicionado ao final da lista...")
 
-print('Os valores digitados em ordem foram:', lista)
+print('Os valores digitados em ordem crescente foram:', lista)
