@@ -23,4 +23,4 @@ elif opcão == 4:
     print('Sua compra de R${:.2f} vai custar R${:.2f} no final.'.format(valor, total))
 else:
     total = 0
-    print('OPCÃO INVÁLIDA de pagamento, Intente novamente!')
+    print('OPCÃO INVÁLIDA de pagamento, tente novamente!')
