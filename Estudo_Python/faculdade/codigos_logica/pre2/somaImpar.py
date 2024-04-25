@@ -1,14 +1,15 @@
-def somaImpares(val):
-  cont = 0
-  while val > 0:
-    digito = val % 10  # para pegar o último dígito do número
+def somaImpares(n):
+  impares = 0
+  while n > 0:
+    digito = n % 10  # para pegar o último dígito do número
     if digito % 2 != 0:  # Verificar se o dígito é ímpar
-      cont += digito  # Se for ímpar, adiciona ao contador
-    val //= 10  # Remove o último dígito do número
-  return cont
+      impares += digito  # Se for ímpar, adiciona ao contador
+    n //= 10  # Remove o último dígito do número
+  return impares
 
 n = int(input())
-print(somaImpares(n))
+result = somaImpares(n)
+print(result)
 
  # ==== ele percorre o valor todo e remove apenas o ultimo valor ====
  
