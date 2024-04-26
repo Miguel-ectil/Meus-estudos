@@ -1,5 +1,5 @@
 
-print("======dsefio 3! ======")
+print("======desafio 3! ======")
 
 N1 = int(input("Digite um numero: "))
 N2 = int(input("Digite outro numero: "))
