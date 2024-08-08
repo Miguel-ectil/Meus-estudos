@@ -10,10 +10,10 @@
 // tratamento de erro!
 
 // console.error('Deu erro! tente novamente')
-// console.clear('Deu erro! tente novamente')  // elá linpa o terminal
+// console.clear('Deu erro! tente novamente')  // ela linpa o terminal
 // console.count(['Deu erro! tente novamente']) //conta as vezes que ela foi usada
 
-// FileSystem // vou usalo depois
+// FileSystem // vou usa-lo depois
 
 console.log("deu erro");
 // console.error("deu erro");

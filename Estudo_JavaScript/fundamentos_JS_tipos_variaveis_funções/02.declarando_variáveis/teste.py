@@ -1,7 +1,4 @@
 
-
-
-
 forma = 'triângulo'
 altura = 5
 comprimento = 7
